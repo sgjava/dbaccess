@@ -1,0 +1,52 @@
+~~Copyright (c) Steven P. Goldsmith. All rights reserved.
+~~
+~~Created by Steven P. Goldsmith December 13, 2011
+~~sgoldsmith@codeferm.com
+
+            ------
+            Tests
+            ------
+            Steven P. Goldsmith
+            ------
+            2011-12-11
+
+Functional tests
+
+    Unit tests are provided to test all the basic functionality. You can really
+    think of these more as integration tests since each test handles a complete
+    functional section of database work.
+
+    * {{{./testapidocs/com/codeferm/dbaccess/BaseTest.html}BaseTest}} is the parent
+      test of all other tests. It handles acquiring application properties and
+      SQL statements.
+
+    []
+
+[testapidocs/com/codeferm/dbaccess/package-summary.png]
+
+    * {{{./testapidocs/com/codeferm/dbaccess/dbcp/BaseDbcpTest.html}BaseDbcpTest}}
+      is the parent of all DBCP based tests. It handles acquiring a
+      DataSource based on BasicDataSource. All child classes test
+      implementation specific JDBC wrappers against DBCP pooled connections.
+
+    []
+
+[testapidocs/com/codeferm/dbaccess/dbcp/package-summary.png]
+
+    * {{{./testapidocs/com/codeferm/dbaccess/atomikos/BaseAtomikosTest.html}BaseAtomikosTest}}
+      is the parent of all Atomikos based tests. It handles acquiring a
+      DataSource based on AtomikosDataSourceBean. All child classes test
+      implementation specific JDBC wrappers against Atomikos.
+
+    []
+
+[testapidocs/com/codeferm/dbaccess/atomikos/package-summary.png]
+
+    * {{{./testapidocs/com/codeferm/dbaccess/transaction/TransactionTest.html}TransactionTest}}
+      Is used by all transaction tests to verify commit and rollback on
+      @Transaction annotated methods. Standard Connection and JTA based
+      connections are tested.
+
+    []
+
+[testapidocs/com/codeferm/dbaccess/transaction/package-summary.png]

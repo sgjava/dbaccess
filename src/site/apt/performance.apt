@@ -1,0 +1,205 @@
+~~Copyright (c) Steven P. Goldsmith. All rights reserved.
+~~
+~~Created by Steven P. Goldsmith December 13, 2011
+~~sgoldsmith@codeferm.com
+
+            ------
+            Performance
+            ------
+            Steven P. Goldsmith
+            ------
+            2012-01-10
+
+Performance
+
+    While using unit tests to glean performance data for the various
+    implementations is not the most scientifically empirical it does provide
+    some interesting insight.
+
+    * You will not notice much difference between the various implementations
+      since most of the latency is caused by the database itself. Examine the
+      profiling results below. You will note that the largest portion of
+      execution time is spent in the actual JDBC driver code.
+
+[./images/profile1.png]
+
+    * DbBeanMapper (using DbJdbcConn) bean mapping was four times faster than
+      JdbcTemplate. You should consider this in applications where you are
+      processing larger amounts of beans.
+
+    * Atomikos JTA transactions are 9 times slower than standard Connection
+      based transactions. You have to weigh the advantages of using thread based
+      JTA which can work across multiple connections (the nature of using a
+      DataSource and closing the Connection after each operation) or using a
+      single Connection. For batch operations the cost is too high to use JTA in
+      my opinion. See the profiling results below.
+
+[./images/profile2.png]
+
+    []
+
+    [[1]] Tests using DBCP DataSource. I prime each test to eliminate
+          any lazy loading noise. Spring's JdbcTemplate required the most
+          overhead, but this should not be cause for concern as you will see in
+          the subsequent tests.
+
+*-------------------+---------------:
+| DbQueryRunnerConn | 27 ms         |
+*-------------------+---------------:
+| DbJdbcConn        | 28 ms         |
+*-------------------+---------------:
+| DbPersist         | 31 ms         |
+*-------------------+---------------:
+| DbJdbcDs          | 41 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 52 ms         |
+*-------------------+---------------:
+| DbJdbcTemplate    | 234 ms        |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[2]] Tests using DBCP DataSource. Average using 1000 iterations with
+          parameter markers.
+
+*-------------------+---------------:
+| DbJdbcConn        | 26 ms         |
+*-------------------+---------------:
+| DbPersist         | 27 ms         |
+*-------------------+---------------:
+| DbJdbcTemplate    | 30 ms         |
+*-------------------+---------------:
+| DbJdbcDs          | 31 ms         |
+*-------------------+---------------:
+| DbQueryRunnerConn | 31 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 33 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[3]] Tests using DBCP DataSource. Average using 1000 iterations with named
+          parameters.
+
+*-------------------+---------------:
+| DbJdbcTemplate    | 27 ms         |
+*-------------------+---------------:
+| DbJdbcConn        | 27 ms         |
+*-------------------+---------------:
+| DbQueryRunnerConn | 29 ms         |
+*-------------------+---------------:
+| DbJdbcDs          | 29 ms         |
+*-------------------+---------------:
+| DbPersist         | 31 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 32 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[4]] Tests using DBCP DataSource. Average using 1000 iterations batch of 3
+          inserts with parameter markers.
+
+*-------------------+---------------:
+| DbJdbcConn        | 16 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 17 ms         |
+*-------------------+---------------:
+| DbPersist         | 17 ms         |
+*-------------------+---------------:
+| DbQueryRunnerConn | 18 ms         |
+*-------------------+---------------:
+| DbJdbcDs          | 18 ms         |
+*-------------------+---------------:
+| DbJdbcTemplate    | 18 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[5]] Tests using DBCP DataSource. Average using 1000 iterations batch of 3
+          inserts with named parameters.
+
+*-------------------+---------------:
+| DbJdbcDs          | 17 ms         |
+*-------------------+---------------:
+| DbJdbcTemplate    | 17 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 17 ms         |
+*-------------------+---------------:
+| DbQueryRunnerConn | 17 ms         |
+*-------------------+---------------:
+| DbJdbcConn        | 18 ms         |
+*-------------------+---------------:
+| DbPersist         | 18 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[6]] Tests using DBCP DataSource. Total time using 50000 records mapped to
+          a bean list.
+
+*-------------------+---------------:
+| DbJdbcConn        | 1543 ms       |
+*-------------------+---------------:
+| DbPersist         | 1921 ms       |
+*-------------------+---------------:
+| DbQueryRunnerConn | 2053 ms       |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 2781 ms       |
+*-------------------+---------------:
+| DbJdbcDs          | 3375 ms       |
+*-------------------+---------------:
+| DbJdbcTemplate    | 6321 ms       |
+*-------------------+---------------:
+com.codeferm.dbaccess.dbcp.DbcpTest
+
+    [[7]] Tests using AtomikosDataSourceBean DataSource. Average using 1000
+          iterations of commits.
+
+*-------------------+---------------:
+| DbQueryRunnerConn | 156 ms        |
+*-------------------+---------------:
+| DbPersist         | 160 ms        |
+*-------------------+---------------:
+| DbJdbcDs          | 160 ms        |
+*-------------------+---------------:
+| DbJdbcTemplate    | 162 ms        |
+*-------------------+---------------:
+| DbJdbcConn        | 163 ms        |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 163 ms        |
+*-------------------+---------------:
+com.codeferm.dbaccess.transaction.TransactionTest
+
+    [[8]] Tests using AtomikosDataSourceBean DataSource. Average using 1000
+          iterations of rollbacks.
+
+*-------------------+---------------:
+| DbPersist         | 76 ms         |
+*-------------------+---------------:
+| DbQueryRunnerConn | 81 ms         |
+*-------------------+---------------:
+| DbJdbcTemplate    | 81 ms         |
+*-------------------+---------------:
+| DbQueryRunnerDs   | 84 ms         |
+*-------------------+---------------:
+| DbJdbcConn        | 87 ms         |
+*-------------------+---------------:
+| DbJdbcDs          | 88 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.transaction.TransactionTest
+
+    [[9]]  Tests using DBCP DataSource. Average using 1000 iterations of
+           commits.
+
+*-------------------+---------------:
+| DbQueryRunnerConn | 17 ms         |
+*-------------------+---------------:
+| DbJdbcConn        | 19 ms         |
+*-------------------+---------------:
+com.codeferm.dbaccess.transaction.TransactionTest
+
+    [[10]]  Tests using DBCP DataSource. Average using 1000 iterations of
+            rollbacks.
+
+*-------------------+---------------:
+| DbJdbcConn        | 4 ms          |
+*-------------------+---------------:
+| DbQueryRunnerConn | 5 ms          |
+*-------------------+---------------:
+com.codeferm.dbaccess.transaction.TransactionTest

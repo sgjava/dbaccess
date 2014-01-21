@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Copyright (c) Steven P. Goldsmith. All rights reserved.
+
+Created by Steven P. Goldsmith December 20, 2011
+sgoldsmith@codeferm.com
+-->
+
+<project name="dbaccess">  
+    <publishDate format="dd MMM yyyy" position="left"/>  
+  
+    <bannerLeft>
+        <name>DB Access API</name>
+        <src>images/logo.png</src>
+        <href>http://www.codeferm.com</href>
+    </bannerLeft>
+
+    <body>
+        <menu name="Main" inherit="bottom">
+            <item name="Introduction" href="index.html" />
+            <item name="Configure" href="configure.html" />
+            <item name="Performance" href="performance.html" />
+            <item name="Tests" href="tests.html" />
+        </menu>
+        
+        <menu ref="reports" inherit="bottom" />
+    </body>
+</project> 

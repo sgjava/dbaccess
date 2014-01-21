@@ -1,0 +1,68 @@
+~~Copyright (c) Steven P. Goldsmith. All rights reserved.
+~~
+~~Created by Steven P. Goldsmith December 13, 2011
+~~sgoldsmith@codeferm.com
+
+            ------
+            Configure
+            ------
+            Steven P. Goldsmith
+            ------
+            2011-12-13
+
+Configuration of project
+
+    The project requires some configuration prior to building. In order to run
+    the various tests a simple test table is required. I used PostgreSQL 8.4 and
+    9.1, but you should be able to use any JDBC 3 or 4 compliant driver. Also,
+    since I make use of current libraries (many of which are not in the public
+    Maven repositories) it is best that you point to our
+    {{{https://codeferm.com/nexus/content/repositories/public}Nexus}} repository.
+
+
+    [[1]] Download and install
+          {{{http://www.postgresql.org/download}PostgresSQL}} database server.
+
+    [[2]] Configure PostgresSQL for XA Datasource
+
+      [[a]] If you get "javax.transaction.HeuristicMixedException: Heuristic
+            Exception" edit postgresql.conf and set max_prepared_transactions to
+            be at least as big as max_connections.
+
+      [[b]] After restarting postgresql service on Ubuntu you may get "Failed
+            system call was shmget(key=xxxxxxx, size=xxxxxxxx, xxxxx)." Edit
+            /etc/sysctl.conf and add/increase kernel.shmmax.
+  
+    [[3]] Run the SQL script {{{../test-classes/sql/test.sql}test.sql}}
+          This script creates the user, database and tables. Read the comments
+          on which parts need to be run separately and which database user to
+          use. You can use {{{http://www.pgadmin.org}pgAdmin}} or similar tool.
+          You may wish to use another database. This is a simple matter of:
+
+      [[a]] Adding your JDBC driver JAR to test dependencies.
+
+      [[b]] Modifying {{{../classes/app.properties}app.properties}} db.*
+            and xa.* properties.
+
+      [[c]] Modifying any SQL dialect differences in statements contained in
+            {{{../classes/sql.properties}sql.properties}}.
+
+    [[4]] Configure Maven to use the Codeferm's Nexus repository.
+
+      [[a]] Edit .m2/settings.xml to add repository.
+
+      [[b]] See {{{http://wiki.netbeans.org/FaqNexus}Netbeans Nexus FAQ}} if you
+            are using Netbeans.
+
+    [[5]] Build Maven project (I used Netbeans 7.0.1 for the project, but this
+          is a standard Maven 3 project).
+
+      [[a]] Download latest build {{{../../../ws/*zip*/workspace.zip}workspace.zip}}.
+            Unzip and copy this trunk directory into NetBeansProjects (or
+            whatever directory your IDE uses).
+
+      [[b]] Build project in Maven with mvn clean install or in Netbeans 7 you
+            can open the project and do a Clean and Build. This should download
+            all the dependencies, compile and run all the tests. The first time
+            may take several minutes to download all the jars and run all the
+            tests. Use mvn site to build Maven site.
