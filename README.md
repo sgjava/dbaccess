@@ -38,7 +38,7 @@ single key value with updateReturnKey.
 * [Surefire Report](http://sgjava.github.io/dbaccess/surefire-report.html)
 * [Performance](http://sgjava.github.io/dbaccess/performance.html)
 
-### Quick links
+### Packaging
 
 DB Access is is divided into to two namespaces. One covers all the basic JDBC functionality and the other transactions.
 * The Common API and wrapped classes are in com.codeferm.dbaccess. Note that the DbAccess abstract class is the center of the universe.
