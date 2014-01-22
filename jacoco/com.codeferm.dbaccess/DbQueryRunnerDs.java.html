@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DbQueryRunnerDs.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess</a> &gt; <span class="el_source">DbQueryRunnerDs.java</span></div><h1>DbQueryRunnerDs.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on November 27, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.apache.commons.dbutils.BasicRowProcessor;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * DBUtils QueryRunner extensions of {@link com.codeferm.dbaccess.DbAccess} abstract
+ * class.
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public class DbQueryRunnerDs extends DbAccess {
+
+    /**
+     * Logger.
+     */
+    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+<span class="fc" id="L41">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
+            DbQueryRunnerDs.class);
+    //CHECKSTYLE:ON
+    /**
+     * Implementation class.
+     */
+<span class="fc" id="L47">    private transient QueryRunner template = null;</span>
+
+    /**
+     * Construct new {@code QueryRunner} with {@code DataSource}.
+     *
+     * @param dataSource Database data source.
+     * @throws SQLException Possible exception.
+     */
+    public DbQueryRunnerDs(final DataSource dataSource) throws SQLException {
+<span class="fc" id="L56">        super();</span>
+<span class="fc" id="L57">        this.template = new QueryRunner(dataSource);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Get {@code QueryRunner} object.
+     *
+     * @return QueryRunner template.
+     */
+    public final QueryRunner getTemplate() {
+<span class="nc" id="L66">        return template;</span>
+    }
+
+    /**
+     * Set {@code QueryRunner} object.
+     *
+     * @param template QueryRunner template.
+     */
+    public final void setTemplate(final QueryRunner template) {
+<span class="nc" id="L75">        this.template = template;</span>
+<span class="nc" id="L76">    }</span>
+
+    /**
+     * Return query results as list of beans. DBUtils doesn't handle underscore
+     * to camelCase conversions for you. A custom
+     * {@link com.codeferm.dbaccess.DbBeanProcessor} is implemented to handle
+     * underscores properly. {@code Connection} is closed automatically.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz {@code Class} to map results to.
+     * @return {@code List} of {@code &lt;T&gt;} typed objects.
+     */
+    @Override
+    public final &lt;T&gt; List&lt;T&gt; selectList(final String sql,
+            final Object[] params, final Class clazz) {
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L94">            log.debug(String.format(&quot;selectBeanList: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L97">        List&lt;T&gt; list = null;</span>
+        try {
+<span class="fc" id="L99">            list = (List&lt;T&gt;) template.query(sql,</span>
+                    new BeanListHandler(clazz,
+                    new BasicRowProcessor(new DbBeanProcessor())), params);
+<span class="nc" id="L102">        } catch (SQLException e) {</span>
+<span class="nc" id="L103">            throw new DbAccessException(String.format(</span>
+                    &quot;selectBeanList: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L106">        }</span>
+<span class="fc" id="L107">        return list;</span>
+    }
+
+    /**
+     * Return query results as list of Maps. {@code Connection} is closed
+     * automatically.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return {@code List} of Maps containing field name/value pair.
+     */
+    @Override
+    public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
+            final Object[] params) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L122">            log.debug(String.format(&quot;selectMapList: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L125">        List&lt;Map&lt;String, Object&gt;&gt; list = null;</span>
+        try {
+<span class="fc" id="L127">            list = template.query(sql, new MapListHandler(),</span>
+                    params);
+<span class="nc" id="L129">        } catch (SQLException e) {</span>
+<span class="nc" id="L130">            throw new DbAccessException(String.format(</span>
+                    &quot;selectMapList: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">        return list;</span>
+    }
+
+    /**
+     * Executes the given INSERT, UPDATE, or DELETE SQL statement with parameter
+     * array. {@code Connection} is closed automatically.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated.
+     */
+    @Override
+    public final int update(final String sql, final Object[] params) {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L148">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
+                    asList(params)));
+        }
+<span class="fc" id="L151">        int rows = -1;</span>
+        try {
+<span class="fc" id="L153">            rows = template.update(sql, params);</span>
+<span class="fc" id="L154">        } catch (SQLException e) {</span>
+<span class="fc" id="L155">            throw new DbAccessException(String.format(</span>
+                    &quot;update: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">        return rows;</span>
+    }
+
+    /**
+     * Executes the given INSERT statement with parameter array and returns auto
+     * generate key. JDBC driver needs to support RETURN_GENERATED_KEYS.
+     * {@code Connection} is closed automatically.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Field name/value pairs of keys.
+     */
+    @Override
+    public final Map&lt;String, Object&gt; updateReturnKeys(final String sql,
+            final Object[] params) {
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L175">            log.debug(String.format(&quot;updateReturnKeys: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L178">        Map&lt;String, Object&gt; keys = null;</span>
+<span class="fc" id="L179">        Connection connection = null; //NOPMD, DbUtils uses closeQuietly</span>
+<span class="fc" id="L180">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L181">        ResultSet resultSet = null; //NOPMD, DbUtils uses closeQuietly</span>
+        try {
+            // Get Connection from QueryRunner DataSource
+<span class="fc" id="L184">            connection = template.getDataSource().getConnection();</span>
+<span class="fc" id="L185">            preparedStatement = connection.prepareStatement(sql,</span>
+                    Statement.RETURN_GENERATED_KEYS);
+            // Fill parameters
+<span class="fc" id="L188">            template.fillStatement(preparedStatement, params);</span>
+<span class="fc" id="L189">            preparedStatement.executeUpdate();</span>
+            // Get keys as ResultSet
+<span class="fc" id="L191">            resultSet = preparedStatement.getGeneratedKeys();</span>
+            // Get generated keys as Object array
+<span class="fc" id="L193">            keys = new MapHandler().handle(resultSet);</span>
+<span class="nc" id="L194">        } catch (SQLException e) {</span>
+<span class="nc" id="L195">            throw new DbAccessException(String.format(</span>
+                    &quot;updateReturnKeys: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+        } finally {
+<span class="pc" id="L199">            DbUtils.closeQuietly(resultSet);</span>
+<span class="pc" id="L200">            DbUtils.closeQuietly(preparedStatement);</span>
+<span class="pc" id="L201">            DbUtils.closeQuietly(connection);</span>
+<span class="fc" id="L202">        }</span>
+<span class="fc" id="L203">        return keys;</span>
+    }
+
+    /**
+     * Executes the given INSERT, UPDATE, or DELETE SQL statement with array of
+     * parameter arrays.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated array.
+     */
+    @Override
+    public final int[] batch(final String sql, final Object[][] params) {
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L217">            log.debug(String.format(&quot;batch: sql=%s&quot;, sql));</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            for (Object[] param : params) {</span>
+<span class="nc" id="L219">                log.debug(</span>
+                        String.format(&quot;batch: params=%s&quot;,
+                        Arrays.asList(param)));
+            }
+        }
+<span class="fc" id="L224">        int[] rows = null;</span>
+        try {
+<span class="fc" id="L226">            rows = template.batch(sql, params);</span>
+<span class="nc" id="L227">        } catch (SQLException e) {</span>
+<span class="nc" id="L228">            throw new DbAccessException(String.format(</span>
+                    &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L231">        }</span>
+<span class="fc" id="L232">        return rows;</span>
+    }
+
+    /**
+     * Close connection quietly.
+     */
+    @Override
+    public final void cleanUp() {
+        // Nothing to do here since all methods clean up resources after each
+        // operation.
+<span class="fc" id="L242">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>

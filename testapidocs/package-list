@@ -1,0 +1,5 @@
+com.codeferm.dbaccess
+com.codeferm.dbaccess.atomikos
+com.codeferm.dbaccess.dbcp
+com.codeferm.dbaccess.dto
+com.codeferm.dbaccess.transaction

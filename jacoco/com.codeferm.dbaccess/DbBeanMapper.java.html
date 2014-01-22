@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DbBeanMapper.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess</a> &gt; <span class="el_source">DbBeanMapper.java</span></div><h1>DbBeanMapper.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on November 27, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess;
+
+import java.beans.IntrospectionException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Abstract class adding simple bean mapping from database field names with
+ * underscore to camelCase bean properties.
+ *
+ * @see com.codeferm.dbaccess.DbAccess
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+<span class="fc" id="L33">public abstract class DbBeanMapper extends DbAccess { //NOPMD, really, I have to call it AbstractXXX, screw that</span>
+
+    /**
+     * Logger.
+     */
+    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+<span class="fc" id="L39">    private static final Logger log =</span>
+            LoggerFactory.getLogger(DbBeanMapper.class);  //NOPMD
+    //CHECKSTYLE:ON    
+
+    /**
+     * Convert bean property names from camelCase to underscore and return
+     * mapping. This way mapping only occurs one time for the entire
+     * {@code ResultSet}.
+     *
+     * @param fields {@code Array} containing bean field names
+     * @return {@code Map} of bean to database field names
+     */
+    public final Map&lt;String, String&gt; fromCamelCase(final Field[] fields) {
+<span class="fc" id="L52">        final Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L53">        String[] splitArr = null;</span>
+<span class="fc" id="L54">        StringBuilder fieldName = null;</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (Field field : fields) {</span>
+            // Split words based on capital letters
+<span class="fc" id="L57">            splitArr = field.getName().split(&quot;(?=\\p{Upper})&quot;);</span>
+<span class="fc" id="L58">            fieldName = new StringBuilder(); //NOPMD OK to create new StringBuilder in loop</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            for (int i = 0; i &lt; splitArr.length; i += 1) {</span>
+<span class="fc" id="L60">                fieldName.append(splitArr[i]);</span>
+                // Add underscore if not last word
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                if (i &lt; splitArr.length - 1) {</span>
+<span class="fc" id="L63">                    fieldName.append(&quot;_&quot;);</span>
+                }
+                // Field name to database field name mapping
+<span class="fc" id="L66">                map.put(field.getName(), fieldName.toString());</span>
+            }
+        }
+<span class="fc" id="L69">        return map;</span>
+    }
+
+    /**
+     * Get write method of each property and store in Map by name.
+     *
+     * @param fields {@code Array} containing bean field names
+     * @param clazz {@code Class} of bean
+     * @return {@code Map} of bean write methods
+     */
+    public final Map&lt;String, Method&gt; getWriteMethods(final Field[] fields,
+            final Class clazz) {
+<span class="fc" id="L81">        final Map&lt;String, Method&gt; map = new HashMap&lt;String, Method&gt;();</span>
+        try {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            for (Field field : fields) {</span>
+                // Ignore synthetic classes or dynamic proxies.
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                if (!field.isSynthetic()) {</span>
+<span class="fc" id="L86">                    PropertyDescriptor propertyDescriptor =</span>
+                            new PropertyDescriptor(field.getName(), clazz);  //NOPMD OK to create new PropertyDescriptor in loop
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">                    if (propertyDescriptor != null) {</span>
+<span class="fc" id="L89">                        map.put(field.getName(), propertyDescriptor.</span>
+                                getWriteMethod());
+                    }
+                }
+            }
+<span class="nc" id="L94">        } catch (IntrospectionException e) {</span>
+<span class="nc" id="L95">            throw new DbAccessException(e);</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">        return map;</span>
+    }
+
+    /**
+     * Return list of beans mapped from {@code ResultSet}.
+     *
+     * @param &lt;T&gt; Type of beans
+     * @param resultSet {@code ResultSet} to process
+     * @param clazz {@code Class} of bean
+     * @return {@code List} of {@code &lt;T&gt;} type beans
+     */
+    public final &lt;T&gt; List&lt;T&gt; createObjects(final ResultSet resultSet,
+            final Class clazz) {
+<span class="fc" id="L110">        final List&lt;T&gt; list = new ArrayList&lt;T&gt;();</span>
+        // Get bean fields
+<span class="fc" id="L112">        final Field[] fields = clazz.getDeclaredFields();</span>
+        // Get bean to database field name mappings
+<span class="fc" id="L114">        final Map&lt;String, String&gt; dbMap = fromCamelCase(fields);</span>
+        // Get bean write methods
+<span class="fc" id="L116">        final Map&lt;String, Method&gt; beanMap = getWriteMethods(fields, clazz);</span>
+        try {
+            // Process ResultSet
+<span class="fc bfc" id="L119" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+                // New bean
+<span class="fc" id="L121">                final T instance = (T) clazz.newInstance();</span>
+                // Map ResultSet to bean properties
+<span class="fc bfc" id="L123" title="All 2 branches covered.">                for (Field field : fields) {</span>
+                    // Ignore synthetic classes or dynamic proxies.
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                    if (!field.isSynthetic()) {</span>
+<span class="fc" id="L126">                        beanMap.get(field.getName()).invoke(instance, resultSet.</span>
+                                getObject(dbMap.get(field.getName())));
+                    }
+                }
+<span class="fc" id="L130">                list.add(instance);</span>
+<span class="fc" id="L131">            }</span>
+<span class="nc" id="L132">        } catch (SQLException e) {</span>
+<span class="nc" id="L133">            throw new DbAccessException(e);</span>
+<span class="nc" id="L134">        } catch (InvocationTargetException e) {</span>
+<span class="nc" id="L135">            throw new DbAccessException(e);</span>
+<span class="nc" id="L136">        } catch (IllegalAccessException e) {</span>
+<span class="nc" id="L137">            throw new DbAccessException(e);</span>
+<span class="nc" id="L138">        } catch (InstantiationException e) {</span>
+<span class="nc" id="L139">            throw new DbAccessException(e);</span>
+<span class="fc" id="L140">        }</span>
+<span class="fc" id="L141">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>

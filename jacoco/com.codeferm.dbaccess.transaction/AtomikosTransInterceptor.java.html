@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AtomikosTransInterceptor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess.transaction</a> &gt; <span class="el_source">AtomikosTransInterceptor.java</span></div><h1>AtomikosTransInterceptor.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on December 24, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess.transaction;
+
+import com.atomikos.icatch.jta.UserTransactionImp;
+import com.codeferm.dbaccess.DbAccess;
+import java.lang.reflect.Method;
+import javax.transaction.UserTransaction;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Intercept methods annotated with
+ * {@link com.codeferm.dbaccess.transaction.Transaction} and commit on success or
+ * rollback if {@link java.lang.Exception} is thrown. The first method parameter
+ * must be an instance of {@link com.codeferm.dbaccess.DbAccess} in order for this
+ * class to close the connection prior to commit or rollback operation as
+ * required by Atomikos.
+ * &lt;p&gt;
+ * &lt;p&gt;Currently this class supports Geronimo JTA for
+ * {@link javax.transaction.UserTransaction} and Atomikos
+ * {@code UserTransactionImp} for the implementation. Other JTA
+ * implementations could be leveraged as well.
+ * &lt;p&gt;
+ * &lt;p&gt;Limitations
+ * &lt;p&gt;
+ * Behind the scenes, method interception is implemented by generating bytecode
+ * at runtime. Guice dynamically creates a subclass that applies interceptors by
+ * overriding methods. If you are on a platform that doesn't support bytecode
+ * generation (such as Android), you should use Guice without AOP support.
+ * &lt;p&gt;
+ * This approach imposes limits on what classes and methods can be intercepted:
+ * &lt;p&gt;
+ * &lt;p&gt;Classes must be public or package-private.
+ * Classes must be non-final
+ * Methods must be public, package-private or protected
+ * Methods must be non-final
+ * Instances must be created by Guice by an @Inject-annotated or no-argument
+ * constructor
+ * &lt;p&gt;
+ * &lt;p&gt;It is not possible to use method interception on instances that aren't
+ * constructed by Guice.
+ *
+ * @see com.codeferm.dbaccess.transaction.Transaction
+ * @see com.codeferm.dbaccess.transaction.AtomikosTransModule
+ * @see com.codeferm.dbaccess.transaction.TransactionFactory
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+<span class="fc" id="L58">public final class AtomikosTransInterceptor implements MethodInterceptor {</span>
+
+    /**
+     * Logger.
+     */
+    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+<span class="fc" id="L64">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
+            AtomikosTransInterceptor.class);
+    //CHECKSTYLE:ON    
+
+    /**
+     * Invoke method wrapped in a transaction.
+     *
+     * @param invocation Method invocation.
+     * @return Invoked Object.
+     * @throws Throwable Possible exception.
+     */
+    @Override
+    public Object invoke(final MethodInvocation invocation) throws Throwable {
+<span class="fc" id="L77">        final Method method = invocation.getMethod();</span>
+<span class="fc" id="L78">        final Transaction annotation = method.getAnnotation(Transaction.class);</span>
+<span class="fc" id="L79">        Object object = null;</span>
+        // Make sure interceptor was called for a @Transaction method
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (annotation == null) {</span>
+            // Not a Transaction annotated method, so proceed without change
+<span class="nc" id="L83">            object = invocation.proceed();</span>
+
+        } else {
+            // First parameter must be DbAccess object
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">            if (invocation.getArguments().length == 0</span>
+                    || !(invocation.getArguments()[0] instanceof DbAccess)) {
+<span class="nc" id="L89">                throw new IllegalArgumentException(String.format(</span>
+                        &quot;First parameter must be a DbAccess instance, not %s&quot;,
+                        method.getName()));
+            }
+            // Get DbAccess object
+<span class="fc" id="L94">            final DbAccess dbAccess = (DbAccess) invocation.getArguments()[0];</span>
+<span class="fc" id="L95">            final UserTransaction userTransaction = new UserTransactionImp();</span>
+            // Begin transaction
+<span class="fc" id="L97">            userTransaction.begin();</span>
+            try {
+                // Proceed with the original method's invocation
+<span class="fc" id="L100">                object = invocation.proceed();</span>
+                // Close connection
+<span class="fc" id="L102">                dbAccess.cleanUp();</span>
+                // Commit if successful
+<span class="fc" id="L104">                userTransaction.commit();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L106">                    log.debug(String.format(</span>
+                            &quot;Committed transaction for method %s&quot;,
+                            invocation.getMethod().getName()));
+                }
+<span class="fc" id="L110">            } catch (Exception e) {</span>
+                // Rollback on Exception
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L113">                    log.debug(String.format(</span>
+                            &quot;Rollback transaction for method %s&quot;,
+                            invocation.getMethod().getName()));
+                }
+                // Close connection
+<span class="fc" id="L118">                dbAccess.cleanUp();</span>
+                // Rollback on error
+<span class="fc" id="L120">                userTransaction.rollback();</span>
+<span class="fc" id="L121">                throw e;</span>
+<span class="fc" id="L122">            }</span>
+        }
+<span class="fc" id="L124">        return object;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>

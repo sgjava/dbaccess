@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DbQueryRunnerConn.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess</a> &gt; <span class="el_source">DbQueryRunnerConn.java</span></div><h1>DbQueryRunnerConn.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on November 27, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import javax.sql.DataSource;
+import org.apache.commons.dbutils.BasicRowProcessor;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * DBUtils QueryRunner extension of {@link com.codeferm.dbaccess.DbAccess} abstract
+ * class that uses a {@code Connection} instead of a {@code DataSource}.
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+public class DbQueryRunnerConn extends DbAccess {
+
+    /**
+     * Logger.
+     */
+    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+<span class="fc" id="L41">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
+            DbQueryRunnerConn.class);
+    //CHECKSTYLE:ON
+    /**
+     * Implementation class.
+     */
+<span class="pc" id="L47">    private transient QueryRunner template = null;</span>
+    /**
+     * This allows the use of the same connection across multiple
+     * {@code QueryRunner} calls. The calling code should manage the connection.
+     * This is only a reference because {@code QueryRunner} methods that use a
+     * {@code DataSource} close connection after each operation.
+     */
+<span class="pc" id="L54">    private transient Connection connection = null;</span>
+
+    /**
+     * Construct new {@code QueryRunner} with {@code DataSource}.
+     *
+     * @param dataSource Database data source.
+     * @throws SQLException Possible exception.
+     */
+    public DbQueryRunnerConn(final DataSource dataSource) throws SQLException {
+<span class="fc" id="L63">        super();</span>
+<span class="fc" id="L64">        this.connection = dataSource.getConnection();</span>
+<span class="fc" id="L65">        this.template = new QueryRunner();</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Construct new {@code QueryRunner} and persist connection in template in
+     * order to use across multiple calls.
+     *
+     * @param connection Database connection.
+     */
+    public DbQueryRunnerConn(final Connection connection) {
+<span class="nc" id="L75">        super();</span>
+<span class="nc" id="L76">        this.connection = connection;</span>
+<span class="nc" id="L77">        this.template = new QueryRunner();</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Get {@code Connection}.
+     *
+     * @return Connection Database connection.
+     */
+    public final Connection getConnection() {
+<span class="nc" id="L86">        return connection;</span>
+    }
+
+    /**
+     * Set {@code Connection}.
+     *
+     * @param connection Database connection.
+     */
+    public final void setConnection(final Connection connection) {
+<span class="nc" id="L95">        this.connection = connection;</span>
+<span class="nc" id="L96">    }</span>
+
+    /**
+     * Get {@code QueryRunner} object.
+     *
+     * @return QueryRunner template.
+     */
+    public final QueryRunner getTemplate() {
+<span class="nc" id="L104">        return template;</span>
+    }
+
+    /**
+     * Set {@code QueryRunner} object.
+     *
+     * @param template QueryRunner template.
+     */
+    public final void setTemplate(final QueryRunner template) {
+<span class="nc" id="L113">        this.template = template;</span>
+<span class="nc" id="L114">    }</span>
+
+    /**
+     * Return query results as list of beans. DBUtils doesn't handle underscore
+     * to camelCase conversions for you. A custom DbBeanProcessor is implemented
+     * to handle underscores properly. Connection is not closed.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz Class to map results to.
+     * @return {@code List} of {@code &lt;T&gt;} typed objects.
+     */
+    @Override
+    public final &lt;T&gt; List&lt;T&gt; selectList(final String sql,
+            final Object[] params, final Class clazz) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L131">            log.debug(String.format(&quot;selectBeanList: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L134">        List&lt;T&gt; list = null;</span>
+        try {
+<span class="fc" id="L136">            list = (List&lt;T&gt;) template.query(connection, sql,</span>
+                    new BeanListHandler(clazz,
+                    new BasicRowProcessor(new DbBeanProcessor())), params);
+<span class="nc" id="L139">        } catch (SQLException e) {</span>
+<span class="nc" id="L140">            throw new DbAccessException(String.format(</span>
+                    &quot;selectBeanList: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L143">        }</span>
+<span class="fc" id="L144">        return list;</span>
+    }
+
+    /**
+     * Return query results as list of Maps. {@code Connection} is not closed.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return {@code List} of Maps containing field name/value pair.
+     */
+    @Override
+    public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
+            final Object[] params) {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L158">            log.debug(String.format(&quot;selectMapList: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L161">        List&lt;Map&lt;String, Object&gt;&gt; list = null;</span>
+        try {
+<span class="fc" id="L163">            list = template.query(connection, sql, new MapListHandler(),</span>
+                    params);
+<span class="nc" id="L165">        } catch (SQLException e) {</span>
+<span class="nc" id="L166">            throw new DbAccessException(String.format(</span>
+                    &quot;selectMapList: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L169">        }</span>
+<span class="fc" id="L170">        return list;</span>
+    }
+
+    /**
+     * Executes the given INSERT, UPDATE, or DELETE SQL statement with parameter
+     * array. {@code Connection} is not closed.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated.
+     */
+    @Override
+    public final int update(final String sql, final Object[] params) {
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L184">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
+                    asList(params)));
+        }
+<span class="fc" id="L187">        int rows = -1;</span>
+        try {
+<span class="fc" id="L189">            rows = template.update(connection, sql, params);</span>
+<span class="fc" id="L190">        } catch (SQLException e) {</span>
+<span class="fc" id="L191">            throw new DbAccessException(String.format(</span>
+                    &quot;update: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L194">        }</span>
+<span class="fc" id="L195">        return rows;</span>
+    }
+
+    /**
+     * Executes the given INSERT statement with parameter array and returns auto
+     * generate key. JDBC driver needs to support RETURN_GENERATED_KEYS.
+     * Connection is not closed.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Field name/value pairs of keys.
+     */
+    @Override
+    public final Map&lt;String, Object&gt; updateReturnKeys(final String sql,
+            final Object[] params) {
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L211">            log.debug(String.format(&quot;updateReturnKeys: sql=%s, params=%s&quot;, sql,</span>
+                    Arrays.asList(params)));
+        }
+<span class="fc" id="L214">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L215">        ResultSet resultSet = null; //NOPMD, DbUtils uses closeQuietly</span>
+<span class="fc" id="L216">        Map&lt;String, Object&gt; keys = null;</span>
+        try {
+            // Connection from template
+<span class="fc" id="L219">            preparedStatement = connection.prepareStatement(sql,</span>
+                    Statement.RETURN_GENERATED_KEYS);
+            // Fill parameters
+<span class="fc" id="L222">            template.fillStatement(preparedStatement, params);</span>
+<span class="fc" id="L223">            preparedStatement.executeUpdate();</span>
+            // Get keys as ResultSet
+<span class="fc" id="L225">            resultSet = preparedStatement.getGeneratedKeys();</span>
+            // Get generated keys as Object array
+<span class="fc" id="L227">            keys = new MapHandler().handle(resultSet);</span>
+<span class="nc" id="L228">        } catch (SQLException e) {</span>
+<span class="nc" id="L229">            throw new DbAccessException(String.format(</span>
+                    &quot;updateReturnKeys: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+        } finally {
+<span class="pc" id="L233">            DbUtils.closeQuietly(resultSet);</span>
+<span class="pc" id="L234">            DbUtils.closeQuietly(preparedStatement);</span>
+<span class="fc" id="L235">        }</span>
+<span class="fc" id="L236">        return keys;</span>
+    }
+
+    /**
+     * Executes the given INSERT, UPDATE, or DELETE SQL statement with array of
+     * parameter arrays. {@code Connection} is not closed.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated array.
+     */
+    @Override
+    public final int[] batch(final String sql, final Object[][] params) {
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L250">            log.debug(String.format(&quot;batch: sql=%s&quot;, sql));</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">            for (Object[] param : params) {</span>
+<span class="nc" id="L252">                log.debug(</span>
+                        String.format(&quot;batch: params=%s&quot;,
+                        Arrays.asList(param)));
+            }
+        }
+<span class="fc" id="L257">        int[] rows = null;</span>
+        try {
+<span class="fc" id="L259">            rows = template.batch(connection, sql, params);</span>
+<span class="nc" id="L260">        } catch (SQLException e) {</span>
+<span class="nc" id="L261">            throw new DbAccessException(String.format(</span>
+                    &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
+                    params)), e);
+<span class="fc" id="L264">        }</span>
+<span class="fc" id="L265">        return rows;</span>
+    }
+
+    /**
+     * Close connection quietly.
+     */
+    @Override
+    public final void cleanUp() {
+<span class="fc" id="L273">        DbUtils.closeQuietly(connection);</span>
+<span class="fc" id="L274">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>

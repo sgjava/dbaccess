@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DbAccess.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess</a> &gt; <span class="el_source">DbAccess.java</span></div><h1>DbAccess.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on November 27, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess;
+
+import java.util.List;
+import java.util.Map;
+import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
+
+/**
+ * Abstract class to simplify JDBC database access across all JDBC wrapper
+ * implementations. The goal is to have a common database API without coding to
+ * a specific implementation such as Apache DBUtils or Spring JdbcTemplate. This
+ * allows you to swap out the implementation as needed without impacting
+ * dependant code. All implementations support named parameters as well.
+ * Transactional support can be added using the
+ * {@link com.codeferm.dbaccess.transaction.Transaction} annotation.
+ *
+ * Implementations should automatically handle database field names with
+ * underscores and map them to camelCase bean fields.
+ *
+ * @see com.codeferm.dbaccess.DbBeanMapper
+ * @see com.codeferm.dbaccess.DbJdbcConn
+ * @see com.codeferm.dbaccess.DbJdbcDs
+ * @see com.codeferm.dbaccess.DbJdbcTemplate
+ * @see com.codeferm.dbaccess.DbPersist
+ * @see com.codeferm.dbaccess.DbQueryRunnerConn
+ * @see com.codeferm.dbaccess.DbQueryRunnerDs
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+<span class="fc" id="L37">public abstract class DbAccess {  //NOPMD, this is an API , so it's OK to have &quot;too many&quot; methods</span>
+
+    /**
+     * Return SQL with ? type parameter markers in place of named parameters.
+     *
+     * @param sql SQL with named parameters.
+     * @return SQL with ? markers.
+     */
+    public final String namedParamsToMarkers(final String sql) {
+<span class="fc" id="L46">        return NamedParameterUtils.parseSqlStatementIntoString(sql);</span>
+    }
+
+    /**
+     * Return SQL with ? type parameter markers in place of named parameters.
+     *
+     * @param sql SQL with named parameters.
+     * @param params Named parameters.
+     * @return SQL with ? markers.
+     */
+    public final Object[] paramMapToArray(final String sql,
+            final Map&lt;String, Object&gt; params) {
+        // Params are in the proper order for the SQL statement
+<span class="fc" id="L59">        return NamedParameterUtils.buildValueArray(sql, params);</span>
+    }
+
+    /**
+     * Return {@code Object[][]} from named parameters in
+     * {@code List&lt;Map&lt;String, Object&gt;&gt;}. This is handy for batch
+     * operations.
+     *
+     * @param sql SQL to map list of named parameters to ? markers.
+     * @param params List of parameter maps.
+     * @return Array of Object arrays.
+     */
+    public final Object[][] mapListToArray(final String sql,
+            final List&lt;Map&lt;String, Object&gt;&gt; params) {
+<span class="fc" id="L73">        final Object[][] batchParams = new Object[params.size()][];</span>
+<span class="fc" id="L74">        int i = 0; //NOPMD</span>
+        // Convert list of List&lt;Map&lt;String, Object&gt;&gt; to Object[][]
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (Map&lt;String, Object&gt; param : params) {</span>
+            // Make sure parameters are in correct sequence
+<span class="fc" id="L78">            batchParams[i++] = paramMapToArray(sql, param);</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">        return batchParams;</span>
+    }
+
+    /**
+     * Return parameterized query results as list of beans.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz Class to map results to.
+     * @return List of &lt;T&gt; typed objects.
+     */
+    public abstract &lt;T&gt; List&lt;T&gt; selectList(final String sql,
+            final Object[] params, final Class clazz);
+
+    /**
+     * Return query results as list of beans.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param clazz Class to map results to.
+     * @return List of &lt;T&gt; typed objects.
+     */
+    public final &lt;T&gt; List&lt;T&gt; selectList(final String sql, final Class clazz) {
+<span class="nc" id="L104">        return selectList(sql, new Object[]{}, clazz);</span>
+    }
+
+    /**
+     * Return parameterized query results as a single bean.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz Class to map results to.
+     * @return &lt;T&gt; typed object.
+     */
+    public final &lt;T&gt; T select(final String sql, final Object[] params,
+            final Class clazz) {
+<span class="fc" id="L118">        final List&lt;T&gt; list = selectList(sql, params, clazz);</span>
+<span class="fc" id="L119">        T object = null;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="fc" id="L122">            object = list.get(0);</span>
+        }
+<span class="fc" id="L124">        return object;</span>
+    }
+
+    /**
+     * Return query results as a single bean.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param clazz Class to map results to.
+     * @return &lt;T&gt; typed object.
+     */
+    public final &lt;T&gt; T select(final String sql, final Class clazz) {
+<span class="nc" id="L136">        final List&lt;T&gt; list = selectList(sql, new Object[]{}, clazz);</span>
+<span class="nc" id="L137">        T object = null;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="nc" id="L140">            object = list.get(0);</span>
+        }
+<span class="nc" id="L142">        return object;</span>
+    }
+
+    /**
+     * Return parameterized query results as list of beans. Named parameters
+     * are converted to parameter markers.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz Class to map results to.
+     * @return List of &lt;T&gt; typed objects.
+     */
+    public final &lt;T&gt; List&lt;T&gt; selectList(final String sql,
+            final Map&lt;String, Object&gt; params, final Class clazz) {
+<span class="fc" id="L157">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
+                params), clazz);
+    }
+
+    /**
+     * Return parameterized query results as a single bean. Named parameters
+     * are converted to parameter markers.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param clazz Class to map results to.
+     * @return &lt;T&gt; typed object.
+     */
+    public final &lt;T&gt; T select(final String sql, final Map&lt;String, Object&gt; params,
+            final Class clazz) {
+<span class="nc" id="L173">        final List&lt;T&gt; list = selectList(sql, params, clazz);</span>
+<span class="nc" id="L174">        T object = null;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="nc" id="L177">            object = list.get(0);</span>
+        }
+<span class="nc" id="L179">        return object;</span>
+    }
+
+    /**
+     * Return parameterized query results as list of maps.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return List of Maps containing field name/value pair.
+     */
+    public abstract List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
+            final Object[] params);
+
+    /**
+     * Return query results as list of maps.
+     *
+     * @param sql SQL statement to execute.
+     * @return List of Maps containing field name/value pair.
+     */
+    public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql) {
+<span class="fc" id="L199">        return selectList(sql, new Object[]{});</span>
+    }
+
+    /**
+     * Return parameterized query results as a single Map.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return List of Maps containing field name/value pair.
+     */
+    public final Map&lt;String, Object&gt; select(final String sql,
+            final Object[] params) {
+<span class="fc" id="L211">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, params);</span>
+<span class="fc" id="L212">        Map&lt;String, Object&gt; map = null;</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="fc" id="L215">            map = list.get(0);</span>
+        }
+<span class="fc" id="L217">        return map;</span>
+    }
+
+    /**
+     * Return query results as a single Map.
+     *
+     * @param sql SQL statement to execute.
+     * @return List of Maps containing field name/value pair.
+     */
+    public final Map&lt;String, Object&gt; select(final String sql) {
+<span class="fc" id="L227">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, new Object[]{});</span>
+<span class="fc" id="L228">        Map&lt;String, Object&gt; map = null;</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="fc" id="L231">            map = list.get(0);</span>
+        }
+<span class="fc" id="L233">        return map;</span>
+    }
+
+    /**
+     * Return parameterized query results as a single typed Object.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param fieldName Name of field to return.
+     * @return Object by field name.
+     */
+    public final &lt;T&gt; T select(final String sql, final Object[] params,
+            final String fieldName) {
+<span class="fc" id="L247">        T object = null;</span>
+<span class="fc" id="L248">        Map&lt;String, Object&gt; map = null;</span>
+<span class="fc" id="L249">        map = select(sql, params);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        if (map != null) {</span>
+            // Get first item in List
+<span class="fc" id="L252">            object = (T) map.get(fieldName);</span>
+        }
+<span class="fc" id="L254">        return object;</span>
+    }
+
+    /**
+     * Return parameterized query results as a single typed Object.
+     *
+     * @param &lt;T&gt; Type of object that the handler returns.
+     * @param sql SQL statement to execute.
+     * @param fieldName Name of field to return.
+     * @return Object by field name.
+     */
+    public final &lt;T&gt; T select(final String sql, final String fieldName) {
+<span class="fc" id="L266">        T object = null;</span>
+<span class="fc" id="L267">        Map&lt;String, Object&gt; map = null;</span>
+<span class="fc" id="L268">        map = select(sql, new Object[]{});</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        if (map != null) {</span>
+            // Get first item in List
+<span class="fc" id="L271">            object = (T) map.get(fieldName);</span>
+        }
+<span class="fc" id="L273">        return object;</span>
+    }
+
+    /**
+     * Return parameterized query results as list of maps. Named parameters
+     * are converted to parameter markers.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return List of Maps containing field name/value pair.
+     */
+    public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
+            final Map&lt;String, Object&gt; params) {
+<span class="fc" id="L286">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
+                params));
+    }
+
+    /**
+     * Return parameterized query results as a single Map. Named parameters are
+     * converted to parameter markers.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return List of Maps containing field name/value pair.
+     */
+    public final Map&lt;String, Object&gt; select(final String sql,
+            final Map&lt;String, Object&gt; params) {
+<span class="nc" id="L300">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(namedParamsToMarkers(</span>
+                sql),
+                paramMapToArray(sql, params));
+<span class="nc" id="L303">        Map&lt;String, Object&gt; map = null;</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+            // Get first item in List
+<span class="nc" id="L306">            map = list.get(0);</span>
+        }
+<span class="nc" id="L308">        return map;</span>
+    }
+
+    /**
+     * Executes parameterized INSERT, UPDATE, or DELETE SQL statement.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated.
+     */
+    public abstract int update(final String sql, final Object[] params);
+
+    /**
+     * Executes INSERT, UPDATE, or DELETE SQL statement.
+     *
+     * @param sql SQL statement to execute.
+     * @return Number of rows updated.
+     */
+    public final int update(final String sql) {
+<span class="nc" id="L327">        return update(sql, new Object[]{});</span>
+    }
+
+    /**
+     * Executes parameterized INSERT, UPDATE, or DELETE SQL statement. Named
+     * parameters are converted to parameter markers.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated.
+     */
+    public final int update(final String sql, final Map&lt;String, Object&gt; params) {
+<span class="fc" id="L339">        return update(namedParamsToMarkers(sql), paramMapToArray(sql, params));</span>
+    }
+
+    /**
+     * Executes parameterized INSERT statement and returns auto generated keys.
+     * JDBC driver needs to support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Field name/value pairs of keys.
+     */
+    public abstract Map&lt;String, Object&gt; updateReturnKeys(final String sql,
+            final Object[] params);
+
+    /**
+     * Executes INSERT statement and returns auto generated keys. JDBC driver
+     * needs to support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @return Field name/value pairs of keys.
+     */
+    public final Map&lt;String, Object&gt; updateReturnKeys(final String sql) {
+<span class="nc" id="L361">        return updateReturnKeys(sql, new Object[]{});</span>
+    }
+
+    /**
+     * Executes parameterized INSERT statement and returns auto generated keys.
+     * Named parameters are converted to parameter markers. JDBC driver needs to
+     * support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Field name/value pairs of keys.
+     */
+    public final Map&lt;String, Object&gt; updateReturnKeys(final String sql,
+            final Map&lt;String, Object&gt; params) {
+<span class="nc" id="L375">        return updateReturnKeys(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
+                params));
+    }
+
+    /**
+     * Executes INSERT statement and returns auto generated key by name. JDBC
+     * driver needs to support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @param keyName Key name to return as int.
+     * @return key value of key.
+     */
+    public final int updateReturnKey(final String sql, final String keyName) {
+<span class="nc" id="L388">        return Integer.parseInt(updateReturnKeys(sql, new Object[]{}).get(</span>
+                keyName).toString());
+    }
+
+    /**
+     * Executes parameterized INSERT statement and returns auto generated key by
+     * name. JDBC driver needs to support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param keyName Key name to return as int.
+     * @return key value of key.
+     */
+    public final int updateReturnKey(final String sql, final Object[] params,
+            final String keyName) {
+<span class="fc" id="L403">        return Integer.parseInt(updateReturnKeys(sql, params).get(keyName).</span>
+                toString());
+    }
+
+    /**
+     * Executes parameterized INSERT statement and returns auto generated key by
+     * name. Named parameters are converted to parameter markers. JDBC driver
+     * needs to support RETURN_GENERATED_KEYS.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @param keyName Key name to return as int.
+     * @return key value of key.
+     */
+    public final int updateReturnKey(final String sql,
+            final Map&lt;String, Object&gt; params, final String keyName) {
+<span class="fc" id="L419">        return Integer.parseInt(updateReturnKeys(namedParamsToMarkers(sql),</span>
+                paramMapToArray(sql, params)).get(keyName).toString());
+    }
+
+    /**
+     * Executes INSERT, UPDATE, or DELETE SQL statement with batch parameters.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated array.
+     */
+    public abstract int[] batch(final String sql, final Object[][] params);
+
+    /**
+     * Executes INSERT, UPDATE, or DELETE SQL statement with batch parameters.
+     * Named parameters are converted to parameter markers.
+     *
+     * @param sql SQL statement to execute.
+     * @param params Initialize the PreparedStatement's IN parameters.
+     * @return Number of rows updated array.
+     */
+    public final int[] batch(final String sql,
+            final List&lt;Map&lt;String, Object&gt;&gt; params) {
+<span class="fc" id="L442">        return batch(namedParamsToMarkers(sql), mapListToArray(sql, params));</span>
+    }
+
+    /**
+     * Clean up resources such as open Connections.
+     */
+    public abstract void cleanUp();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>

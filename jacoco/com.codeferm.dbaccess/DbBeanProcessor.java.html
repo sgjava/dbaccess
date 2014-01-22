@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DbBeanProcessor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DB Access</a> &gt; <a href="index.source.html" class="el_package">com.codeferm.dbaccess</a> &gt; <span class="el_source">DbBeanProcessor.java</span></div><h1>DbBeanProcessor.java</h1><pre class="source lang-java linenums">/*
+ * Copyright (c) Steven P. Goldsmith. All rights reserved.
+ *
+ * Created by Steven P. Goldsmith on November 27, 2011
+ * sgoldsmith@com.codeferm
+ */
+package com.codeferm.dbaccess;
+
+import java.beans.PropertyDescriptor;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Arrays;
+import org.apache.commons.dbutils.BeanProcessor;
+
+/**
+ * DbUtils {@code BeanProcessor} to convert underscore &quot;_&quot; database field
+ * names to camelCase.
+ *
+ *
+ * @see com.codeferm.dbaccess.DbQueryRunnerConn
+ * @see com.codeferm.dbaccess.DbQueryRunnerDs
+ *
+ * @author sgoldsmith
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+<span class="fc" id="L27">public class DbBeanProcessor extends BeanProcessor {</span>
+
+    /**
+     * Map ResultSet to bean properties.
+     *
+     * @param rsmd ResultSet to map.
+     * @param props Bean property descriptor.
+     * @return Array mapping field to bean.
+     * @throws SQLException Possible exception.
+     */
+    @Override
+    protected final int[] mapColumnsToProperties(final ResultSetMetaData rsmd,
+            final PropertyDescriptor[] props) throws SQLException {
+<span class="fc" id="L40">        final int cols = rsmd.getColumnCount();</span>
+<span class="fc" id="L41">        final int[] columnToProperty = new int[cols + 1];</span>
+<span class="fc" id="L42">        Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (int propIndex = 0; propIndex &lt; props.length; propIndex++) {</span>
+<span class="fc" id="L44">            final String propName = props[propIndex].getName();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (int col = 1; col &lt;= cols; col++) {</span>
+<span class="fc" id="L46">                final String columnName = this.toCamelCase(rsmd.getColumnName(</span>
+                        col));
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(propName)) {</span>
+<span class="fc" id="L49">                    columnToProperty[col] = propIndex;</span>
+<span class="fc" id="L50">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L54">        return columnToProperty;</span>
+    }
+
+    /**
+     * Convert string with '_' to camelCase.
+     *
+     * @param underscoreStr Input string.
+     * @return camelCase String.
+     */
+    private String toCamelCase(final String underscoreStr) {
+<span class="fc" id="L64">        final StringBuffer sbStr = new StringBuffer();</span>
+<span class="fc" id="L65">        final String[] str = underscoreStr.split(&quot;_&quot;);</span>
+<span class="fc" id="L66">        boolean firstTime = true;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (String temp : str) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (firstTime) {</span>
+<span class="fc" id="L69">                sbStr.append(temp.toLowerCase()); //NOPMD, Locale.getDefault() is</span>
+                // used
+<span class="fc" id="L71">                firstTime = false;</span>
+            } else {
+<span class="fc" id="L73">                sbStr.append(Character.toUpperCase(temp.charAt(0)));</span>
+<span class="fc" id="L74">                sbStr.append(temp.substring(1).toLowerCase());</span>
+            }
+        }
+<span class="fc" id="L77">        return sbStr.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.5.20140109-1605</span></div></body></html>
