@@ -37,3 +37,5 @@ single key value with updateReturnKey.
 * [Source Xref](http://sgjava.github.io/dbaccess/xref)
 * [Surefire Report](http://sgjava.github.io/dbaccess/surefire-report.html)
 * [Performance](http://sgjava.github.io/dbaccess/performance.html)
+
+![Package com.codeferm.dbaccess](http://sgjava.github.io/dbaccess/apidocs/com/codeferm/dbaccess/package-summary.png "Package com.codeferm.dbaccess")
