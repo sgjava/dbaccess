@@ -38,4 +38,10 @@ single key value with updateReturnKey.
 * [Surefire Report](http://sgjava.github.io/dbaccess/surefire-report.html)
 * [Performance](http://sgjava.github.io/dbaccess/performance.html)
 
+### Quick links
+
+DB Access is is divided into to two namespaces. One covers all the basic JDBC functionality and the other transactions.
+* The Common API and wrapped classes are in com.codeferm.dbaccess. Note that the DbAccess abstract class is the center of the universe.
 ![Package com.codeferm.dbaccess](http://sgjava.github.io/dbaccess/apidocs/com/codeferm/dbaccess/package-summary.png "Package com.codeferm.dbaccess")
+* The AOP/annotation based transaction classes are in com.codeferm.dbaccess.transaction.
+![Package com.codeferm.dbaccess.transaction](http://sgjava.github.io/dbaccess/apidocs/com/codeferm/dbaccess/transaction/package-summary.png "Package com.codeferm.dbaccess.transaction")
