@@ -107,7 +107,7 @@ sgoldsmith@codeferm.com
                     </includes>
                     <skipTests>${tests.skip}</skipTests>                   
                 </configuration>                    
-            </plugin>               
+            </plugin>
         </plugins>
     </build>
     

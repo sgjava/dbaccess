@@ -1,9 +1,9 @@
 ## DB Access
 
-DB Access is a database abstraction layer that prevents coding to a specific
-implementation such as Apache DBUtils or Spring JdbcTemplate. This allows you to
-swap out the implementation as needed without impacting dependant code. DB
-Access has the following features:
+[DB Access](http://sgjava.github.io/dbaccess) is a database abstraction layer
+that prevents coding to a specific implementation such as Apache DBUtils or
+Spring JdbcTemplate. This allows you to swap out the implementation as needed
+without impacting dependant code. DB Access has the following features:
 * Common API currently supporting Apache DbUtils (DataSource and Connection
 based), Spring JdbcTemplate, Persist and a home grown extension of the DbAccess
 abstract class (DataSource and Connection based). Implementations can be easily
