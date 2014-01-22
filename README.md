@@ -29,3 +29,11 @@ by simply selecting a different transaction module from TransactionFactory.
 * For JDBC drivers that support RETURN_GENERATED_KEYS all implementations
 automatically support returning keys with updateReturnKeys or returning a
 single key value with updateReturnKey.
+
+### Quick links
+
+* [Configure](http://sgjava.github.io/dbaccess/configure.html)
+* [JavaDocs](http://sgjava.github.io/dbaccess/apidocs)
+* [Source Xref](http://sgjava.github.io/dbaccess/xref)
+* [Surefire Report](http://sgjava.github.io/dbaccess/surefire-report.html)
+* [Performance](http://sgjava.github.io/dbaccess/performance.html)
