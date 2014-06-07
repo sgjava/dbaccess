@@ -6,8 +6,6 @@
  */
 package com.codeferm.dbaccess.transaction;
 
-import com.codeferm.dbaccess.transaction.AtomikosTransModule;
-import com.codeferm.dbaccess.transaction.TransactionFactory;
 import com.codeferm.dbaccess.DbJdbcConn;
 import com.codeferm.dbaccess.atomikos.BaseAtomikosTest;
 import org.junit.Test;
@@ -18,7 +16,7 @@ import org.junit.Test;
  * {@link com.codeferm.dbaccess.DbAccess}. Test records are removed from table.
  *
  * @see com.codeferm.dbaccess.transaction.TransactionTest
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -40,21 +38,23 @@ public final class DbJdbcConnTest extends BaseAtomikosTest {
         // accurate.
         TransactionTest test = TransactionFactory.createObject(
                 TransactionTest.class, AtomikosTransModule.class);
-        int id = test.commitRec(new DbJdbcConn(getDataSource()), getSqlMap().get(
-                "insert.testtable"));
+        int id = test.commitRec(new DbJdbcConn(getDataSource()), getSqlMap().
+                get(
+                        "insert.testtable"));
         test.verifyCommit(new DbJdbcConn(getDataSource()), getSqlMap().get(
                 "select.testtable.by.id"), getSqlMap().get(
-                "delete.testtable.by.id"), id);
+                        "delete.testtable.by.id"), id);
         long elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms", elapsedTime));
         log.info("commit DbJdbcConn");
         startTime = System.currentTimeMillis();
         for (int number = 1; number <= loops; number++) {
-            id = test.commitRec(new DbJdbcConn(getDataSource()), getSqlMap().get(
-                    "insert.testtable"));
+            id = test.commitRec(new DbJdbcConn(getDataSource()), getSqlMap().
+                    get(
+                            "insert.testtable"));
             test.verifyCommit(new DbJdbcConn(getDataSource()), getSqlMap().get(
                     "select.testtable.by.id"), getSqlMap().get(
-                    "delete.testtable.by.id"), id);
+                            "delete.testtable.by.id"), id);
         }
         elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms, loops: %d, average: %d ms",
@@ -83,9 +83,10 @@ public final class DbJdbcConnTest extends BaseAtomikosTest {
                     get("insert.testtable"));
         } catch (Throwable e) {
             // Verify rollback worked
-            test.verifyRollback(new DbJdbcConn(getDataSource()), getSqlMap().get(
-                    "select.testtable.by.id"), getSqlMap().get(
-                    "delete.testtable.by.id"), id);
+            test.verifyRollback(new DbJdbcConn(getDataSource()), getSqlMap().
+                    get(
+                            "select.testtable.by.id"), getSqlMap().get(
+                            "delete.testtable.by.id"), id);
         }
         long elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms", elapsedTime));
@@ -99,10 +100,11 @@ public final class DbJdbcConnTest extends BaseAtomikosTest {
                         get("insert.testtable"));
             } catch (Throwable e) {
                 // Verify rollback worked
-                test.verifyRollback(new DbJdbcConn(getDataSource()), getSqlMap().
+                test.verifyRollback(new DbJdbcConn(getDataSource()),
+                        getSqlMap().
                         get(
-                        "select.testtable.by.id"), getSqlMap().get(
-                        "delete.testtable.by.id"), id);
+                                "select.testtable.by.id"), getSqlMap().get(
+                                "delete.testtable.by.id"), id);
             }
         }
         elapsedTime = System.currentTimeMillis() - startTime;

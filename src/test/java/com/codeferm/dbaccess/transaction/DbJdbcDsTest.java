@@ -6,8 +6,6 @@
  */
 package com.codeferm.dbaccess.transaction;
 
-import com.codeferm.dbaccess.transaction.AtomikosTransModule;
-import com.codeferm.dbaccess.transaction.TransactionFactory;
 import com.codeferm.dbaccess.DbJdbcDs;
 import com.codeferm.dbaccess.atomikos.BaseAtomikosTest;
 import org.junit.Test;
@@ -18,7 +16,7 @@ import org.junit.Test;
  * {@link com.codeferm.dbaccess.DbAccess}. Test records are removed from table.
  *
  * @see com.codeferm.dbaccess.transaction.TransactionTest
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -44,7 +42,7 @@ public final class DbJdbcDsTest extends BaseAtomikosTest {
                 "insert.testtable"));
         test.verifyCommit(new DbJdbcDs(getDataSource()), getSqlMap().get(
                 "select.testtable.by.id"), getSqlMap().get(
-                "delete.testtable.by.id"), id);
+                        "delete.testtable.by.id"), id);
         long elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms", elapsedTime));
         log.info("commit DbJdbcDs");
@@ -54,7 +52,7 @@ public final class DbJdbcDsTest extends BaseAtomikosTest {
                     "insert.testtable"));
             test.verifyCommit(new DbJdbcDs(getDataSource()), getSqlMap().get(
                     "select.testtable.by.id"), getSqlMap().get(
-                    "delete.testtable.by.id"), id);
+                            "delete.testtable.by.id"), id);
         }
         elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms, loops: %d, average: %d ms",
@@ -85,7 +83,7 @@ public final class DbJdbcDsTest extends BaseAtomikosTest {
             // Verify rollback worked
             test.verifyRollback(new DbJdbcDs(getDataSource()), getSqlMap().get(
                     "select.testtable.by.id"), getSqlMap().get(
-                    "delete.testtable.by.id"), id);
+                            "delete.testtable.by.id"), id);
         }
         long elapsedTime = System.currentTimeMillis() - startTime;
         log.info(String.format("Elapsed time: %d ms", elapsedTime));
@@ -101,8 +99,8 @@ public final class DbJdbcDsTest extends BaseAtomikosTest {
                 // Verify rollback worked
                 test.verifyRollback(new DbJdbcDs(getDataSource()), getSqlMap().
                         get(
-                        "select.testtable.by.id"), getSqlMap().get(
-                        "delete.testtable.by.id"), id);
+                                "select.testtable.by.id"), getSqlMap().get(
+                                "delete.testtable.by.id"), id);
             }
         }
         elapsedTime = System.currentTimeMillis() - startTime;

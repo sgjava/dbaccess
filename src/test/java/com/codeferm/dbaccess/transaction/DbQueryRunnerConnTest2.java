@@ -6,8 +6,6 @@
  */
 package com.codeferm.dbaccess.transaction;
 
-import com.codeferm.dbaccess.transaction.QueryRunnerTransModule;
-import com.codeferm.dbaccess.transaction.TransactionFactory;
 import com.codeferm.dbaccess.DbAccess;
 import com.codeferm.dbaccess.DbQueryRunnerConn;
 import com.codeferm.dbaccess.dbcp.BaseDbcpTest;
@@ -19,7 +17,7 @@ import org.junit.Test;
  * {@link com.codeferm.dbaccess.DbAccess}. Test records are removed from table.
  *
  * @see com.codeferm.dbaccess.transaction.TransactionTest
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0

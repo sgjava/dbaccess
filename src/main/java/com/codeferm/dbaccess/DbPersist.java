@@ -188,13 +188,14 @@ public class DbPersist extends DbAccess {
             // Get keys as ResultSet
             resultSet = preparedStatement.getGeneratedKeys();
             // Prime the pump
-            resultSet.next();
-            // Get generated keys as Map of field name/value
-            keys = Persist.loadMap(resultSet);
+            if (resultSet.next()) {
+                // Get generated keys as Map of field name/value
+                keys = Persist.loadMap(resultSet);
+            }
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "updateReturnKeys: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -223,7 +224,7 @@ public class DbPersist extends DbAccess {
             for (Object[] param : params) {
                 log.debug(
                         String.format("batch: params=%s",
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
         int[] rows = null;
@@ -241,7 +242,7 @@ public class DbPersist extends DbAccess {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "batch: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             template.closePreparedStatement(preparedStatement);
         }
