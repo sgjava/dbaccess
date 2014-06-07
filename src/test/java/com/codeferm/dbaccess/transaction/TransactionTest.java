@@ -6,15 +6,14 @@
  */
 package com.codeferm.dbaccess.transaction;
 
-import com.codeferm.dbaccess.transaction.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.math.BigDecimal;
-import com.codeferm.dbaccess.dto.TestTableDto;
-import java.util.List;
 import com.codeferm.dbaccess.DbAccess;
 import com.codeferm.dbaccess.DbAccessException;
+import com.codeferm.dbaccess.dto.TestTableDto;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Atomikos transactions test. Test records are automatically removed from
@@ -32,7 +31,7 @@ public class TransactionTest {
     //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             TransactionTest.class);
-    //CHECKSTYLE:ON    
+    //CHECKSTYLE:ON
     /**
      * BigDecimal test value.
      */
