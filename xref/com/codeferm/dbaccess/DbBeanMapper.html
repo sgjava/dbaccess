@@ -17,16 +17,16 @@
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">package</strong> com.codeferm.dbaccess;
 <a class="jxr_linenumber" name="8" href="#8">8</a>   
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> java.beans.IntrospectionException;
-<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.sql.ResultSet;
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.sql.SQLException;
-<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> java.beans.PropertyDescriptor;
-<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Field;
-<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.InvocationTargetException;
-<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Method;
-<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.beans.PropertyDescriptor;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Field;
+<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.InvocationTargetException;
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Method;
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> java.sql.ResultSet;
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> java.sql.SQLException;
+<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
 <a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
 <a class="jxr_linenumber" name="22" href="#22">22</a>  
@@ -45,10 +45,10 @@
 <a class="jxr_linenumber" name="35" href="#35">35</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="38" href="#38">38</a>      <em class="jxr_comment">//CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct</em>
-<a class="jxr_linenumber" name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log =
-<a class="jxr_linenumber" name="40" href="#40">40</a>              LoggerFactory.getLogger(DbBeanMapper.<strong class="jxr_keyword">class</strong>);  <em class="jxr_comment">//NOPMD</em>
-<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON    </em>
+<a class="jxr_linenumber" name="38" href="#38">38</a>      <em class="jxr_comment">//CHECKSTYLE:OFF ConstantName</em>
+<a class="jxr_linenumber" name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log = LoggerFactory.
+<a class="jxr_linenumber" name="40" href="#40">40</a>              getLogger(DbBeanMapper.<strong class="jxr_keyword">class</strong>);  <em class="jxr_comment">//NOPMD</em>
+<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON ConstantName</em>
 <a class="jxr_linenumber" name="42" href="#42">42</a>  
 <a class="jxr_linenumber" name="43" href="#43">43</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment">     * Convert bean property names from camelCase to underscore and return</em>
@@ -93,8 +93,8 @@
 <a class="jxr_linenumber" name="83" href="#83">83</a>              <strong class="jxr_keyword">for</strong> (Field field : fields) {
 <a class="jxr_linenumber" name="84" href="#84">84</a>                  <em class="jxr_comment">// Ignore synthetic classes or dynamic proxies.</em>
 <a class="jxr_linenumber" name="85" href="#85">85</a>                  <strong class="jxr_keyword">if</strong> (!field.isSynthetic()) {
-<a class="jxr_linenumber" name="86" href="#86">86</a>                      PropertyDescriptor propertyDescriptor =
-<a class="jxr_linenumber" name="87" href="#87">87</a>                              <strong class="jxr_keyword">new</strong> PropertyDescriptor(field.getName(), clazz);  <em class="jxr_comment">//NOPMD OK to create new PropertyDescriptor in loop</em>
+<a class="jxr_linenumber" name="86" href="#86">86</a>                      PropertyDescriptor propertyDescriptor
+<a class="jxr_linenumber" name="87" href="#87">87</a>                              = <strong class="jxr_keyword">new</strong> PropertyDescriptor(field.getName(), clazz);  <em class="jxr_comment">//NOPMD OK to create new PropertyDescriptor in loop</em>
 <a class="jxr_linenumber" name="88" href="#88">88</a>                      <strong class="jxr_keyword">if</strong> (propertyDescriptor != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="89" href="#89">89</a>                          map.put(field.getName(), propertyDescriptor.
 <a class="jxr_linenumber" name="90" href="#90">90</a>                                  getWriteMethod());

@@ -6,25 +6,24 @@
  */
 package com.codeferm.dbaccess.transaction;
 
+import com.codeferm.dbaccess.DbAccessException;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
-import com.codeferm.dbaccess.DbAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Simple factory class that returns and Object with methods wrapped in a
  * transaction if the method is annotated with
- * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor
- * {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
+ * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor  {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
  * {@link com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor} or
- * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded
- * with Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
+ * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded with
+ * Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
  *
  * @see com.codeferm.dbaccess.transaction.Transaction
  * @see com.codeferm.dbaccess.transaction.AtomikosTransInterceptor
  * @see com.codeferm.dbaccess.transaction.AtomikosTransModule
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -34,16 +33,16 @@ public final class TransactionFactory {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
-<span class="fc" id="L38">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
+    //CHECKSTYLE:OFF ConstantName
+<span class="fc" id="L37">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
             TransactionFactory.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
 
     /**
      * Suppress default constructor for non-instantiability.
      */
-<span class="nc" id="L45">    private TransactionFactory() {</span>
-<span class="nc" id="L46">        throw new AssertionError();</span>
+<span class="nc" id="L44">    private TransactionFactory() {</span>
+<span class="nc" id="L45">        throw new AssertionError();</span>
     }
 
     /**
@@ -56,14 +55,15 @@ public final class TransactionFactory {
      */
     public static &lt;T&gt; T createObject(final Class&lt;T&gt; clazz,
             final Class&lt;? extends AbstractModule&gt; transModule) {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L60">            log.debug(String.format(&quot;Creating transactional object for %s&quot;,</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L59">            log.debug(String.format(&quot;Creating transactional object for %s&quot;,</span>
                     clazz.getName()));
         }
-<span class="fc" id="L63">        T object = null;</span>
+<span class="fc" id="L62">        T object = null;</span>
         try {
-<span class="fc" id="L65">            object = Guice.createInjector(transModule.newInstance()).getInstance(</span>
-                    clazz);
+<span class="fc" id="L64">            object = Guice.createInjector(transModule.newInstance()).</span>
+                    getInstance(
+                            clazz);
 <span class="nc" id="L67">        } catch (InstantiationException e) {</span>
 <span class="nc" id="L68">            throw new DbAccessException(e);</span>
 <span class="nc" id="L69">        } catch (IllegalAccessException e) {</span>

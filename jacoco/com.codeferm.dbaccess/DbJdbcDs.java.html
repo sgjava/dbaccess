@@ -9,15 +9,15 @@ package com.codeferm.dbaccess;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * that uses JDBC API directly. {@code DataSource} based implementation.
  *
  * @see com.codeferm.dbaccess.DbAccess
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -36,9 +36,9 @@ public class DbJdbcDs extends DbBeanMapper {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
 <span class="fc" id="L40">    private static final Logger log = LoggerFactory.getLogger(DbJdbcDs.class); //NOPMD</span>
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * DataSource reference.
      */
@@ -107,7 +107,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="nc" id="L107">        } catch (Exception e) {</span>
 <span class="nc" id="L108">            throw new DbAccessException(String.format(</span>
                     &quot;selectBeanList: sql=%s, params=%s&quot;, sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
 <span class="nc" id="L112">            try {</span>
 <span class="pc bpc" id="L113" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
@@ -176,7 +176,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="nc" id="L176">        } catch (SQLException e) {</span>
 <span class="nc" id="L177">            throw new DbAccessException(String.format(</span>
                     &quot;selectMapList: sql=%s, params=%s&quot;, sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
 <span class="nc" id="L181">            try {</span>
 <span class="pc bpc" id="L182" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
@@ -232,7 +232,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="fc" id="L232">        } catch (SQLException e) {</span>
 <span class="fc" id="L233">            throw new DbAccessException(String.format(</span>
                     &quot;update: sql=%s, params=%s&quot;, sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
 <span class="fc" id="L237">            try {</span>
 <span class="pc bpc" id="L238" title="2 of 4 branches missed.">                if (preparedStatement != null) {</span>
@@ -296,7 +296,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="nc" id="L296">        } catch (SQLException e) {</span>
 <span class="nc" id="L297">            throw new DbAccessException(String.format(</span>
                     &quot;updateReturnKeys: sql=%s, params=%s&quot;, sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
 <span class="nc" id="L301">            try {</span>
 <span class="pc bpc" id="L302" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
@@ -338,7 +338,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="nc bnc" id="L338" title="All 2 branches missed.">            for (Object[] param : params) {</span>
 <span class="nc" id="L339">                log.debug(</span>
                         String.format(&quot;batch: params=%s&quot;,
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
 <span class="fc" id="L344">        Connection connection = null;</span>
@@ -361,7 +361,7 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="nc" id="L361">        } catch (SQLException e) {</span>
 <span class="nc" id="L362">            throw new DbAccessException(String.format(</span>
                     &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
 <span class="nc" id="L366">            try {</span>
 <span class="pc bpc" id="L367" title="3 of 4 branches missed.">                if (preparedStatement != null) {</span>

@@ -75,7 +75,7 @@
       <div id="contentBox">
         <!-- Copyright (c) Steven P. Goldsmith. All rights reserved. --><!--  --><!-- Created by Steven P. Goldsmith December 13, 2011 --><!-- sgoldsmith@codeferm.com --><div class="section">
 <h2>Configuration of project<a name="Configuration_of_project"></a></h2>
-<p>The project requires some configuration prior to building. In order to run the various tests a simple test table is required. I used PostgreSQL 8.4 and 9.1, but you should be able to use any JDBC 3 or 4 compliant driver. Also, since I make use of current libraries (many of which are not in the public Maven repositories) it is best that you point to our <a class="externalLink" href="https://codeferm.com/nexus/content/repositories/public">Nexus</a> repository.</p>
+<p>The project requires some configuration prior to building. In order to run the various tests a simple test table is required. I used PostgreSQL 9.3, but you should be able to use any JDBC 3 or 4 compliant driver. Also, since I make use of libraries (many of which are not in the public Maven repositories) it is best that you point to our <a class="externalLink" href="https://codeferm.com/nexus/content/repositories/public">Nexus</a> repository. You can also just grab the libraries and place them in your third party repository.</p>
 <ol style="list-style-type: decimal">
 <li>Download and install <a class="externalLink" href="http://www.postgresql.org/download">PostgresSQL</a> database server.</li>
 <li>Configure PostgresSQL for XA Datasource
@@ -91,10 +91,10 @@
 <ol style="list-style-type: lower-alpha">
 <li>Edit .m2/settings.xml to add repository.</li>
 <li>See <a class="externalLink" href="http://wiki.netbeans.org/FaqNexus">Netbeans Nexus FAQ</a> if you are using Netbeans.</li></ol></li>
-<li>Build Maven project (I used Netbeans 7.0.1 for the project, but this is a standard Maven 3 project).
+<li>Build Maven project (I used Netbeans 8.0 for the project, but this is a standard Maven 3 project).
 <ol style="list-style-type: lower-alpha">
 <li>Download latest build <a href="../../../ws/*zip*/workspace.zip">workspace.zip</a>. Unzip and copy this trunk directory into NetBeansProjects (or whatever directory your IDE uses).</li>
-<li>Build project in Maven with mvn clean install or in Netbeans 7 you can open the project and do a Clean and Build. This should download all the dependencies, compile and run all the tests. The first time may take several minutes to download all the jars and run all the tests. Use mvn site to build Maven site.</li></ol></li></ol></div>
+<li>Build project in Maven with mvn clean install or in Netbeans 8 you can open the project and do a Clean and Build. This should download all the dependencies, compile and run all the tests. The first time may take several minutes to download all the jars and run all the tests. Use mvn site to build Maven site.</li></ol></li></ol></div>
       </div>
     </div>
     <div class="clear">

@@ -33,8 +33,8 @@
 <a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> org.springframework.jdbc.support.KeyHolder;
 <a class="jxr_linenumber" name="24" href="#24">24</a>  
 <a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment"> * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess} abstract</em>
-<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment"> * class.</em>
+<a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment"> * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess}</em>
+<a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment"> * abstract class.</em>
 <a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment"> * @author sgoldsmith</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment"> * @version 1.0.0</em>
@@ -45,10 +45,10 @@
 <a class="jxr_linenumber" name="35" href="#35">35</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="38" href="#38">38</a>      <em class="jxr_comment">//CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct</em>
+<a class="jxr_linenumber" name="38" href="#38">38</a>      <em class="jxr_comment">//CHECKSTYLE:OFF ConstantName</em>
 <a class="jxr_linenumber" name="39" href="#39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log = LoggerFactory.getLogger( <em class="jxr_comment">//NOPMD</em>
 <a class="jxr_linenumber" name="40" href="#40">40</a>              DbJdbcTemplate.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON ConstantName</em>
 <a class="jxr_linenumber" name="42" href="#42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="43" href="#43">43</a>  <em class="jxr_javadoccomment">     * Implementation class.</em>
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment">     */</em>
@@ -158,59 +158,58 @@
 <a class="jxr_linenumber" name="148" href="#148">148</a>         <em class="jxr_comment">// Holds keys after update</em>
 <a class="jxr_linenumber" name="149" href="#149">149</a>         <strong class="jxr_keyword">final</strong> KeyHolder keyHolder = <strong class="jxr_keyword">new</strong> GeneratedKeyHolder();
 <a class="jxr_linenumber" name="150" href="#150">150</a>         <em class="jxr_comment">// Generic PreparedStatementCreator</em>
-<a class="jxr_linenumber" name="151" href="#151">151</a>         <strong class="jxr_keyword">final</strong> PreparedStatementCreator psc =
-<a class="jxr_linenumber" name="152" href="#152">152</a>                 <strong class="jxr_keyword">new</strong> PreparedStatementCreator() {
-<a class="jxr_linenumber" name="153" href="#153">153</a> 
-<a class="jxr_linenumber" name="154" href="#154">154</a>                     @Override
-<a class="jxr_linenumber" name="155" href="#155">155</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> PreparedStatement createPreparedStatement(
-<a class="jxr_linenumber" name="156" href="#156">156</a>                             <strong class="jxr_keyword">final</strong> Connection con) <strong class="jxr_keyword">throws</strong> SQLException {
-<a class="jxr_linenumber" name="157" href="#157">157</a>                         PreparedStatement preparedStatement = con.
-<a class="jxr_linenumber" name="158" href="#158">158</a>                                 prepareStatement(sql,
-<a class="jxr_linenumber" name="159" href="#159">159</a>                                 Statement.RETURN_GENERATED_KEYS);
-<a class="jxr_linenumber" name="160" href="#160">160</a>                         <em class="jxr_comment">// Fill parameters</em>
-<a class="jxr_linenumber" name="161" href="#161">161</a>                         <strong class="jxr_keyword">int</strong> i = 1; <em class="jxr_comment">//NOPMD</em>
-<a class="jxr_linenumber" name="162" href="#162">162</a>                         <strong class="jxr_keyword">for</strong> (Object o : params) {
-<a class="jxr_linenumber" name="163" href="#163">163</a>                             preparedStatement.setObject(i++, o);
-<a class="jxr_linenumber" name="164" href="#164">164</a>                         }
-<a class="jxr_linenumber" name="165" href="#165">165</a>                         <strong class="jxr_keyword">return</strong> preparedStatement;
-<a class="jxr_linenumber" name="166" href="#166">166</a>                     }
-<a class="jxr_linenumber" name="167" href="#167">167</a>                 };
-<a class="jxr_linenumber" name="168" href="#168">168</a>         <em class="jxr_comment">// Execute update</em>
-<a class="jxr_linenumber" name="169" href="#169">169</a>         template.update(psc, keyHolder);
-<a class="jxr_linenumber" name="170" href="#170">170</a>         <em class="jxr_comment">// Return keys</em>
-<a class="jxr_linenumber" name="171" href="#171">171</a>         <strong class="jxr_keyword">return</strong> keyHolder.getKeys();
-<a class="jxr_linenumber" name="172" href="#172">172</a>     }
-<a class="jxr_linenumber" name="173" href="#173">173</a> 
-<a class="jxr_linenumber" name="174" href="#174">174</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * Executes the given INSERT, UPDATE, or DELETE SQL statement with array of</em>
-<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     * parameter arrays.</em>
-<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * @param sql SQL statement to execute.</em>
-<a class="jxr_linenumber" name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * @param params Initialize the PreparedStatement's IN parameters.</em>
-<a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     * @return Number of rows updated array.</em>
-<a class="jxr_linenumber" name="181" href="#181">181</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="182" href="#182">182</a>     @Override
-<a class="jxr_linenumber" name="183" href="#183">183</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] batch(<strong class="jxr_keyword">final</strong> String sql, <strong class="jxr_keyword">final</strong> Object[][] params) {
-<a class="jxr_linenumber" name="184" href="#184">184</a>         <strong class="jxr_keyword">if</strong> (log.isDebugEnabled()) {
-<a class="jxr_linenumber" name="185" href="#185">185</a>             log.debug(String.format(<span class="jxr_string">"batch: sql=%s"</span>, sql));
-<a class="jxr_linenumber" name="186" href="#186">186</a>             <strong class="jxr_keyword">for</strong> (Object[] param : params) {
-<a class="jxr_linenumber" name="187" href="#187">187</a>                 log.debug(
-<a class="jxr_linenumber" name="188" href="#188">188</a>                         String.format(<span class="jxr_string">"batch: params=%s"</span>,
-<a class="jxr_linenumber" name="189" href="#189">189</a>                         Arrays.asList(param)));
-<a class="jxr_linenumber" name="190" href="#190">190</a>             }
-<a class="jxr_linenumber" name="191" href="#191">191</a>         }
-<a class="jxr_linenumber" name="192" href="#192">192</a>         <strong class="jxr_keyword">return</strong> template.batchUpdate(sql, Arrays.asList(params));
-<a class="jxr_linenumber" name="193" href="#193">193</a>     }
-<a class="jxr_linenumber" name="194" href="#194">194</a> 
-<a class="jxr_linenumber" name="195" href="#195">195</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     * Close connection quietly.</em>
-<a class="jxr_linenumber" name="197" href="#197">197</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="198" href="#198">198</a>     @Override
-<a class="jxr_linenumber" name="199" href="#199">199</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> cleanUp() {
-<a class="jxr_linenumber" name="200" href="#200">200</a>         <em class="jxr_comment">// Nothing to do here since all methods clean up resources after each</em>
-<a class="jxr_linenumber" name="201" href="#201">201</a>         <em class="jxr_comment">// operation.</em>
-<a class="jxr_linenumber" name="202" href="#202">202</a>     }
-<a class="jxr_linenumber" name="203" href="#203">203</a> }
+<a class="jxr_linenumber" name="151" href="#151">151</a>         <strong class="jxr_keyword">final</strong> PreparedStatementCreator psc = <strong class="jxr_keyword">new</strong> PreparedStatementCreator() {
+<a class="jxr_linenumber" name="152" href="#152">152</a> 
+<a class="jxr_linenumber" name="153" href="#153">153</a>             @Override
+<a class="jxr_linenumber" name="154" href="#154">154</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> PreparedStatement createPreparedStatement(
+<a class="jxr_linenumber" name="155" href="#155">155</a>                     <strong class="jxr_keyword">final</strong> Connection con) <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="156" href="#156">156</a>                 PreparedStatement preparedStatement = con.
+<a class="jxr_linenumber" name="157" href="#157">157</a>                         prepareStatement(sql,
+<a class="jxr_linenumber" name="158" href="#158">158</a>                                 Statement.RETURN_GENERATED_KEYS);
+<a class="jxr_linenumber" name="159" href="#159">159</a>                 <em class="jxr_comment">// Fill parameters</em>
+<a class="jxr_linenumber" name="160" href="#160">160</a>                 <strong class="jxr_keyword">int</strong> i = 1; <em class="jxr_comment">//NOPMD</em>
+<a class="jxr_linenumber" name="161" href="#161">161</a>                 <strong class="jxr_keyword">for</strong> (Object o : params) {
+<a class="jxr_linenumber" name="162" href="#162">162</a>                     preparedStatement.setObject(i++, o);
+<a class="jxr_linenumber" name="163" href="#163">163</a>                 }
+<a class="jxr_linenumber" name="164" href="#164">164</a>                 <strong class="jxr_keyword">return</strong> preparedStatement;
+<a class="jxr_linenumber" name="165" href="#165">165</a>             }
+<a class="jxr_linenumber" name="166" href="#166">166</a>         };
+<a class="jxr_linenumber" name="167" href="#167">167</a>         <em class="jxr_comment">// Execute update</em>
+<a class="jxr_linenumber" name="168" href="#168">168</a>         template.update(psc, keyHolder);
+<a class="jxr_linenumber" name="169" href="#169">169</a>         <em class="jxr_comment">// Return keys</em>
+<a class="jxr_linenumber" name="170" href="#170">170</a>         <strong class="jxr_keyword">return</strong> keyHolder.getKeys();
+<a class="jxr_linenumber" name="171" href="#171">171</a>     }
+<a class="jxr_linenumber" name="172" href="#172">172</a> 
+<a class="jxr_linenumber" name="173" href="#173">173</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="174" href="#174">174</a> <em class="jxr_javadoccomment">     * Executes the given INSERT, UPDATE, or DELETE SQL statement with array of</em>
+<a class="jxr_linenumber" name="175" href="#175">175</a> <em class="jxr_javadoccomment">     * parameter arrays.</em>
+<a class="jxr_linenumber" name="176" href="#176">176</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="177" href="#177">177</a> <em class="jxr_javadoccomment">     * @param sql SQL statement to execute.</em>
+<a class="jxr_linenumber" name="178" href="#178">178</a> <em class="jxr_javadoccomment">     * @param params Initialize the PreparedStatement's IN parameters.</em>
+<a class="jxr_linenumber" name="179" href="#179">179</a> <em class="jxr_javadoccomment">     * @return Number of rows updated array.</em>
+<a class="jxr_linenumber" name="180" href="#180">180</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="181" href="#181">181</a>     @Override
+<a class="jxr_linenumber" name="182" href="#182">182</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] batch(<strong class="jxr_keyword">final</strong> String sql, <strong class="jxr_keyword">final</strong> Object[][] params) {
+<a class="jxr_linenumber" name="183" href="#183">183</a>         <strong class="jxr_keyword">if</strong> (log.isDebugEnabled()) {
+<a class="jxr_linenumber" name="184" href="#184">184</a>             log.debug(String.format(<span class="jxr_string">"batch: sql=%s"</span>, sql));
+<a class="jxr_linenumber" name="185" href="#185">185</a>             <strong class="jxr_keyword">for</strong> (Object[] param : params) {
+<a class="jxr_linenumber" name="186" href="#186">186</a>                 log.debug(
+<a class="jxr_linenumber" name="187" href="#187">187</a>                         String.format(<span class="jxr_string">"batch: params=%s"</span>,
+<a class="jxr_linenumber" name="188" href="#188">188</a>                                 Arrays.asList(param)));
+<a class="jxr_linenumber" name="189" href="#189">189</a>             }
+<a class="jxr_linenumber" name="190" href="#190">190</a>         }
+<a class="jxr_linenumber" name="191" href="#191">191</a>         <strong class="jxr_keyword">return</strong> template.batchUpdate(sql, Arrays.asList(params));
+<a class="jxr_linenumber" name="192" href="#192">192</a>     }
+<a class="jxr_linenumber" name="193" href="#193">193</a> 
+<a class="jxr_linenumber" name="194" href="#194">194</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="195" href="#195">195</a> <em class="jxr_javadoccomment">     * Close connection quietly.</em>
+<a class="jxr_linenumber" name="196" href="#196">196</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="197" href="#197">197</a>     @Override
+<a class="jxr_linenumber" name="198" href="#198">198</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> cleanUp() {
+<a class="jxr_linenumber" name="199" href="#199">199</a>         <em class="jxr_comment">// Nothing to do here since all methods clean up resources after each</em>
+<a class="jxr_linenumber" name="200" href="#200">200</a>         <em class="jxr_comment">// operation.</em>
+<a class="jxr_linenumber" name="201" href="#201">201</a>     }
+<a class="jxr_linenumber" name="202" href="#202">202</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

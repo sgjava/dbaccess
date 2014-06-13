@@ -19,15 +19,15 @@
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> java.sql.Connection;
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.sql.PreparedStatement;
 <a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.sql.ResultSet;
-<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.sql.SQLException;
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> java.sql.Statement;
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
-<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
-<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> javax.sql.DataSource;
-<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> java.sql.ResultSetMetaData;
-<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> java.sql.ResultSetMetaData;
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <strong class="jxr_keyword">import</strong> java.sql.SQLException;
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">import</strong> java.sql.Statement;
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
+<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> javax.sql.DataSource;
 <a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> org.slf4j.Logger;
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.slf4j.LoggerFactory;
 <a class="jxr_linenumber" name="23" href="#23">23</a>  
@@ -36,7 +36,7 @@
 <a class="jxr_linenumber" name="26" href="#26">26</a>  <em class="jxr_javadoccomment"> * that uses JDBC API directly. {@code DataSource} based implementation.</em>
 <a class="jxr_linenumber" name="27" href="#27">27</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="28" href="#28">28</a>  <em class="jxr_javadoccomment"> * @see com.codeferm.dbaccess.DbAccess</em>
-<a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment"> * @author sgoldsmith</em>
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_javadoccomment"> * @version 1.0.0</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>  <em class="jxr_javadoccomment"> * @since 1.0.0</em>
@@ -46,9 +46,9 @@
 <a class="jxr_linenumber" name="36" href="#36">36</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="38" href="#38">38</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="39" href="#39">39</a>      <em class="jxr_comment">//CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct</em>
+<a class="jxr_linenumber" name="39" href="#39">39</a>      <em class="jxr_comment">//CHECKSTYLE:OFF ConstantName</em>
 <a class="jxr_linenumber" name="40" href="#40">40</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log = LoggerFactory.getLogger(DbJdbcDs.<strong class="jxr_keyword">class</strong>); <em class="jxr_comment">//NOPMD</em>
-<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="41" href="#41">41</a>      <em class="jxr_comment">//CHECKSTYLE:ON ConstantName</em>
 <a class="jxr_linenumber" name="42" href="#42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="43" href="#43">43</a>  <em class="jxr_javadoccomment">     * DataSource reference.</em>
 <a class="jxr_linenumber" name="44" href="#44">44</a>  <em class="jxr_javadoccomment">     */</em>
@@ -117,7 +117,7 @@
 <a class="jxr_linenumber" name="107" href="#107">107</a>         } <strong class="jxr_keyword">catch</strong> (Exception e) {
 <a class="jxr_linenumber" name="108" href="#108">108</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/codeferm/dbaccess/DbAccessException.html">DbAccessException</a>(String.format(
 <a class="jxr_linenumber" name="109" href="#109">109</a>                     <span class="jxr_string">"selectBeanList: sql=%s, params=%s"</span>, sql, Arrays.asList(
-<a class="jxr_linenumber" name="110" href="#110">110</a>                     params)), e);
+<a class="jxr_linenumber" name="110" href="#110">110</a>                             params)), e);
 <a class="jxr_linenumber" name="111" href="#111">111</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="112" href="#112">112</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="113" href="#113">113</a>                 <strong class="jxr_keyword">if</strong> (resultSet != <strong class="jxr_keyword">null</strong>) {
@@ -186,7 +186,7 @@
 <a class="jxr_linenumber" name="176" href="#176">176</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
 <a class="jxr_linenumber" name="177" href="#177">177</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/codeferm/dbaccess/DbAccessException.html">DbAccessException</a>(String.format(
 <a class="jxr_linenumber" name="178" href="#178">178</a>                     <span class="jxr_string">"selectMapList: sql=%s, params=%s"</span>, sql, Arrays.asList(
-<a class="jxr_linenumber" name="179" href="#179">179</a>                     params)), e);
+<a class="jxr_linenumber" name="179" href="#179">179</a>                             params)), e);
 <a class="jxr_linenumber" name="180" href="#180">180</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="181" href="#181">181</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="182" href="#182">182</a>                 <strong class="jxr_keyword">if</strong> (resultSet != <strong class="jxr_keyword">null</strong>) {
@@ -242,7 +242,7 @@
 <a class="jxr_linenumber" name="232" href="#232">232</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
 <a class="jxr_linenumber" name="233" href="#233">233</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/codeferm/dbaccess/DbAccessException.html">DbAccessException</a>(String.format(
 <a class="jxr_linenumber" name="234" href="#234">234</a>                     <span class="jxr_string">"update: sql=%s, params=%s"</span>, sql, Arrays.asList(
-<a class="jxr_linenumber" name="235" href="#235">235</a>                     params)), e);
+<a class="jxr_linenumber" name="235" href="#235">235</a>                             params)), e);
 <a class="jxr_linenumber" name="236" href="#236">236</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="237" href="#237">237</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="238" href="#238">238</a>                 <strong class="jxr_keyword">if</strong> (preparedStatement != <strong class="jxr_keyword">null</strong>) {
@@ -306,7 +306,7 @@
 <a class="jxr_linenumber" name="296" href="#296">296</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
 <a class="jxr_linenumber" name="297" href="#297">297</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/codeferm/dbaccess/DbAccessException.html">DbAccessException</a>(String.format(
 <a class="jxr_linenumber" name="298" href="#298">298</a>                     <span class="jxr_string">"updateReturnKeys: sql=%s, params=%s"</span>, sql, Arrays.asList(
-<a class="jxr_linenumber" name="299" href="#299">299</a>                     params)), e);
+<a class="jxr_linenumber" name="299" href="#299">299</a>                             params)), e);
 <a class="jxr_linenumber" name="300" href="#300">300</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="301" href="#301">301</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="302" href="#302">302</a>                 <strong class="jxr_keyword">if</strong> (resultSet != <strong class="jxr_keyword">null</strong>) {
@@ -348,7 +348,7 @@
 <a class="jxr_linenumber" name="338" href="#338">338</a>             <strong class="jxr_keyword">for</strong> (Object[] param : params) {
 <a class="jxr_linenumber" name="339" href="#339">339</a>                 log.debug(
 <a class="jxr_linenumber" name="340" href="#340">340</a>                         String.format(<span class="jxr_string">"batch: params=%s"</span>,
-<a class="jxr_linenumber" name="341" href="#341">341</a>                         Arrays.asList(param)));
+<a class="jxr_linenumber" name="341" href="#341">341</a>                                 Arrays.asList(param)));
 <a class="jxr_linenumber" name="342" href="#342">342</a>             }
 <a class="jxr_linenumber" name="343" href="#343">343</a>         }
 <a class="jxr_linenumber" name="344" href="#344">344</a>         Connection connection = <strong class="jxr_keyword">null</strong>;
@@ -371,7 +371,7 @@
 <a class="jxr_linenumber" name="361" href="#361">361</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
 <a class="jxr_linenumber" name="362" href="#362">362</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/codeferm/dbaccess/DbAccessException.html">DbAccessException</a>(String.format(
 <a class="jxr_linenumber" name="363" href="#363">363</a>                     <span class="jxr_string">"batch: sql=%s, params=%s"</span>, sql, Arrays.asList(
-<a class="jxr_linenumber" name="364" href="#364">364</a>                     params)), e);
+<a class="jxr_linenumber" name="364" href="#364">364</a>                             params)), e);
 <a class="jxr_linenumber" name="365" href="#365">365</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="366" href="#366">366</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="367" href="#367">367</a>                 <strong class="jxr_keyword">if</strong> (preparedStatement != <strong class="jxr_keyword">null</strong>) {

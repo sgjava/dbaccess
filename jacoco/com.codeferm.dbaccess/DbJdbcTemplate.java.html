@@ -23,8 +23,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 /**
- * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess} abstract
- * class.
+ * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess}
+ * abstract class.
  *
  * @author sgoldsmith
  * @version 1.0.0
@@ -35,10 +35,10 @@ public class DbJdbcTemplate extends DbAccess {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
 <span class="fc" id="L39">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
             DbJdbcTemplate.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * Implementation class.
      */
@@ -148,27 +148,26 @@ public class DbJdbcTemplate extends DbAccess {
         // Holds keys after update
 <span class="fc" id="L149">        final KeyHolder keyHolder = new GeneratedKeyHolder();</span>
         // Generic PreparedStatementCreator
-<span class="fc" id="L151">        final PreparedStatementCreator psc =</span>
-<span class="fc" id="L152">                new PreparedStatementCreator() {</span>
+<span class="fc" id="L151">        final PreparedStatementCreator psc = new PreparedStatementCreator() {</span>
 
-                    @Override
-                    public final PreparedStatement createPreparedStatement(
-                            final Connection con) throws SQLException {
-<span class="fc" id="L157">                        PreparedStatement preparedStatement = con.</span>
-                                prepareStatement(sql,
+            @Override
+            public final PreparedStatement createPreparedStatement(
+                    final Connection con) throws SQLException {
+<span class="fc" id="L156">                PreparedStatement preparedStatement = con.</span>
+                        prepareStatement(sql,
                                 Statement.RETURN_GENERATED_KEYS);
-                        // Fill parameters
-<span class="fc" id="L161">                        int i = 1; //NOPMD</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">                        for (Object o : params) {</span>
-<span class="fc" id="L163">                            preparedStatement.setObject(i++, o);</span>
-                        }
-<span class="fc" id="L165">                        return preparedStatement;</span>
-                    }
-                };
+                // Fill parameters
+<span class="fc" id="L160">                int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                for (Object o : params) {</span>
+<span class="fc" id="L162">                    preparedStatement.setObject(i++, o);</span>
+                }
+<span class="fc" id="L164">                return preparedStatement;</span>
+            }
+        };
         // Execute update
-<span class="fc" id="L169">        template.update(psc, keyHolder);</span>
+<span class="fc" id="L168">        template.update(psc, keyHolder);</span>
         // Return keys
-<span class="fc" id="L171">        return keyHolder.getKeys();</span>
+<span class="fc" id="L170">        return keyHolder.getKeys();</span>
     }
 
     /**
@@ -181,15 +180,15 @@ public class DbJdbcTemplate extends DbAccess {
      */
     @Override
     public final int[] batch(final String sql, final Object[][] params) {
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L185">            log.debug(String.format(&quot;batch: sql=%s&quot;, sql));</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">            for (Object[] param : params) {</span>
-<span class="nc" id="L187">                log.debug(</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L184">            log.debug(String.format(&quot;batch: sql=%s&quot;, sql));</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            for (Object[] param : params) {</span>
+<span class="nc" id="L186">                log.debug(</span>
                         String.format(&quot;batch: params=%s&quot;,
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
-<span class="fc" id="L192">        return template.batchUpdate(sql, Arrays.asList(params));</span>
+<span class="fc" id="L191">        return template.batchUpdate(sql, Arrays.asList(params));</span>
     }
 
     /**
@@ -199,6 +198,6 @@ public class DbJdbcTemplate extends DbAccess {
     public final void cleanUp() {
         // Nothing to do here since all methods clean up resources after each
         // operation.
-<span class="fc" id="L202">    }</span>
+<span class="fc" id="L201">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
