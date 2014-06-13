@@ -13,12 +13,13 @@
 Configuration of project
 
     The project requires some configuration prior to building. In order to run
-    the various tests a simple test table is required. I used PostgreSQL 8.4 and
-    9.1, but you should be able to use any JDBC 3 or 4 compliant driver. Also,
-    since I make use of current libraries (many of which are not in the public
+    the various tests a simple test table is required. I used PostgreSQL 9.3, but
+    you should be able to use any JDBC 3 or 4 compliant driver. Also,
+    since I make use of libraries (many of which are not in the public
     Maven repositories) it is best that you point to our
     {{{https://codeferm.com/nexus/content/repositories/public}Nexus}} repository.
-
+    You can also just grab the libraries and place them in your third party
+    repository.
 
     [[1]] Download and install
           {{{http://www.postgresql.org/download}PostgresSQL}} database server.
@@ -54,14 +55,14 @@ Configuration of project
       [[b]] See {{{http://wiki.netbeans.org/FaqNexus}Netbeans Nexus FAQ}} if you
             are using Netbeans.
 
-    [[5]] Build Maven project (I used Netbeans 7.0.1 for the project, but this
+    [[5]] Build Maven project (I used Netbeans 8.0 for the project, but this
           is a standard Maven 3 project).
 
       [[a]] Download latest build {{{../../../ws/*zip*/workspace.zip}workspace.zip}}.
             Unzip and copy this trunk directory into NetBeansProjects (or
             whatever directory your IDE uses).
 
-      [[b]] Build project in Maven with mvn clean install or in Netbeans 7 you
+      [[b]] Build project in Maven with mvn clean install or in Netbeans 8 you
             can open the project and do a Clean and Build. This should download
             all the dependencies, compile and run all the tests. The first time
             may take several minutes to download all the jars and run all the

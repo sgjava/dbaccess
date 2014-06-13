@@ -23,8 +23,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 /**
- * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess} abstract
- * class.
+ * Spring JdbcTemplate extension of {@link com.codeferm.dbaccess.DbAccess}
+ * abstract class.
  *
  * @author sgoldsmith
  * @version 1.0.0
@@ -35,10 +35,10 @@ public class DbJdbcTemplate extends DbAccess {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             DbJdbcTemplate.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * Implementation class.
      */
@@ -148,23 +148,22 @@ public class DbJdbcTemplate extends DbAccess {
         // Holds keys after update
         final KeyHolder keyHolder = new GeneratedKeyHolder();
         // Generic PreparedStatementCreator
-        final PreparedStatementCreator psc =
-                new PreparedStatementCreator() {
+        final PreparedStatementCreator psc = new PreparedStatementCreator() {
 
-                    @Override
-                    public final PreparedStatement createPreparedStatement(
-                            final Connection con) throws SQLException {
-                        PreparedStatement preparedStatement = con.
-                                prepareStatement(sql,
+            @Override
+            public final PreparedStatement createPreparedStatement(
+                    final Connection con) throws SQLException {
+                PreparedStatement preparedStatement = con.
+                        prepareStatement(sql,
                                 Statement.RETURN_GENERATED_KEYS);
-                        // Fill parameters
-                        int i = 1; //NOPMD
-                        for (Object o : params) {
-                            preparedStatement.setObject(i++, o);
-                        }
-                        return preparedStatement;
-                    }
-                };
+                // Fill parameters
+                int i = 1; //NOPMD
+                for (Object o : params) {
+                    preparedStatement.setObject(i++, o);
+                }
+                return preparedStatement;
+            }
+        };
         // Execute update
         template.update(psc, keyHolder);
         // Return keys
@@ -186,7 +185,7 @@ public class DbJdbcTemplate extends DbAccess {
             for (Object[] param : params) {
                 log.debug(
                         String.format("batch: params=%s",
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
         return template.batchUpdate(sql, Arrays.asList(params));

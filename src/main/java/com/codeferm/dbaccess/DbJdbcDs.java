@@ -9,15 +9,15 @@ package com.codeferm.dbaccess;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * that uses JDBC API directly. {@code DataSource} based implementation.
  *
  * @see com.codeferm.dbaccess.DbAccess
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -36,9 +36,9 @@ public class DbJdbcDs extends DbBeanMapper {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger(DbJdbcDs.class); //NOPMD
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * DataSource reference.
      */
@@ -107,7 +107,7 @@ public class DbJdbcDs extends DbBeanMapper {
         } catch (Exception e) {
             throw new DbAccessException(String.format(
                     "selectBeanList: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -176,7 +176,7 @@ public class DbJdbcDs extends DbBeanMapper {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "selectMapList: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -232,7 +232,7 @@ public class DbJdbcDs extends DbBeanMapper {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "update: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -296,7 +296,7 @@ public class DbJdbcDs extends DbBeanMapper {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "updateReturnKeys: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (resultSet != null) {
@@ -338,7 +338,7 @@ public class DbJdbcDs extends DbBeanMapper {
             for (Object[] param : params) {
                 log.debug(
                         String.format("batch: params=%s",
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
         Connection connection = null;
@@ -361,7 +361,7 @@ public class DbJdbcDs extends DbBeanMapper {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "batch: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             try {
                 if (preparedStatement != null) {

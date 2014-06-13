@@ -25,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DBUtils QueryRunner extensions of {@link com.codeferm.dbaccess.DbAccess} abstract
- * class.
+ * DBUtils QueryRunner extensions of {@link com.codeferm.dbaccess.DbAccess}
+ * abstract class.
  *
  * @author sgoldsmith
  * @version 1.0.0
@@ -37,10 +37,10 @@ public class DbQueryRunnerDs extends DbAccess {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             DbQueryRunnerDs.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * Implementation class.
      */
@@ -98,11 +98,12 @@ public class DbQueryRunnerDs extends DbAccess {
         try {
             list = (List<T>) template.query(sql,
                     new BeanListHandler(clazz,
-                    new BasicRowProcessor(new DbBeanProcessor())), params);
+                            new BasicRowProcessor(new DbBeanProcessor())),
+                    params);
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "selectBeanList: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         }
         return list;
     }
@@ -129,7 +130,7 @@ public class DbQueryRunnerDs extends DbAccess {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "selectMapList: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         }
         return list;
     }
@@ -154,7 +155,7 @@ public class DbQueryRunnerDs extends DbAccess {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "update: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         }
         return rows;
     }
@@ -194,7 +195,7 @@ public class DbQueryRunnerDs extends DbAccess {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "updateReturnKeys: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         } finally {
             DbUtils.closeQuietly(resultSet);
             DbUtils.closeQuietly(preparedStatement);
@@ -218,7 +219,7 @@ public class DbQueryRunnerDs extends DbAccess {
             for (Object[] param : params) {
                 log.debug(
                         String.format("batch: params=%s",
-                        Arrays.asList(param)));
+                                Arrays.asList(param)));
             }
         }
         int[] rows = null;
@@ -227,7 +228,7 @@ public class DbQueryRunnerDs extends DbAccess {
         } catch (SQLException e) {
             throw new DbAccessException(String.format(
                     "batch: sql=%s, params=%s", sql, Arrays.asList(
-                    params)), e);
+                            params)), e);
         }
         return rows;
     }

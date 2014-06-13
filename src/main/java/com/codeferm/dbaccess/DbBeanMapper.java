@@ -7,16 +7,16 @@
 package com.codeferm.dbaccess;
 
 import java.beans.IntrospectionException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +35,10 @@ public abstract class DbBeanMapper extends DbAccess { //NOPMD, really, I have to
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
-    private static final Logger log =
-            LoggerFactory.getLogger(DbBeanMapper.class);  //NOPMD
-    //CHECKSTYLE:ON    
+    //CHECKSTYLE:OFF ConstantName
+    private static final Logger log = LoggerFactory.
+            getLogger(DbBeanMapper.class);  //NOPMD
+    //CHECKSTYLE:ON ConstantName
 
     /**
      * Convert bean property names from camelCase to underscore and return
@@ -83,8 +83,8 @@ public abstract class DbBeanMapper extends DbAccess { //NOPMD, really, I have to
             for (Field field : fields) {
                 // Ignore synthetic classes or dynamic proxies.
                 if (!field.isSynthetic()) {
-                    PropertyDescriptor propertyDescriptor =
-                            new PropertyDescriptor(field.getName(), clazz);  //NOPMD OK to create new PropertyDescriptor in loop
+                    PropertyDescriptor propertyDescriptor
+                            = new PropertyDescriptor(field.getName(), clazz);  //NOPMD OK to create new PropertyDescriptor in loop
                     if (propertyDescriptor != null) {
                         map.put(field.getName(), propertyDescriptor.
                                 getWriteMethod());

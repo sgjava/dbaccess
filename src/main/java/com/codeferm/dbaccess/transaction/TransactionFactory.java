@@ -6,25 +6,24 @@
  */
 package com.codeferm.dbaccess.transaction;
 
+import com.codeferm.dbaccess.DbAccessException;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
-import com.codeferm.dbaccess.DbAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Simple factory class that returns and Object with methods wrapped in a
  * transaction if the method is annotated with
- * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor
- * {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
+ * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor  {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
  * {@link com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor} or
- * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded
- * with Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
+ * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded with
+ * Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
  *
  * @see com.codeferm.dbaccess.transaction.Transaction
  * @see com.codeferm.dbaccess.transaction.AtomikosTransInterceptor
  * @see com.codeferm.dbaccess.transaction.AtomikosTransModule
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -34,10 +33,10 @@ public final class TransactionFactory {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             TransactionFactory.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
 
     /**
      * Suppress default constructor for non-instantiability.
@@ -62,8 +61,9 @@ public final class TransactionFactory {
         }
         T object = null;
         try {
-            object = Guice.createInjector(transModule.newInstance()).getInstance(
-                    clazz);
+            object = Guice.createInjector(transModule.newInstance()).
+                    getInstance(
+                            clazz);
         } catch (InstantiationException e) {
             throw new DbAccessException(e);
         } catch (IllegalAccessException e) {

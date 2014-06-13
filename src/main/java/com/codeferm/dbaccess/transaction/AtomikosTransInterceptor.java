@@ -17,18 +17,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Intercept methods annotated with
- * {@link com.codeferm.dbaccess.transaction.Transaction} and commit on success or
- * rollback if {@link java.lang.Exception} is thrown. The first method parameter
- * must be an instance of {@link com.codeferm.dbaccess.DbAccess} in order for this
- * class to close the connection prior to commit or rollback operation as
- * required by Atomikos.
+ * {@link com.codeferm.dbaccess.transaction.Transaction} and commit on success
+ * or rollback if {@link java.lang.Exception} is thrown. The first method
+ * parameter must be an instance of {@link com.codeferm.dbaccess.DbAccess} in
+ * order for this class to close the connection prior to commit or rollback
+ * operation as required by Atomikos.
  * <p>
- * <p>Currently this class supports Geronimo JTA for
+ * <p>
+ * Currently this class supports Geronimo JTA for
  * {@link javax.transaction.UserTransaction} and Atomikos
- * {@code UserTransactionImp} for the implementation. Other JTA
- * implementations could be leveraged as well.
+ * {@code UserTransactionImp} for the implementation. Other JTA implementations
+ * could be leveraged as well.
  * <p>
- * <p>Limitations
+ * <p>
+ * Limitations
  * <p>
  * Behind the scenes, method interception is implemented by generating bytecode
  * at runtime. Guice dynamically creates a subclass that applies interceptors by
@@ -37,14 +39,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This approach imposes limits on what classes and methods can be intercepted:
  * <p>
- * <p>Classes must be public or package-private.
- * Classes must be non-final
- * Methods must be public, package-private or protected
- * Methods must be non-final
+ * <p>
+ * Classes must be public or package-private. Classes must be non-final Methods
+ * must be public, package-private or protected Methods must be non-final
  * Instances must be created by Guice by an @Inject-annotated or no-argument
  * constructor
  * <p>
- * <p>It is not possible to use method interception on instances that aren't
+ * <p>
+ * It is not possible to use method interception on instances that aren't
  * constructed by Guice.
  *
  * @see com.codeferm.dbaccess.transaction.Transaction
@@ -60,10 +62,10 @@ public final class AtomikosTransInterceptor implements MethodInterceptor {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             AtomikosTransInterceptor.class);
-    //CHECKSTYLE:ON    
+    //CHECKSTYLE:ON ConstantName
 
     /**
      * Invoke method wrapped in a transaction.

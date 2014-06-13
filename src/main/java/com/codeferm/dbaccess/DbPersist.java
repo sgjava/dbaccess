@@ -31,9 +31,9 @@ public class DbPersist extends DbAccess {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName
     private static final Logger log = LoggerFactory.getLogger(DbPersist.class);  //NOPMD
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * Implementation class.
      */
