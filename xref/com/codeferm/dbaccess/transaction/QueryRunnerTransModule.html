@@ -20,14 +20,14 @@
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> com.google.inject.matcher.Matchers;
 <a class="jxr_linenumber" name="11" href="#11">11</a>  
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in the</em>
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * Guice module for methods annotated with</em>
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in</em>
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * the Guice module for methods annotated with</em>
 <a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> * {@link com.codeferm.dbaccess.transaction.Transaction}.</em>
 <a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="17" href="#17">17</a>  <em class="jxr_javadoccomment"> * @see com.codeferm.dbaccess.transaction.Transaction</em>
 <a class="jxr_linenumber" name="18" href="#18">18</a>  <em class="jxr_javadoccomment"> * @see com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor</em>
 <a class="jxr_linenumber" name="19" href="#19">19</a>  <em class="jxr_javadoccomment"> * @see com.codeferm.dbaccess.transaction.TransactionFactory</em>
-<a class="jxr_linenumber" name="20" href="#20">20</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="20" href="#20">20</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="21" href="#21">21</a>  <em class="jxr_javadoccomment"> * @author sgoldsmith</em>
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <em class="jxr_javadoccomment"> * @version 1.0.0</em>
 <a class="jxr_linenumber" name="23" href="#23">23</a>  <em class="jxr_javadoccomment"> * @since 1.0.0</em>
@@ -39,14 +39,15 @@
 <a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>      @Override
 <a class="jxr_linenumber" name="31" href="#31">31</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> configure() {
-<a class="jxr_linenumber" name="32" href="#32">32</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/codeferm/dbaccess/transaction/QueryRunnerTransInterceptor.html">QueryRunnerTransInterceptor</a> interceptor = <strong class="jxr_keyword">new</strong> <a href="../../../../com/codeferm/dbaccess/transaction/QueryRunnerTransInterceptor.html">QueryRunnerTransInterceptor</a>();
-<a class="jxr_linenumber" name="33" href="#33">33</a>          <em class="jxr_comment">// Request injection of QueryRunnerTransInterceptor</em>
-<a class="jxr_linenumber" name="34" href="#34">34</a>          requestInjection(interceptor);
-<a class="jxr_linenumber" name="35" href="#35">35</a>          <em class="jxr_comment">// Match all methods of class with @Transaction annotation</em>
-<a class="jxr_linenumber" name="36" href="#36">36</a>          bindInterceptor(Matchers.any(),
-<a class="jxr_linenumber" name="37" href="#37">37</a>                  Matchers.annotatedWith(Transaction.<strong class="jxr_keyword">class</strong>), interceptor);
-<a class="jxr_linenumber" name="38" href="#38">38</a>      }
-<a class="jxr_linenumber" name="39" href="#39">39</a>  }
+<a class="jxr_linenumber" name="32" href="#32">32</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../com/codeferm/dbaccess/transaction/QueryRunnerTransInterceptor.html">QueryRunnerTransInterceptor</a> interceptor
+<a class="jxr_linenumber" name="33" href="#33">33</a>                  = <strong class="jxr_keyword">new</strong> <a href="../../../../com/codeferm/dbaccess/transaction/QueryRunnerTransInterceptor.html">QueryRunnerTransInterceptor</a>();
+<a class="jxr_linenumber" name="34" href="#34">34</a>          <em class="jxr_comment">// Request injection of QueryRunnerTransInterceptor</em>
+<a class="jxr_linenumber" name="35" href="#35">35</a>          requestInjection(interceptor);
+<a class="jxr_linenumber" name="36" href="#36">36</a>          <em class="jxr_comment">// Match all methods of class with @Transaction annotation</em>
+<a class="jxr_linenumber" name="37" href="#37">37</a>          bindInterceptor(Matchers.any(),
+<a class="jxr_linenumber" name="38" href="#38">38</a>                  Matchers.annotatedWith(Transaction.<strong class="jxr_keyword">class</strong>), interceptor);
+<a class="jxr_linenumber" name="39" href="#39">39</a>      }
+<a class="jxr_linenumber" name="40" href="#40">40</a>  }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

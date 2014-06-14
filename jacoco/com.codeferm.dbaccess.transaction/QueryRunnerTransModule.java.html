@@ -10,14 +10,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
 
 /**
- * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in the
- * Guice module for methods annotated with
+ * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in
+ * the Guice module for methods annotated with
  * {@link com.codeferm.dbaccess.transaction.Transaction}.
  *
  * @see com.codeferm.dbaccess.transaction.Transaction
  * @see com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor
  * @see com.codeferm.dbaccess.transaction.TransactionFactory
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -29,12 +29,13 @@ import com.google.inject.matcher.Matchers;
      */
     @Override
     protected void configure() {
-<span class="nc" id="L32">        final QueryRunnerTransInterceptor interceptor = new QueryRunnerTransInterceptor();</span>
+<span class="nc" id="L32">        final QueryRunnerTransInterceptor interceptor</span>
+                = new QueryRunnerTransInterceptor();
         // Request injection of QueryRunnerTransInterceptor
-<span class="nc" id="L34">        requestInjection(interceptor);</span>
+<span class="nc" id="L35">        requestInjection(interceptor);</span>
         // Match all methods of class with @Transaction annotation
-<span class="nc" id="L36">        bindInterceptor(Matchers.any(),</span>
+<span class="nc" id="L37">        bindInterceptor(Matchers.any(),</span>
                 Matchers.annotatedWith(Transaction.class), interceptor);
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L39">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

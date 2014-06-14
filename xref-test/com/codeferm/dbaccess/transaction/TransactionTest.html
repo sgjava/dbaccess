@@ -38,10 +38,10 @@
 <a class="jxr_linenumber" name="28" href="#28">28</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="29" href="#29">29</a>  <em class="jxr_javadoccomment">     * Logger.</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="31" href="#31">31</a>      <em class="jxr_comment">//CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct</em>
+<a class="jxr_linenumber" name="31" href="#31">31</a>      <em class="jxr_comment">//CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Logger log = LoggerFactory.getLogger( <em class="jxr_comment">//NOPMD</em>
 <a class="jxr_linenumber" name="33" href="#33">33</a>              TransactionTest.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="34" href="#34">34</a>      <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="34" href="#34">34</a>      <em class="jxr_comment">//CHECKSTYLE:ON ConstantName</em>
 <a class="jxr_linenumber" name="35" href="#35">35</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="36" href="#36">36</a>  <em class="jxr_javadoccomment">     * BigDecimal test value.</em>
 <a class="jxr_linenumber" name="37" href="#37">37</a>  <em class="jxr_javadoccomment">     */</em>
@@ -64,9 +64,9 @@
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <em class="jxr_javadoccomment">     * @return ID of record inserted.</em>
 <a class="jxr_linenumber" name="55" href="#55">55</a>  <em class="jxr_javadoccomment">     * @throws Exception Possible exception.</em>
 <a class="jxr_linenumber" name="56" href="#56">56</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="57" href="#57">57</a>      <em class="jxr_comment">//CHECKSTYLE:OFF Guice methods cannot be final</em>
+<a class="jxr_linenumber" name="57" href="#57">57</a>      <em class="jxr_comment">//CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final</em>
 <a class="jxr_linenumber" name="58" href="#58">58</a>      @Transaction
-<a class="jxr_linenumber" name="59" href="#59">59</a>      <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="59" href="#59">59</a>      <em class="jxr_comment">//CHECKSTYLE:ON DesignForExtension</em>
 <a class="jxr_linenumber" name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> commitRec(<strong class="jxr_keyword">final</strong> DbAccess db, <strong class="jxr_keyword">final</strong> String sql) <strong class="jxr_keyword">throws</strong>
 <a class="jxr_linenumber" name="61" href="#61">61</a>              Exception {
 <a class="jxr_linenumber" name="62" href="#62">62</a>          <em class="jxr_comment">// Create parameter array</em>
@@ -93,9 +93,9 @@
 <a class="jxr_linenumber" name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * @param id Key of recored to check/delete.</em>
 <a class="jxr_linenumber" name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     * @throws SQLException possible exception.</em>
 <a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="86" href="#86">86</a>      <em class="jxr_comment">//CHECKSTYLE:OFF Guice methods cannot be final</em>
+<a class="jxr_linenumber" name="86" href="#86">86</a>      <em class="jxr_comment">//CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final</em>
 <a class="jxr_linenumber" name="87" href="#87">87</a>      @Transaction
-<a class="jxr_linenumber" name="88" href="#88">88</a>      <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="88" href="#88">88</a>      <em class="jxr_comment">//CHECKSTYLE:ON DesignForExtension</em>
 <a class="jxr_linenumber" name="89" href="#89">89</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> verifyCommit(<strong class="jxr_keyword">final</strong> DbAccess db, <strong class="jxr_keyword">final</strong> String selectSql,
 <a class="jxr_linenumber" name="90" href="#90">90</a>              <strong class="jxr_keyword">final</strong> String deleteSql, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> id) <strong class="jxr_keyword">throws</strong>
 <a class="jxr_linenumber" name="91" href="#91">91</a>              SQLException {
@@ -117,9 +117,9 @@
 <a class="jxr_linenumber" name="107" href="#107">107</a> <em class="jxr_javadoccomment">     * @return ID of record inserted.</em>
 <a class="jxr_linenumber" name="108" href="#108">108</a> <em class="jxr_javadoccomment">     * @throws Exception Possible exception.</em>
 <a class="jxr_linenumber" name="109" href="#109">109</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="110" href="#110">110</a>     <em class="jxr_comment">//CHECKSTYLE:OFF Guice methods cannot be final</em>
+<a class="jxr_linenumber" name="110" href="#110">110</a>     <em class="jxr_comment">//CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final</em>
 <a class="jxr_linenumber" name="111" href="#111">111</a>     @Transaction
-<a class="jxr_linenumber" name="112" href="#112">112</a>     <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="112" href="#112">112</a>     <em class="jxr_comment">//CHECKSTYLE:ON DesignForExtension</em>
 <a class="jxr_linenumber" name="113" href="#113">113</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> rollbackRec(<strong class="jxr_keyword">final</strong> DbAccess db, <strong class="jxr_keyword">final</strong> String sql) <strong class="jxr_keyword">throws</strong>
 <a class="jxr_linenumber" name="114" href="#114">114</a>             Exception {
 <a class="jxr_linenumber" name="115" href="#115">115</a>         <em class="jxr_comment">// Create parameter array</em>
@@ -150,9 +150,9 @@
 <a class="jxr_linenumber" name="140" href="#140">140</a> <em class="jxr_javadoccomment">     * @param id Key of recored to check/delete.</em>
 <a class="jxr_linenumber" name="141" href="#141">141</a> <em class="jxr_javadoccomment">     * @throws SQLException possible exception.</em>
 <a class="jxr_linenumber" name="142" href="#142">142</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="143" href="#143">143</a>     <em class="jxr_comment">//CHECKSTYLE:OFF Guice methods cannot be final</em>
+<a class="jxr_linenumber" name="143" href="#143">143</a>     <em class="jxr_comment">//CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final</em>
 <a class="jxr_linenumber" name="144" href="#144">144</a>     @Transaction
-<a class="jxr_linenumber" name="145" href="#145">145</a>     <em class="jxr_comment">//CHECKSTYLE:ON</em>
+<a class="jxr_linenumber" name="145" href="#145">145</a>     <em class="jxr_comment">//CHECKSTYLE:ON DesignForExtension</em>
 <a class="jxr_linenumber" name="146" href="#146">146</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> verifyRollback(<strong class="jxr_keyword">final</strong> DbAccess db, <strong class="jxr_keyword">final</strong> String selectSql,
 <a class="jxr_linenumber" name="147" href="#147">147</a>             <strong class="jxr_keyword">final</strong> String deleteSql, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> id) <strong class="jxr_keyword">throws</strong>
 <a class="jxr_linenumber" name="148" href="#148">148</a>             SQLException {
