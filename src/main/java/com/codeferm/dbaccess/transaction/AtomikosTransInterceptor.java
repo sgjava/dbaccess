@@ -62,7 +62,7 @@ public final class AtomikosTransInterceptor implements MethodInterceptor {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF ConstantName
+    //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             AtomikosTransInterceptor.class);
     //CHECKSTYLE:ON ConstantName

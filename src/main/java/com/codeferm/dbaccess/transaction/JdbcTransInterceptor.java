@@ -60,7 +60,7 @@ public final class JdbcTransInterceptor implements MethodInterceptor {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF ConstantName
+    //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             JdbcTransInterceptor.class);
     //CHECKSTYLE:ON ConstantName

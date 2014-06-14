@@ -22,12 +22,13 @@ import java.lang.annotation.Target;
  * @see com.codeferm.dbaccess.transaction.JdbcTransInterceptor
  * @see com.codeferm.dbaccess.transaction.JdbcTransModule
  * @see com.codeferm.dbaccess.transaction.TransactionFactory
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
  */
 @Documented
-@Retention(RetentionPolicy.RUNTIME) @Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface Transaction {
 }

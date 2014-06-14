@@ -28,10 +28,10 @@ public class TransactionTest {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF This is not a constant, so naming convenetion is correct
+    //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
     private static final Logger log = LoggerFactory.getLogger( //NOPMD
             TransactionTest.class);
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON ConstantName
     /**
      * BigDecimal test value.
      */
@@ -54,9 +54,9 @@ public class TransactionTest {
      * @return ID of record inserted.
      * @throws Exception Possible exception.
      */
-    //CHECKSTYLE:OFF Guice methods cannot be final
+    //CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final
     @Transaction
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON DesignForExtension
     public int commitRec(final DbAccess db, final String sql) throws
             Exception {
         // Create parameter array
@@ -83,9 +83,9 @@ public class TransactionTest {
      * @param id Key of recored to check/delete.
      * @throws SQLException possible exception.
      */
-    //CHECKSTYLE:OFF Guice methods cannot be final
+    //CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final
     @Transaction
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON DesignForExtension
     public void verifyCommit(final DbAccess db, final String selectSql,
             final String deleteSql, final int id) throws
             SQLException {
@@ -107,9 +107,9 @@ public class TransactionTest {
      * @return ID of record inserted.
      * @throws Exception Possible exception.
      */
-    //CHECKSTYLE:OFF Guice methods cannot be final
+    //CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final
     @Transaction
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON DesignForExtension
     public int rollbackRec(final DbAccess db, final String sql) throws
             Exception {
         // Create parameter array
@@ -140,9 +140,9 @@ public class TransactionTest {
      * @param id Key of recored to check/delete.
      * @throws SQLException possible exception.
      */
-    //CHECKSTYLE:OFF Guice methods cannot be final
+    //CHECKSTYLE:OFF DesignForExtension - Guice methods cannot be final
     @Transaction
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON DesignForExtension
     public void verifyRollback(final DbAccess db, final String selectSql,
             final String deleteSql, final int id) throws
             SQLException {

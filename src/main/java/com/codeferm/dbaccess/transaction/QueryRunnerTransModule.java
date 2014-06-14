@@ -10,14 +10,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
 
 /**
- * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in the
- * Guice module for methods annotated with
+ * Binds {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor} in
+ * the Guice module for methods annotated with
  * {@link com.codeferm.dbaccess.transaction.Transaction}.
  *
  * @see com.codeferm.dbaccess.transaction.Transaction
  * @see com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor
  * @see com.codeferm.dbaccess.transaction.TransactionFactory
- * 
+ *
  * @author sgoldsmith
  * @version 1.0.0
  * @since 1.0.0
@@ -29,7 +29,8 @@ public final class QueryRunnerTransModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        final QueryRunnerTransInterceptor interceptor = new QueryRunnerTransInterceptor();
+        final QueryRunnerTransInterceptor interceptor
+                = new QueryRunnerTransInterceptor();
         // Request injection of QueryRunnerTransInterceptor
         requestInjection(interceptor);
         // Match all methods of class with @Transaction annotation

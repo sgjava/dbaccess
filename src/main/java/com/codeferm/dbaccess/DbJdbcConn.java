@@ -37,7 +37,7 @@ public class DbJdbcConn extends DbBeanMapper {
     /**
      * Logger.
      */
-    //CHECKSTYLE:OFF ConstantName
+    //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
     private static final Logger log = LoggerFactory.getLogger(DbJdbcConn.class); //NOPMD
     //CHECKSTYLE:ON ConstantName
     /**

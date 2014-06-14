@@ -98,8 +98,8 @@ public final class TestTableDto implements Serializable {
      * @param realField REAL
      * @param doubleField DOUBLE
      */
-    //CHECKSTYLE:OFF It's OK to have more than 7 parameters to initilize constructor
-    public TestTableDto(final Integer id, final String charField, //CHECKSTYLE:ON
+    //CHECKSTYLE:OFF ParameterNumber
+    public TestTableDto(final Integer id, final String charField, //CHECKSTYLE:ON ParameterNumber
             final String varcharField, final Boolean booleanField,
             final Date dateField, final Date timeField,
             final Date timestampField, final Long bigintField,

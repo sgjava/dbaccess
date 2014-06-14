@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class adding simple bean mapping from database field names with
@@ -31,14 +29,6 @@ import org.slf4j.LoggerFactory;
  * @since 1.0.0
  */
 public abstract class DbBeanMapper extends DbAccess { //NOPMD, really, I have to call it AbstractXXX, screw that
-
-    /**
-     * Logger.
-     */
-    //CHECKSTYLE:OFF ConstantName
-    private static final Logger log = LoggerFactory.
-            getLogger(DbBeanMapper.class);  //NOPMD
-    //CHECKSTYLE:ON ConstantName
 
     /**
      * Convert bean property names from camelCase to underscore and return
