@@ -75,10 +75,8 @@ public abstract class DbBeanMapper extends DbAccess { //NOPMD, really, I have to
                 if (!field.isSynthetic()) {
                     PropertyDescriptor propertyDescriptor
                             = new PropertyDescriptor(field.getName(), clazz);  //NOPMD OK to create new PropertyDescriptor in loop
-                    if (propertyDescriptor != null) {
-                        map.put(field.getName(), propertyDescriptor.
-                                getWriteMethod());
-                    }
+                    map.put(field.getName(), propertyDescriptor.
+                            getWriteMethod());
                 }
             }
         } catch (IntrospectionException e) {

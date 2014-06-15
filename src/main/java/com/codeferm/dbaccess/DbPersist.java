@@ -6,6 +6,7 @@
  */
 package com.codeferm.dbaccess;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -117,6 +118,10 @@ public class DbPersist extends DbAccess {
      * @return {@code List} of {@code <T>} typed objects.
      */
     @Override
+    @SuppressFBWarnings(value
+            = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+            justification
+            = "SQL libraries are allowed to accept SQL as parameter")
     public final <T> List<T> selectList(final String sql,
             final Object[] params, final Class clazz) {
         if (log.isDebugEnabled()) {
@@ -134,6 +139,10 @@ public class DbPersist extends DbAccess {
      * @return {@code List} of Maps containing field name/value pair.
      */
     @Override
+    @SuppressFBWarnings(value
+            = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+            justification
+            = "SQL libraries are allowed to accept SQL as parameter")
     public final List<Map<String, Object>> selectList(final String sql,
             final Object[] params) {
         if (log.isDebugEnabled()) {
@@ -152,6 +161,10 @@ public class DbPersist extends DbAccess {
      * @return Number of rows updated.
      */
     @Override
+    @SuppressFBWarnings(value
+            = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+            justification
+            = "SQL libraries are allowed to accept SQL as parameter")
     public final int update(final String sql, final Object[] params) {
         if (log.isDebugEnabled()) {
             log.debug(String.format("update: sql=%s, params=%s", sql, Arrays.
@@ -170,6 +183,10 @@ public class DbPersist extends DbAccess {
      * @return Field name/value pairs of keys.
      */
     @Override
+    @SuppressFBWarnings(value
+            = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+            justification
+            = "SQL libraries are allowed to accept SQL as parameter")
     public final Map<String, Object> updateReturnKeys(final String sql,
             final Object[] params) {
         if (log.isDebugEnabled()) {
@@ -218,6 +235,10 @@ public class DbPersist extends DbAccess {
      * @return Number of rows updated array.
      */
     @Override
+    @SuppressFBWarnings(value
+            = "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING",
+            justification
+            = "SQL libraries are allowed to accept SQL as parameter")
     public final int[] batch(final String sql, final Object[][] params) {
         if (log.isDebugEnabled()) {
             log.debug(String.format("batch: sql=%s", sql));

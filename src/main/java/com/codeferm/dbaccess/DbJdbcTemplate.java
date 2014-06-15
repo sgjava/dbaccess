@@ -6,6 +6,7 @@
  */
 package com.codeferm.dbaccess;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -139,6 +140,8 @@ public class DbJdbcTemplate extends DbAccess {
      * @return Field name/value pairs of keys.
      */
     @Override
+    @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC_ANON", justification
+            = "This mimics how Spring does it")
     public final Map<String, Object> updateReturnKeys(final String sql,
             final Object[] params) {
         if (log.isDebugEnabled()) {
@@ -151,6 +154,8 @@ public class DbJdbcTemplate extends DbAccess {
         final PreparedStatementCreator psc = new PreparedStatementCreator() {
 
             @Override
+            @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC_ANON",
+                    justification = "This mimics how Spring does it")
             public final PreparedStatement createPreparedStatement(
                     final Connection con) throws SQLException {
                 PreparedStatement preparedStatement = con.
