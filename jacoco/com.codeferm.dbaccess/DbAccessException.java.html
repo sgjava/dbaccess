@@ -10,8 +10,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * {@link java.lang.RuntimeException} used by {@link com.codeferm.dbaccess.DbAccess}
- * implementations.
+ * {@link java.lang.RuntimeException} used by
+ * {@link com.codeferm.dbaccess.DbAccess} implementations.
  *
  * @author sgoldsmith
  * @version 1.0.0
