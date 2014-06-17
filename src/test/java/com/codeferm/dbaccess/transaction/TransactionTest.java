@@ -29,7 +29,7 @@ public class TransactionTest {
      * Logger.
      */
     //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
-    private static final Logger log = LoggerFactory.getLogger( //NOPMD
+    private static final Logger log = LoggerFactory.getLogger(//NOPMD
             TransactionTest.class);
     //CHECKSTYLE:ON ConstantName
     /**

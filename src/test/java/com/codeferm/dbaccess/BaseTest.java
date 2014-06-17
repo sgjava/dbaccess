@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.dbutils.QueryLoader;
+import static org.junit.Assert.assertNotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Base test class with common methods used by all other tests. Primarily those
@@ -29,12 +29,12 @@ import static org.junit.Assert.assertNotNull;
 public class BaseTest {
 
     /**
-     * This would usually be private static final, but I want the extended
-     * class name to display for tests.
+     * This would usually be private static final, but I want the extended class
+     * name to display for tests.
      */
-    //CHECKSTYLE:OFF Read comment above
+    //CHECKSTYLE:OFF VisibilityModifier -Read comment above
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    //CHECKSTYLE:ON
+    //CHECKSTYLE:ON VisibilityModifier
     /**
      * Used for all tests to multiply loops by connection pool size.
      */

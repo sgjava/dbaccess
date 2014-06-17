@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple factory class that returns and Object with methods wrapped in a
  * transaction if the method is annotated with
- * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor null {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
+ * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor
+ * null {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
  * {@link com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor} or
  * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded with
  * Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
@@ -34,7 +35,7 @@ public final class TransactionFactory {
      * Logger.
      */
     //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
-    private static final Logger log = LoggerFactory.getLogger( //NOPMD
+    private static final Logger log = LoggerFactory.getLogger(//NOPMD
             TransactionFactory.class);
     //CHECKSTYLE:ON ConstantName
 

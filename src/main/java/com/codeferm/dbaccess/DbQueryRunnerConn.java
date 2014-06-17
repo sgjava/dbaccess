@@ -40,7 +40,7 @@ public class DbQueryRunnerConn extends DbAccess {
      * Logger.
      */
     //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
-    private static final Logger log = LoggerFactory.getLogger( //NOPMD
+    private static final Logger log = LoggerFactory.getLogger(//NOPMD
             DbQueryRunnerConn.class);
     //CHECKSTYLE:ON ConstantName
     /**

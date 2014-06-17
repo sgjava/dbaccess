@@ -37,7 +37,7 @@ public class DbJdbcTemplate extends DbAccess {
      * Logger.
      */
     //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
-    private static final Logger log = LoggerFactory.getLogger( //NOPMD
+    private static final Logger log = LoggerFactory.getLogger(//NOPMD
             DbJdbcTemplate.class);
     //CHECKSTYLE:ON ConstantName
     /**
