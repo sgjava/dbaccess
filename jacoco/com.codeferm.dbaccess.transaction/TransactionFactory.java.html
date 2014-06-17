@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple factory class that returns and Object with methods wrapped in a
  * transaction if the method is annotated with
- * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor null {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
+ * {@link com.codeferm.dbaccess.transaction.Transaction}. The method interceptor
+ * null {@link com.codeferm.dbaccess.transaction.AtomikosTransInterceptor},
  * {@link com.codeferm.dbaccess.transaction.QueryRunnerTransInterceptor} or
  * {@link com.codeferm.dbaccess.transaction.JdbcTransInterceptor} is binded with
  * Guice using {@link com.codeferm.dbaccess.transaction.AtomikosTransModule}.
@@ -34,15 +35,15 @@ public final class TransactionFactory {
      * Logger.
      */
     //CHECKSTYLE:OFF ConstantName - Logger is static final, not a constant
-<span class="fc" id="L37">    private static final Logger log = LoggerFactory.getLogger( //NOPMD</span>
+<span class="fc" id="L38">    private static final Logger log = LoggerFactory.getLogger(//NOPMD</span>
             TransactionFactory.class);
     //CHECKSTYLE:ON ConstantName
 
     /**
      * Suppress default constructor for non-instantiability.
      */
-<span class="nc" id="L44">    private TransactionFactory() {</span>
-<span class="nc" id="L45">        throw new AssertionError();</span>
+<span class="nc" id="L45">    private TransactionFactory() {</span>
+<span class="nc" id="L46">        throw new AssertionError();</span>
     }
 
     /**
@@ -55,21 +56,21 @@ public final class TransactionFactory {
      */
     public static &lt;T&gt; T createObject(final Class&lt;T&gt; clazz,
             final Class&lt;? extends AbstractModule&gt; transModule) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L59">            log.debug(String.format(&quot;Creating transactional object for %s&quot;,</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L60">            log.debug(String.format(&quot;Creating transactional object for %s&quot;,</span>
                     clazz.getName()));
         }
-<span class="fc" id="L62">        T object = null;</span>
+<span class="fc" id="L63">        T object = null;</span>
         try {
-<span class="fc" id="L64">            object = Guice.createInjector(transModule.newInstance()).</span>
+<span class="fc" id="L65">            object = Guice.createInjector(transModule.newInstance()).</span>
                     getInstance(
                             clazz);
-<span class="nc" id="L67">        } catch (InstantiationException e) {</span>
-<span class="nc" id="L68">            throw new DbAccessException(e);</span>
-<span class="nc" id="L69">        } catch (IllegalAccessException e) {</span>
-<span class="nc" id="L70">            throw new DbAccessException(e);</span>
-<span class="fc" id="L71">        }</span>
-<span class="fc" id="L72">        return object;</span>
+<span class="nc" id="L68">        } catch (InstantiationException e) {</span>
+<span class="nc" id="L69">            throw new DbAccessException(e);</span>
+<span class="nc" id="L70">        } catch (IllegalAccessException e) {</span>
+<span class="nc" id="L71">            throw new DbAccessException(e);</span>
+<span class="fc" id="L72">        }</span>
+<span class="fc" id="L73">        return object;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
