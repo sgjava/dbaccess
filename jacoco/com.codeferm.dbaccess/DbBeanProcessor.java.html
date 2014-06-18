@@ -10,11 +10,12 @@ import java.beans.PropertyDescriptor;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
 import org.apache.commons.dbutils.BeanProcessor;
 
 /**
- * DbUtils {@code BeanProcessor} to convert underscore &quot;_&quot; database field
- * names to camelCase.
+ * DbUtils {@code BeanProcessor} to convert underscore &quot;_&quot; database field names
+ * to camelCase.
  *
  *
  * @see com.codeferm.dbaccess.DbQueryRunnerConn
@@ -24,7 +25,7 @@ import org.apache.commons.dbutils.BeanProcessor;
  * @version 1.0.0
  * @since 1.0.0
  */
-<span class="fc" id="L27">public class DbBeanProcessor extends BeanProcessor {</span>
+<span class="fc" id="L28">public class DbBeanProcessor extends BeanProcessor {</span>
 
     /**
      * Map ResultSet to bean properties.
@@ -37,21 +38,21 @@ import org.apache.commons.dbutils.BeanProcessor;
     @Override
     protected final int[] mapColumnsToProperties(final ResultSetMetaData rsmd,
             final PropertyDescriptor[] props) throws SQLException {
-<span class="fc" id="L40">        final int cols = rsmd.getColumnCount();</span>
-<span class="fc" id="L41">        final int[] columnToProperty = new int[cols + 1];</span>
-<span class="fc" id="L42">        Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (int propIndex = 0; propIndex &lt; props.length; propIndex++) {</span>
-<span class="fc" id="L44">            final String propName = props[propIndex].getName();</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">            for (int col = 1; col &lt;= cols; col++) {</span>
-<span class="fc" id="L46">                final String columnName = this.toCamelCase(rsmd.getColumnName(</span>
+<span class="fc" id="L41">        final int cols = rsmd.getColumnCount();</span>
+<span class="fc" id="L42">        final int[] columnToProperty = new int[cols + 1];</span>
+<span class="fc" id="L43">        Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int propIndex = 0; propIndex &lt; props.length; propIndex++) {</span>
+<span class="fc" id="L45">            final String propName = props[propIndex].getName();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            for (int col = 1; col &lt;= cols; col++) {</span>
+<span class="fc" id="L47">                final String columnName = this.toCamelCase(rsmd.getColumnName(</span>
                         col));
-<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(propName)) {</span>
-<span class="fc" id="L49">                    columnToProperty[col] = propIndex;</span>
-<span class="fc" id="L50">                    break;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(propName)) {</span>
+<span class="fc" id="L50">                    columnToProperty[col] = propIndex;</span>
+<span class="fc" id="L51">                    break;</span>
                 }
             }
         }
-<span class="fc" id="L54">        return columnToProperty;</span>
+<span class="fc" id="L55">        return columnToProperty;</span>
     }
 
     /**
@@ -61,13 +62,12 @@ import org.apache.commons.dbutils.BeanProcessor;
      * @return camelCase String.
      */
     private String toCamelCase(final String underscoreStr) {
-<span class="fc" id="L64">        final StringBuffer sbStr = new StringBuffer();</span>
-<span class="fc" id="L65">        final String[] str = underscoreStr.split(&quot;_&quot;);</span>
-<span class="fc" id="L66">        boolean firstTime = true;</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (String temp : str) {</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (firstTime) {</span>
-<span class="fc" id="L69">                sbStr.append(temp.toLowerCase()); //NOPMD, Locale.getDefault() is</span>
-                // used
+<span class="fc" id="L65">        final StringBuffer sbStr = new StringBuffer();</span>
+<span class="fc" id="L66">        final String[] str = underscoreStr.split(&quot;_&quot;);</span>
+<span class="fc" id="L67">        boolean firstTime = true;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (String temp : str) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (firstTime) {</span>
+<span class="fc" id="L70">                sbStr.append(temp.toLowerCase(Locale.ENGLISH));</span>
 <span class="fc" id="L71">                firstTime = false;</span>
             } else {
 <span class="fc" id="L73">                sbStr.append(Character.toUpperCase(temp.charAt(0)));</span>

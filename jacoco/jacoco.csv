@@ -11,7 +11,7 @@ DB Access,com.codeferm.dbaccess,DbJdbcConn,326,386,31,33,48,101,26,17,3,8
 DB Access,com.codeferm.dbaccess,DbJdbcTemplate,104,81,7,5,10,19,8,8,2,8
 DB Access,com.codeferm.dbaccess,DbJdbcDs,382,436,45,39,53,124,35,17,2,8
 DB Access,com.codeferm.dbaccess,DbQueryRunnerConn,211,163,7,5,25,44,11,8,5,8
-DB Access,com.codeferm.dbaccess,DbBeanProcessor,0,104,0,10,0,22,0,8,0,3
+DB Access,com.codeferm.dbaccess,DbBeanProcessor,0,105,0,10,0,22,0,8,0,3
 DB Access,com.codeferm.dbaccess,DbBeanMapper,30,178,0,16,10,33,0,12,0,4
 DB Access,com.codeferm.dbaccess,DbJdbcTemplate.new PreparedStatementCreator() {...},0,44,0,2,0,6,0,3,0,2
 DB Access,com.codeferm.dbaccess,DbQueryRunnerDs,189,154,7,5,18,44,8,8,2,8
