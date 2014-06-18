@@ -10,11 +10,12 @@ import java.beans.PropertyDescriptor;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
 import org.apache.commons.dbutils.BeanProcessor;
 
 /**
- * DbUtils {@code BeanProcessor} to convert underscore "_" database field
- * names to camelCase.
+ * DbUtils {@code BeanProcessor} to convert underscore "_" database field names
+ * to camelCase.
  *
  *
  * @see com.codeferm.dbaccess.DbQueryRunnerConn
@@ -66,8 +67,7 @@ public class DbBeanProcessor extends BeanProcessor {
         boolean firstTime = true;
         for (String temp : str) {
             if (firstTime) {
-                sbStr.append(temp.toLowerCase()); //NOPMD, Locale.getDefault() is
-                // used
+                sbStr.append(temp.toLowerCase(Locale.ENGLISH));
                 firstTime = false;
             } else {
                 sbStr.append(Character.toUpperCase(temp.charAt(0)));

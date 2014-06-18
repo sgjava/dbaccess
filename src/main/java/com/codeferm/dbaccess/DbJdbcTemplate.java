@@ -154,8 +154,10 @@ public class DbJdbcTemplate extends DbAccess {
         final PreparedStatementCreator psc = new PreparedStatementCreator() {
 
             @Override
-            @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC_ANON",
-                    justification = "This mimics how Spring does it")
+            @SuppressFBWarnings(value = {"SIC_INNER_SHOULD_BE_STATIC_ANON",
+                "SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING"},
+                    justification
+                    = "This mimics how Spring does it, SQL libraries are allowed to accept SQL as parameter")
             public final PreparedStatement createPreparedStatement(
                     final Connection con) throws SQLException {
                 PreparedStatement preparedStatement = con.
