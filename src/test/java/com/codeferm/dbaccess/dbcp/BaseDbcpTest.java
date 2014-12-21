@@ -7,10 +7,10 @@
 package com.codeferm.dbaccess.dbcp;
 
 import com.codeferm.dbaccess.BaseTest;
-import org.apache.commons.dbcp.BasicDataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +54,7 @@ public class BaseDbcpTest extends BaseTest {
         ds.setUsername(getProperties().getProperty("db.user"));
         ds.setPassword(getProperties().getProperty("db.password"));
         ds.setUrl(getProperties().getProperty("db.url"));
-        ds.setMaxActive(Integer.parseInt(getProperties().getProperty(
+        ds.setMaxTotal(Integer.parseInt(getProperties().getProperty(
                 "db.pool.size")));
         dataSource = ds;
     }
