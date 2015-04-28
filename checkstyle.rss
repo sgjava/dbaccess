@@ -23,7 +23,7 @@ under the License.
     <link>https://github.com/sgjava/dbaccess</link>
     <description>DB Access - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2014</copyright>
+    <copyright>&#169;2015</copyright>
     <item>
       <title>File: 20,
              Errors: 1,
@@ -158,6 +158,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.DbJdbcTemplate.java">com/codeferm/dbaccess/DbJdbcTemplate.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.package-info.java">com/codeferm/dbaccess/transaction/package-info.java</a>
                 </td>
                 <td>
@@ -186,7 +200,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.DbJdbcTemplate.java">com/codeferm/dbaccess/DbJdbcTemplate.java</a>
+                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.AtomikosTransInterceptor.java">com/codeferm/dbaccess/transaction/AtomikosTransInterceptor.java</a>
                 </td>
                 <td>
                   0
@@ -195,26 +209,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
               </tr>
                           <tr>
                 <td>
                   <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.AtomikosTransModule.java">com/codeferm/dbaccess/transaction/AtomikosTransModule.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.AtomikosTransInterceptor.java">com/codeferm/dbaccess/transaction/AtomikosTransInterceptor.java</a>
                 </td>
                 <td>
                   0
@@ -242,7 +242,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.JdbcTransInterceptor.java">com/codeferm/dbaccess/transaction/JdbcTransInterceptor.java</a>
+                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.package-info.java">com/codeferm/dbaccess/package-info.java</a>
                 </td>
                 <td>
                   0
@@ -256,7 +256,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.package-info.java">com/codeferm/dbaccess/package-info.java</a>
+                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.JdbcTransInterceptor.java">com/codeferm/dbaccess/transaction/JdbcTransInterceptor.java</a>
                 </td>
                 <td>
                   0
