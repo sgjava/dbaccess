@@ -101,16 +101,16 @@ public class DbQueryRunnerDs extends DbAccess {
         }
 <span class="fc" id="L102">        List&lt;T&gt; list = null;</span>
         try {
-<span class="fc" id="L104">            list = (List&lt;T&gt;) template.query(sql,</span>
+<span class="nc" id="L104">            list = (List&lt;T&gt;) template.query(sql,</span>
                     new BeanListHandler(clazz,
                             new BasicRowProcessor(new DbBeanProcessor())),
                     params);
-<span class="nc" id="L108">        } catch (SQLException e) {</span>
-<span class="nc" id="L109">            throw new DbAccessException(String.format(</span>
+<span class="fc" id="L108">        } catch (SQLException e) {</span>
+<span class="fc" id="L109">            throw new DbAccessException(String.format(</span>
                     &quot;selectBeanList: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
-<span class="fc" id="L112">        }</span>
-<span class="fc" id="L113">        return list;</span>
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">        return list;</span>
     }
 
     /**
@@ -134,14 +134,14 @@ public class DbQueryRunnerDs extends DbAccess {
         }
 <span class="fc" id="L135">        List&lt;Map&lt;String, Object&gt;&gt; list = null;</span>
         try {
-<span class="fc" id="L137">            list = template.query(sql, new MapListHandler(),</span>
+<span class="nc" id="L137">            list = template.query(sql, new MapListHandler(),</span>
                     params);
-<span class="nc" id="L139">        } catch (SQLException e) {</span>
-<span class="nc" id="L140">            throw new DbAccessException(String.format(</span>
+<span class="fc" id="L139">        } catch (SQLException e) {</span>
+<span class="fc" id="L140">            throw new DbAccessException(String.format(</span>
                     &quot;selectMapList: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
-<span class="fc" id="L143">        }</span>
-<span class="fc" id="L144">        return list;</span>
+<span class="nc" id="L143">        }</span>
+<span class="nc" id="L144">        return list;</span>
     }
 
     /**
@@ -158,19 +158,19 @@ public class DbQueryRunnerDs extends DbAccess {
             justification
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final int update(final String sql, final Object[] params) {
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L162">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
                     asList(params)));
         }
-<span class="fc" id="L165">        int rows = -1;</span>
+<span class="nc" id="L165">        int rows = -1;</span>
         try {
-<span class="fc" id="L167">            rows = template.update(sql, params);</span>
-<span class="fc" id="L168">        } catch (SQLException e) {</span>
-<span class="fc" id="L169">            throw new DbAccessException(String.format(</span>
+<span class="nc" id="L167">            rows = template.update(sql, params);</span>
+<span class="nc" id="L168">        } catch (SQLException e) {</span>
+<span class="nc" id="L169">            throw new DbAccessException(String.format(</span>
                     &quot;update: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
-<span class="fc" id="L172">        }</span>
-<span class="fc" id="L173">        return rows;</span>
+<span class="nc" id="L172">        }</span>
+<span class="nc" id="L173">        return rows;</span>
     }
 
     /**
@@ -199,26 +199,26 @@ public class DbQueryRunnerDs extends DbAccess {
 <span class="fc" id="L199">        ResultSet resultSet = null; //NOPMD, DbUtils uses closeQuietly</span>
         try {
             // Get Connection from QueryRunner DataSource
-<span class="fc" id="L202">            connection = template.getDataSource().getConnection();</span>
-<span class="fc" id="L203">            preparedStatement = connection.prepareStatement(sql,</span>
+<span class="nc" id="L202">            connection = template.getDataSource().getConnection();</span>
+<span class="nc" id="L203">            preparedStatement = connection.prepareStatement(sql,</span>
                     Statement.RETURN_GENERATED_KEYS);
             // Fill parameters
-<span class="fc" id="L206">            template.fillStatement(preparedStatement, params);</span>
-<span class="fc" id="L207">            preparedStatement.executeUpdate();</span>
+<span class="nc" id="L206">            template.fillStatement(preparedStatement, params);</span>
+<span class="nc" id="L207">            preparedStatement.executeUpdate();</span>
             // Get keys as ResultSet
-<span class="fc" id="L209">            resultSet = preparedStatement.getGeneratedKeys();</span>
+<span class="nc" id="L209">            resultSet = preparedStatement.getGeneratedKeys();</span>
             // Get generated keys as Object array
-<span class="fc" id="L211">            keys = new MapHandler().handle(resultSet);</span>
-<span class="nc" id="L212">        } catch (SQLException e) {</span>
-<span class="nc" id="L213">            throw new DbAccessException(String.format(</span>
+<span class="nc" id="L211">            keys = new MapHandler().handle(resultSet);</span>
+<span class="fc" id="L212">        } catch (SQLException e) {</span>
+<span class="fc" id="L213">            throw new DbAccessException(String.format(</span>
                     &quot;updateReturnKeys: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
 <span class="pc" id="L217">            DbUtils.closeQuietly(resultSet);</span>
 <span class="pc" id="L218">            DbUtils.closeQuietly(preparedStatement);</span>
 <span class="pc" id="L219">            DbUtils.closeQuietly(connection);</span>
-<span class="fc" id="L220">        }</span>
-<span class="fc" id="L221">        return keys;</span>
+<span class="nc" id="L220">        }</span>
+<span class="nc" id="L221">        return keys;</span>
     }
 
     /**
@@ -245,13 +245,13 @@ public class DbQueryRunnerDs extends DbAccess {
         }
 <span class="fc" id="L246">        int[] rows = null;</span>
         try {
-<span class="fc" id="L248">            rows = template.batch(sql, params);</span>
-<span class="nc" id="L249">        } catch (SQLException e) {</span>
-<span class="nc" id="L250">            throw new DbAccessException(String.format(</span>
+<span class="nc" id="L248">            rows = template.batch(sql, params);</span>
+<span class="fc" id="L249">        } catch (SQLException e) {</span>
+<span class="fc" id="L250">            throw new DbAccessException(String.format(</span>
                     &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
-<span class="fc" id="L253">        }</span>
-<span class="fc" id="L254">        return rows;</span>
+<span class="nc" id="L253">        }</span>
+<span class="nc" id="L254">        return rows;</span>
     }
 
     /**

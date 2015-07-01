@@ -53,11 +53,11 @@ public class DbPersist extends DbAccess {
      */
     public DbPersist(final DataSource dataSource) throws SQLException {
 <span class="fc" id="L55">        super();</span>
-<span class="fc" id="L56">        connection = dataSource.getConnection();</span>
-<span class="fc" id="L57">        template = new Persist(connection);</span>
+<span class="nc" id="L56">        connection = dataSource.getConnection();</span>
+<span class="nc" id="L57">        template = new Persist(connection);</span>
         // Automatically close prepared statements after reads
-<span class="fc" id="L59">        template.setClosePreparedStatementsAfterRead(true);</span>
-<span class="fc" id="L60">    }</span>
+<span class="nc" id="L59">        template.setClosePreparedStatementsAfterRead(true);</span>
+<span class="nc" id="L60">    }</span>
 
     /**
      * Construct new {@code Persist} object with {@code Connection}.
@@ -124,11 +124,11 @@ public class DbPersist extends DbAccess {
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final &lt;T&gt; List&lt;T&gt; selectList(final String sql,
             final Object[] params, final Class clazz) {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L128">            log.debug(String.format(&quot;selectBeanList: sql=%s, params=%s&quot;, sql,</span>
                     Arrays.asList(params)));
         }
-<span class="fc" id="L131">        return (List&lt;T&gt;) template.readList(clazz, sql, params);</span>
+<span class="nc" id="L131">        return (List&lt;T&gt;) template.readList(clazz, sql, params);</span>
     }
 
     /**
@@ -145,11 +145,11 @@ public class DbPersist extends DbAccess {
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
             final Object[] params) {
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L149">            log.debug(String.format(&quot;selectMapList: sql=%s, params=%s&quot;, sql,</span>
                     Arrays.asList(params)));
         }
-<span class="fc" id="L152">        return template.readMapList(sql, params);</span>
+<span class="nc" id="L152">        return template.readMapList(sql, params);</span>
     }
 
     /**
@@ -166,11 +166,11 @@ public class DbPersist extends DbAccess {
             justification
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final int update(final String sql, final Object[] params) {
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L170">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
                     asList(params)));
         }
-<span class="fc" id="L173">        return template.executeUpdate(sql, params);</span>
+<span class="nc" id="L173">        return template.executeUpdate(sql, params);</span>
     }
 
     /**
@@ -189,25 +189,25 @@ public class DbPersist extends DbAccess {
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final Map&lt;String, Object&gt; updateReturnKeys(final String sql,
             final Object[] params) {
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L193">            log.debug(String.format(&quot;updateReturnKeys: sql=%s, params=%s&quot;, sql,</span>
                     Arrays.asList(params)));
         }
-<span class="fc" id="L196">        Map&lt;String, Object&gt; keys = null;</span>
-<span class="fc" id="L197">        PreparedStatement preparedStatement = null;</span>
-<span class="fc" id="L198">        ResultSet resultSet = null;</span>
+<span class="nc" id="L196">        Map&lt;String, Object&gt; keys = null;</span>
+<span class="nc" id="L197">        PreparedStatement preparedStatement = null;</span>
+<span class="nc" id="L198">        ResultSet resultSet = null;</span>
         try {
-<span class="fc" id="L200">            preparedStatement = connection.prepareStatement(sql,</span>
+<span class="nc" id="L200">            preparedStatement = connection.prepareStatement(sql,</span>
                     Statement.RETURN_GENERATED_KEYS);
             // Fill parameters
-<span class="fc" id="L203">            Persist.setParameters(preparedStatement, params);</span>
-<span class="fc" id="L204">            preparedStatement.executeUpdate();</span>
+<span class="nc" id="L203">            Persist.setParameters(preparedStatement, params);</span>
+<span class="nc" id="L204">            preparedStatement.executeUpdate();</span>
             // Get keys as ResultSet
-<span class="fc" id="L206">            resultSet = preparedStatement.getGeneratedKeys();</span>
+<span class="nc" id="L206">            resultSet = preparedStatement.getGeneratedKeys();</span>
             // Prime the pump
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">            if (resultSet.next()) {</span>
                 // Get generated keys as Map of field name/value
-<span class="fc" id="L210">                keys = Persist.loadMap(resultSet);</span>
+<span class="nc" id="L210">                keys = Persist.loadMap(resultSet);</span>
             }
 <span class="nc" id="L212">        } catch (SQLException e) {</span>
 <span class="nc" id="L213">            throw new DbAccessException(String.format(</span>
@@ -215,15 +215,15 @@ public class DbPersist extends DbAccess {
                             params)), e);
         } finally {
 <span class="nc" id="L217">            try {</span>
-<span class="pc bpc" id="L218" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
-<span class="pc" id="L219">                    resultSet.close();</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">                if (resultSet != null) {</span>
+<span class="nc" id="L219">                    resultSet.close();</span>
                 }
 <span class="nc" id="L221">            } catch (SQLException e) {</span>
 <span class="nc" id="L222">                log.error(e.getMessage());</span>
-<span class="pc" id="L223">            }</span>
-<span class="pc" id="L224">            template.closePreparedStatement(preparedStatement);</span>
-<span class="fc" id="L225">        }</span>
-<span class="fc" id="L226">        return keys;</span>
+<span class="nc" id="L223">            }</span>
+<span class="nc" id="L224">            template.closePreparedStatement(preparedStatement);</span>
+<span class="nc" id="L225">        }</span>
+<span class="nc" id="L226">        return keys;</span>
     }
 
     /**
@@ -240,7 +240,7 @@ public class DbPersist extends DbAccess {
             justification
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final int[] batch(final String sql, final Object[][] params) {
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L244">            log.debug(String.format(&quot;batch: sql=%s&quot;, sql));</span>
 <span class="nc bnc" id="L245" title="All 2 branches missed.">            for (Object[] param : params) {</span>
 <span class="nc" id="L246">                log.debug(</span>
@@ -248,26 +248,26 @@ public class DbPersist extends DbAccess {
                                 Arrays.asList(param)));
             }
         }
-<span class="fc" id="L251">        int[] rows = null;</span>
-<span class="fc" id="L252">        PreparedStatement preparedStatement = null;</span>
+<span class="nc" id="L251">        int[] rows = null;</span>
+<span class="nc" id="L252">        PreparedStatement preparedStatement = null;</span>
         try {
-<span class="fc" id="L254">            preparedStatement = connection.prepareStatement(sql);</span>
+<span class="nc" id="L254">            preparedStatement = connection.prepareStatement(sql);</span>
             // Add parameter arrays to batch
-<span class="fc bfc" id="L256" title="All 2 branches covered.">            for (Object[] param : params) {</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">            for (Object[] param : params) {</span>
                 // Fill parameters
-<span class="fc" id="L258">                Persist.setParameters(preparedStatement, param);</span>
+<span class="nc" id="L258">                Persist.setParameters(preparedStatement, param);</span>
                 // Add to batch
-<span class="fc" id="L260">                preparedStatement.addBatch();</span>
+<span class="nc" id="L260">                preparedStatement.addBatch();</span>
             }
-<span class="fc" id="L262">            rows = preparedStatement.executeBatch();</span>
+<span class="nc" id="L262">            rows = preparedStatement.executeBatch();</span>
 <span class="nc" id="L263">        } catch (SQLException e) {</span>
 <span class="nc" id="L264">            throw new DbAccessException(String.format(</span>
                     &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="pc" id="L268">            template.closePreparedStatement(preparedStatement);</span>
-<span class="fc" id="L269">        }</span>
-<span class="fc" id="L270">        return rows;</span>
+<span class="nc" id="L268">            template.closePreparedStatement(preparedStatement);</span>
+<span class="nc" id="L269">        }</span>
+<span class="nc" id="L270">        return rows;</span>
     }
 
     /**
@@ -276,10 +276,10 @@ public class DbPersist extends DbAccess {
     @Override
     public final void cleanUp() {
         try {
-<span class="fc" id="L279">            connection.close();</span>
+<span class="nc" id="L279">            connection.close();</span>
 <span class="nc" id="L280">        } catch (SQLException e) {</span>
 <span class="nc" id="L281">            log.error(e.getMessage());</span>
-<span class="fc" id="L282">        }</span>
-<span class="fc" id="L283">    }</span>
+<span class="nc" id="L282">        }</span>
+<span class="nc" id="L283">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
