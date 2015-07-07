@@ -38,21 +38,21 @@ import org.apache.commons.dbutils.BeanProcessor;
     @Override
     protected final int[] mapColumnsToProperties(final ResultSetMetaData rsmd,
             final PropertyDescriptor[] props) throws SQLException {
-<span class="fc" id="L41">        final int cols = rsmd.getColumnCount();</span>
-<span class="fc" id="L42">        final int[] columnToProperty = new int[cols + 1];</span>
-<span class="fc" id="L43">        Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (int propIndex = 0; propIndex &lt; props.length; propIndex++) {</span>
-<span class="fc" id="L45">            final String propName = props[propIndex].getName();</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">            for (int col = 1; col &lt;= cols; col++) {</span>
-<span class="fc" id="L47">                final String columnName = this.toCamelCase(rsmd.getColumnName(</span>
+<span class="nc" id="L41">        final int cols = rsmd.getColumnCount();</span>
+<span class="nc" id="L42">        final int[] columnToProperty = new int[cols + 1];</span>
+<span class="nc" id="L43">        Arrays.fill(columnToProperty, PROPERTY_NOT_FOUND);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        for (int propIndex = 0; propIndex &lt; props.length; propIndex++) {</span>
+<span class="nc" id="L45">            final String propName = props[propIndex].getName();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            for (int col = 1; col &lt;= cols; col++) {</span>
+<span class="nc" id="L47">                final String columnName = this.toCamelCase(rsmd.getColumnName(</span>
                         col));
-<span class="fc bfc" id="L49" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(propName)) {</span>
-<span class="fc" id="L50">                    columnToProperty[col] = propIndex;</span>
-<span class="fc" id="L51">                    break;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                if (columnName.equalsIgnoreCase(propName)) {</span>
+<span class="nc" id="L50">                    columnToProperty[col] = propIndex;</span>
+<span class="nc" id="L51">                    break;</span>
                 }
             }
         }
-<span class="fc" id="L55">        return columnToProperty;</span>
+<span class="nc" id="L55">        return columnToProperty;</span>
     }
 
     /**
@@ -62,19 +62,19 @@ import org.apache.commons.dbutils.BeanProcessor;
      * @return camelCase String.
      */
     private String toCamelCase(final String underscoreStr) {
-<span class="fc" id="L65">        final StringBuffer sbStr = new StringBuffer();</span>
-<span class="fc" id="L66">        final String[] str = underscoreStr.split(&quot;_&quot;);</span>
-<span class="fc" id="L67">        boolean firstTime = true;</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (String temp : str) {</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (firstTime) {</span>
-<span class="fc" id="L70">                sbStr.append(temp.toLowerCase(Locale.ENGLISH));</span>
-<span class="fc" id="L71">                firstTime = false;</span>
+<span class="nc" id="L65">        final StringBuffer sbStr = new StringBuffer();</span>
+<span class="nc" id="L66">        final String[] str = underscoreStr.split(&quot;_&quot;);</span>
+<span class="nc" id="L67">        boolean firstTime = true;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for (String temp : str) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            if (firstTime) {</span>
+<span class="nc" id="L70">                sbStr.append(temp.toLowerCase(Locale.ENGLISH));</span>
+<span class="nc" id="L71">                firstTime = false;</span>
             } else {
-<span class="fc" id="L73">                sbStr.append(Character.toUpperCase(temp.charAt(0)));</span>
-<span class="fc" id="L74">                sbStr.append(temp.substring(1).toLowerCase());</span>
+<span class="nc" id="L73">                sbStr.append(Character.toUpperCase(temp.charAt(0)));</span>
+<span class="nc" id="L74">                sbStr.append(temp.substring(1).toLowerCase());</span>
             }
         }
-<span class="fc" id="L77">        return sbStr.toString();</span>
+<span class="nc" id="L77">        return sbStr.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
