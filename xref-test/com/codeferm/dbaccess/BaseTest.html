@@ -82,43 +82,42 @@
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      @BeforeClass
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setUpClass() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          <em class="jxr_comment">// Config path for externalized files</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">final</strong> String configPath = System.getProperty(<span class="jxr_string">"user.home"</span>)
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>                  + <span class="jxr_string">"/config/dbaccess/"</span>;
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          <em class="jxr_comment">// Set log4j.properties location</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          File file = <strong class="jxr_keyword">new</strong> File(configPath + <span class="jxr_string">"log4j.properties"</span>);
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          System.setProperty(<span class="jxr_string">"log4j.configuration"</span>, <span class="jxr_string">"file:"</span> + file);
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          properties = <strong class="jxr_keyword">new</strong> Properties();
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <em class="jxr_comment">// Get external application properties</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>          properties.load(<strong class="jxr_keyword">new</strong> FileInputStream(configPath + <span class="jxr_string">"app.properties"</span>));
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <em class="jxr_comment">// Load SQL statements from classpath</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          sqlMap = QueryLoader.instance().load(<span class="jxr_string">"/sql.properties"</span>);
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      }
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>  
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * Test that properties is not null and has specific value.</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      @Test
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> testProperties() {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          log.info(<span class="jxr_string">"testProperties"</span>);
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          log.info(String.format(<span class="jxr_string">"user.dir = %s"</span>, System.getProperty(<span class="jxr_string">"user.dir"</span>)));
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          assertNotNull(<span class="jxr_string">"Properties should not be "</span>, properties);
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">final</strong> String property = properties.getProperty(<span class="jxr_string">"db.driver"</span>);
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          assertNotNull(<span class="jxr_string">"Property should not be null"</span>, property);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          log.debug(<span class="jxr_string">"Property = "</span> + property);
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>     }
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment">     * Test that SQL {@code Map} is not null and list contents.</em>
-<a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     @Test
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> testSqlMap() {
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         log.info(<span class="jxr_string">"testSqlMap"</span>);
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         assertNotNull(<span class="jxr_string">"Properties should not be "</span>, sqlMap);
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;String, String&gt; entry : sqlMap.entrySet()) {
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>             log.debug(entry.getKey() + <span class="jxr_string">": "</span> + entry.getValue());
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         }
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>     }
-<a class="jxr_linenumber" name="L113" href="#L113">113</a> }
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">final</strong> String configPath = <span class="jxr_string">"/opt/config/dbaccess/"</span>;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <em class="jxr_comment">// Set log4j.properties location</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          File file = <strong class="jxr_keyword">new</strong> File(configPath + <span class="jxr_string">"log4j.properties"</span>);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          System.setProperty(<span class="jxr_string">"log4j.configuration"</span>, <span class="jxr_string">"file:"</span> + file);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          properties = <strong class="jxr_keyword">new</strong> Properties();
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          <em class="jxr_comment">// Get external application properties</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          properties.load(<strong class="jxr_keyword">new</strong> FileInputStream(configPath + <span class="jxr_string">"app.properties"</span>));
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          <em class="jxr_comment">// Load SQL statements from classpath</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          sqlMap = QueryLoader.instance().load(<span class="jxr_string">"/sql.properties"</span>);
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>      }
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     * Test that properties is not null and has specific value.</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      @Test
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> testProperties() {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          log.info(<span class="jxr_string">"testProperties"</span>);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          log.info(String.format(<span class="jxr_string">"user.dir = %s"</span>, System.getProperty(<span class="jxr_string">"user.dir"</span>)));
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          assertNotNull(<span class="jxr_string">"Properties should not be "</span>, properties);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">final</strong> String property = properties.getProperty(<span class="jxr_string">"db.driver"</span>);
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          assertNotNull(<span class="jxr_string">"Property should not be null"</span>, property);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          log.debug(<span class="jxr_string">"Property = "</span> + property);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      }
+<a class="jxr_linenumber" name="L100" href="#L100">100</a> 
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment">     * Test that SQL {@code Map} is not null and list contents.</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>     @Test
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">void</strong> testSqlMap() {
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         log.info(<span class="jxr_string">"testSqlMap"</span>);
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         assertNotNull(<span class="jxr_string">"Properties should not be "</span>, sqlMap);
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;String, String&gt; entry : sqlMap.entrySet()) {
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>             log.debug(entry.getKey() + <span class="jxr_string">": "</span> + entry.getValue());
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         }
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>     }
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2015. All rights reserved.</div>

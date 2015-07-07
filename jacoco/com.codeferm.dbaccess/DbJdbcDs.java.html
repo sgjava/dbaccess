@@ -100,43 +100,43 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="fc" id="L100">        ResultSet resultSet = null;</span>
 <span class="fc" id="L101">        List&lt;T&gt; list = null;</span>
         try {
-<span class="nc" id="L103">            connection = dataSource.getConnection();</span>
-<span class="nc" id="L104">            preparedStatement = connection.prepareStatement(sql);</span>
+<span class="fc" id="L103">            connection = dataSource.getConnection();</span>
+<span class="fc" id="L104">            preparedStatement = connection.prepareStatement(sql);</span>
             // Fill parameters
-<span class="nc" id="L106">            int i = 1; //NOPMD</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">            for (Object o : params) {</span>
-<span class="nc" id="L108">                preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L106">            int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            for (Object o : params) {</span>
+<span class="fc" id="L108">                preparedStatement.setObject(i++, o);</span>
             }
-<span class="nc" id="L110">            resultSet = preparedStatement.executeQuery();</span>
-<span class="nc" id="L111">            list = createObjects(resultSet, clazz);</span>
-<span class="fc" id="L112">        } catch (Exception e) {</span>
-<span class="fc" id="L113">            throw new DbAccessException(String.format(</span>
+<span class="fc" id="L110">            resultSet = preparedStatement.executeQuery();</span>
+<span class="fc" id="L111">            list = createObjects(resultSet, clazz);</span>
+<span class="nc" id="L112">        } catch (Exception e) {</span>
+<span class="nc" id="L113">            throw new DbAccessException(String.format(</span>
                     &quot;selectBeanList: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="fc" id="L117">            try {</span>
+<span class="nc" id="L117">            try {</span>
 <span class="pc bpc" id="L118" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
-<span class="nc" id="L119">                    resultSet.close();</span>
+<span class="pc" id="L119">                    resultSet.close();</span>
                 }
 <span class="nc" id="L121">            } catch (SQLException e) {</span>
 <span class="nc" id="L122">                log.error(e.getMessage());</span>
 <span class="pc" id="L123">            }</span>
             try {
 <span class="pc bpc" id="L125" title="3 of 4 branches missed.">                if (preparedStatement != null) {</span>
-<span class="nc" id="L126">                    preparedStatement.close();</span>
+<span class="pc" id="L126">                    preparedStatement.close();</span>
                 }
 <span class="nc" id="L128">            } catch (SQLException e) {</span>
 <span class="nc" id="L129">                log.error(e.getMessage());</span>
 <span class="pc" id="L130">            }</span>
             try {
 <span class="pc bpc" id="L132" title="3 of 4 branches missed.">                if (connection != null) {</span>
-<span class="nc" id="L133">                    connection.close();</span>
+<span class="pc" id="L133">                    connection.close();</span>
                 }
 <span class="nc" id="L135">            } catch (SQLException e) {</span>
 <span class="nc" id="L136">                log.error(e.getMessage());</span>
 <span class="pc" id="L137">            }</span>
 <span class="nc" id="L138">        }</span>
-<span class="nc" id="L139">        return list;</span>
+<span class="fc" id="L139">        return list;</span>
     }
 
     /**
@@ -163,53 +163,53 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="fc" id="L163">        ResultSet resultSet = null;</span>
 <span class="fc" id="L164">        List&lt;Map&lt;String, Object&gt;&gt; list = null;</span>
         try {
-<span class="nc" id="L166">            connection = dataSource.getConnection();</span>
-<span class="nc" id="L167">            preparedStatement = connection.prepareStatement(sql);</span>
+<span class="fc" id="L166">            connection = dataSource.getConnection();</span>
+<span class="fc" id="L167">            preparedStatement = connection.prepareStatement(sql);</span>
             // Fill parameters
-<span class="nc" id="L169">            int i = 1; //NOPMD</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">            for (Object o : params) {</span>
-<span class="nc" id="L171">                preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L169">            int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            for (Object o : params) {</span>
+<span class="fc" id="L171">                preparedStatement.setObject(i++, o);</span>
             }
-<span class="nc" id="L173">            resultSet = preparedStatement.executeQuery();</span>
-<span class="nc" id="L174">            final ResultSetMetaData resultSetMetaData = resultSet.getMetaData();</span>
-<span class="nc" id="L175">            final int numberOfColumns = resultSetMetaData.getColumnCount();</span>
-<span class="nc" id="L176">            list = new ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span>
-<span class="nc" id="L177">            final Map map = new HashMap();</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">            while (resultSet.next()) {</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">                for (i = 1; i &lt;= numberOfColumns; i++) {</span>
-<span class="nc" id="L180">                    map.put(resultSetMetaData.getColumnName(i), resultSet.</span>
+<span class="fc" id="L173">            resultSet = preparedStatement.executeQuery();</span>
+<span class="fc" id="L174">            final ResultSetMetaData resultSetMetaData = resultSet.getMetaData();</span>
+<span class="fc" id="L175">            final int numberOfColumns = resultSetMetaData.getColumnCount();</span>
+<span class="fc" id="L176">            list = new ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span>
+<span class="fc" id="L177">            final Map map = new HashMap();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                for (i = 1; i &lt;= numberOfColumns; i++) {</span>
+<span class="fc" id="L180">                    map.put(resultSetMetaData.getColumnName(i), resultSet.</span>
                             getObject(i));
                 }
-<span class="nc" id="L183">                list.add(map);</span>
+<span class="fc" id="L183">                list.add(map);</span>
             }
-<span class="fc" id="L185">        } catch (SQLException e) {</span>
-<span class="fc" id="L186">            throw new DbAccessException(String.format(</span>
+<span class="nc" id="L185">        } catch (SQLException e) {</span>
+<span class="nc" id="L186">            throw new DbAccessException(String.format(</span>
                     &quot;selectMapList: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="fc" id="L190">            try {</span>
+<span class="nc" id="L190">            try {</span>
 <span class="pc bpc" id="L191" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
-<span class="nc" id="L192">                    resultSet.close();</span>
+<span class="pc" id="L192">                    resultSet.close();</span>
                 }
 <span class="nc" id="L194">            } catch (SQLException e) {</span>
 <span class="nc" id="L195">                log.error(e.getMessage());</span>
 <span class="pc" id="L196">            }</span>
             try {
 <span class="pc bpc" id="L198" title="3 of 4 branches missed.">                if (preparedStatement != null) {</span>
-<span class="nc" id="L199">                    preparedStatement.close();</span>
+<span class="pc" id="L199">                    preparedStatement.close();</span>
                 }
 <span class="nc" id="L201">            } catch (SQLException e) {</span>
 <span class="nc" id="L202">                log.error(e.getMessage());</span>
 <span class="pc" id="L203">            }</span>
             try {
 <span class="pc bpc" id="L205" title="3 of 4 branches missed.">                if (connection != null) {</span>
-<span class="nc" id="L206">                    connection.close();</span>
+<span class="pc" id="L206">                    connection.close();</span>
                 }
 <span class="nc" id="L208">            } catch (SQLException e) {</span>
 <span class="nc" id="L209">                log.error(e.getMessage());</span>
 <span class="pc" id="L210">            }</span>
 <span class="nc" id="L211">        }</span>
-<span class="nc" id="L212">        return list;</span>
+<span class="fc" id="L212">        return list;</span>
     }
 
     /**
@@ -226,43 +226,43 @@ public class DbJdbcDs extends DbBeanMapper {
             justification
             = &quot;SQL libraries are allowed to accept SQL as parameter&quot;)
     public final int update(final String sql, final Object[] params) {
-<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L230">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
                     asList(params)));
         }
-<span class="nc" id="L233">        Connection connection = null;</span>
-<span class="nc" id="L234">        PreparedStatement preparedStatement = null;</span>
-<span class="nc" id="L235">        int rows = -1;</span>
+<span class="fc" id="L233">        Connection connection = null;</span>
+<span class="fc" id="L234">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L235">        int rows = -1;</span>
         try {
-<span class="nc" id="L237">            connection = dataSource.getConnection();</span>
-<span class="nc" id="L238">            preparedStatement = connection.prepareStatement(sql);</span>
+<span class="fc" id="L237">            connection = dataSource.getConnection();</span>
+<span class="fc" id="L238">            preparedStatement = connection.prepareStatement(sql);</span>
             // Fill parameters
-<span class="nc" id="L240">            int i = 1; //NOPMD OK to use short name for loop iteration variable</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">            for (Object o : params) {</span>
-<span class="nc" id="L242">                preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L240">            int i = 1; //NOPMD OK to use short name for loop iteration variable</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">            for (Object o : params) {</span>
+<span class="fc" id="L242">                preparedStatement.setObject(i++, o);</span>
             }
-<span class="nc" id="L244">            rows = preparedStatement.executeUpdate();</span>
-<span class="nc" id="L245">        } catch (SQLException e) {</span>
-<span class="nc" id="L246">            throw new DbAccessException(String.format(</span>
+<span class="fc" id="L244">            rows = preparedStatement.executeUpdate();</span>
+<span class="fc" id="L245">        } catch (SQLException e) {</span>
+<span class="fc" id="L246">            throw new DbAccessException(String.format(</span>
                     &quot;update: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="nc" id="L250">            try {</span>
-<span class="nc bnc" id="L251" title="All 4 branches missed.">                if (preparedStatement != null) {</span>
-<span class="nc" id="L252">                    preparedStatement.close();</span>
+<span class="fc" id="L250">            try {</span>
+<span class="pc bpc" id="L251" title="2 of 4 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L252">                    preparedStatement.close();</span>
                 }
 <span class="nc" id="L254">            } catch (SQLException e) {</span>
 <span class="nc" id="L255">                log.error(e.getMessage());</span>
-<span class="nc" id="L256">            }</span>
+<span class="fc" id="L256">            }</span>
             try {
-<span class="nc bnc" id="L258" title="All 4 branches missed.">                if (connection != null) {</span>
-<span class="nc" id="L259">                    connection.close();</span>
+<span class="pc bpc" id="L258" title="2 of 4 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L259">                    connection.close();</span>
                 }
 <span class="nc" id="L261">            } catch (SQLException e) {</span>
 <span class="nc" id="L262">                log.error(e.getMessage());</span>
-<span class="nc" id="L263">            }</span>
+<span class="fc" id="L263">            }</span>
 <span class="nc" id="L264">        }</span>
-<span class="nc" id="L265">        return rows;</span>
+<span class="fc" id="L265">        return rows;</span>
     }
 
     /**
@@ -290,54 +290,54 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="fc" id="L290">        ResultSet resultSet = null;</span>
 <span class="fc" id="L291">        Map&lt;String, Object&gt; keys = null;</span>
         try {
-<span class="nc" id="L293">            connection = dataSource.getConnection();</span>
-<span class="nc" id="L294">            preparedStatement = connection.prepareStatement(sql,</span>
+<span class="fc" id="L293">            connection = dataSource.getConnection();</span>
+<span class="fc" id="L294">            preparedStatement = connection.prepareStatement(sql,</span>
                     Statement.RETURN_GENERATED_KEYS);
             // Fill parameters
-<span class="nc" id="L297">            int i = 1; //NOPMD</span>
-<span class="nc bnc" id="L298" title="All 2 branches missed.">            for (Object o : params) {</span>
-<span class="nc" id="L299">                preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L297">            int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">            for (Object o : params) {</span>
+<span class="fc" id="L299">                preparedStatement.setObject(i++, o);</span>
             }
-<span class="nc" id="L301">            preparedStatement.executeUpdate();</span>
-<span class="nc" id="L302">            resultSet = preparedStatement.getGeneratedKeys();</span>
-<span class="nc" id="L303">            final ResultSetMetaData resultSetMetaData = resultSet.getMetaData();</span>
-<span class="nc" id="L304">            final int numberOfColumns = resultSetMetaData.getColumnCount();</span>
+<span class="fc" id="L301">            preparedStatement.executeUpdate();</span>
+<span class="fc" id="L302">            resultSet = preparedStatement.getGeneratedKeys();</span>
+<span class="fc" id="L303">            final ResultSetMetaData resultSetMetaData = resultSet.getMetaData();</span>
+<span class="fc" id="L304">            final int numberOfColumns = resultSetMetaData.getColumnCount();</span>
             // Prime the pump
-<span class="nc bnc" id="L306" title="All 2 branches missed.">            if (resultSet.next()) {</span>
-<span class="nc" id="L307">                keys = new HashMap&lt;String, Object&gt;();</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">                for (i = 1; i &lt;= numberOfColumns; i++) {</span>
-<span class="nc" id="L309">                    keys.put(resultSetMetaData.getColumnName(i),</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">            if (resultSet.next()) {</span>
+<span class="fc" id="L307">                keys = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">                for (i = 1; i &lt;= numberOfColumns; i++) {</span>
+<span class="fc" id="L309">                    keys.put(resultSetMetaData.getColumnName(i),</span>
                             resultSet.getObject(i));
                 }
             }
-<span class="fc" id="L313">        } catch (SQLException e) {</span>
-<span class="fc" id="L314">            throw new DbAccessException(String.format(</span>
+<span class="nc" id="L313">        } catch (SQLException e) {</span>
+<span class="nc" id="L314">            throw new DbAccessException(String.format(</span>
                     &quot;updateReturnKeys: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="fc" id="L318">            try {</span>
+<span class="nc" id="L318">            try {</span>
 <span class="pc bpc" id="L319" title="3 of 4 branches missed.">                if (resultSet != null) {</span>
-<span class="nc" id="L320">                    resultSet.close();</span>
+<span class="pc" id="L320">                    resultSet.close();</span>
                 }
 <span class="nc" id="L322">            } catch (SQLException e) {</span>
 <span class="nc" id="L323">                log.error(e.getMessage());</span>
 <span class="pc" id="L324">            }</span>
             try {
 <span class="pc bpc" id="L326" title="3 of 4 branches missed.">                if (preparedStatement != null) {</span>
-<span class="nc" id="L327">                    preparedStatement.close();</span>
+<span class="pc" id="L327">                    preparedStatement.close();</span>
                 }
 <span class="nc" id="L329">            } catch (SQLException e) {</span>
 <span class="nc" id="L330">                log.error(e.getMessage());</span>
 <span class="pc" id="L331">            }</span>
             try {
 <span class="pc bpc" id="L333" title="3 of 4 branches missed.">                if (connection != null) {</span>
-<span class="nc" id="L334">                    connection.close();</span>
+<span class="pc" id="L334">                    connection.close();</span>
                 }
 <span class="nc" id="L336">            } catch (SQLException e) {</span>
 <span class="nc" id="L337">                log.error(e.getMessage());</span>
 <span class="pc" id="L338">            }</span>
 <span class="nc" id="L339">        }</span>
-<span class="nc" id="L340">        return keys;</span>
+<span class="fc" id="L340">        return keys;</span>
     }
 
     /**
@@ -366,40 +366,40 @@ public class DbJdbcDs extends DbBeanMapper {
 <span class="fc" id="L366">        PreparedStatement preparedStatement = null;</span>
 <span class="fc" id="L367">        int[] rows = null;</span>
         try {
-<span class="nc" id="L369">            connection = dataSource.getConnection();</span>
-<span class="nc" id="L370">            preparedStatement = connection.prepareStatement(sql);</span>
+<span class="fc" id="L369">            connection = dataSource.getConnection();</span>
+<span class="fc" id="L370">            preparedStatement = connection.prepareStatement(sql);</span>
             // Add parameter arrays to batch
-<span class="nc bnc" id="L372" title="All 2 branches missed.">            for (Object[] param : params) {</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">            for (Object[] param : params) {</span>
                 // Fill parameters
-<span class="nc" id="L374">                int i = 1; //NOPMD</span>
-<span class="nc bnc" id="L375" title="All 2 branches missed.">                for (Object o : param) {</span>
-<span class="nc" id="L376">                    preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L374">                int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">                for (Object o : param) {</span>
+<span class="fc" id="L376">                    preparedStatement.setObject(i++, o);</span>
                 }
                 // Add to batch
-<span class="nc" id="L379">                preparedStatement.addBatch();</span>
+<span class="fc" id="L379">                preparedStatement.addBatch();</span>
             }
-<span class="nc" id="L381">            rows = preparedStatement.executeBatch();</span>
-<span class="fc" id="L382">        } catch (SQLException e) {</span>
-<span class="fc" id="L383">            throw new DbAccessException(String.format(</span>
+<span class="fc" id="L381">            rows = preparedStatement.executeBatch();</span>
+<span class="nc" id="L382">        } catch (SQLException e) {</span>
+<span class="nc" id="L383">            throw new DbAccessException(String.format(</span>
                     &quot;batch: sql=%s, params=%s&quot;, sql, Arrays.asList(
                             params)), e);
         } finally {
-<span class="fc" id="L387">            try {</span>
+<span class="nc" id="L387">            try {</span>
 <span class="pc bpc" id="L388" title="3 of 4 branches missed.">                if (preparedStatement != null) {</span>
-<span class="nc" id="L389">                    preparedStatement.close();</span>
+<span class="pc" id="L389">                    preparedStatement.close();</span>
                 }
 <span class="nc" id="L391">            } catch (SQLException e) {</span>
 <span class="nc" id="L392">                log.error(e.getMessage());</span>
 <span class="pc" id="L393">            }</span>
             try {
 <span class="pc bpc" id="L395" title="3 of 4 branches missed.">                if (connection != null) {</span>
-<span class="nc" id="L396">                    connection.close();</span>
+<span class="pc" id="L396">                    connection.close();</span>
                 }
 <span class="nc" id="L398">            } catch (SQLException e) {</span>
 <span class="nc" id="L399">                log.error(e.getMessage());</span>
 <span class="pc" id="L400">            }</span>
 <span class="nc" id="L401">        }</span>
-<span class="nc" id="L402">        return rows;</span>
+<span class="fc" id="L402">        return rows;</span>
     }
 
     /**

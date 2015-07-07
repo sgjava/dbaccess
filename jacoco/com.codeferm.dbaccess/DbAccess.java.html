@@ -115,13 +115,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final &lt;T&gt; T select(final String sql, final Object[] params,
             final Class clazz) {
-<span class="nc" id="L118">        final List&lt;T&gt; list = selectList(sql, params, clazz);</span>
-<span class="nc" id="L119">        T object = null;</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+<span class="fc" id="L118">        final List&lt;T&gt; list = selectList(sql, params, clazz);</span>
+<span class="fc" id="L119">        T object = null;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
             // Get first item in List
-<span class="nc" id="L122">            object = list.get(0);</span>
+<span class="fc" id="L122">            object = list.get(0);</span>
         }
-<span class="nc" id="L124">        return object;</span>
+<span class="fc" id="L124">        return object;</span>
     }
 
     /**
@@ -154,7 +154,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final &lt;T&gt; List&lt;T&gt; selectList(final String sql,
             final Map&lt;String, Object&gt; params, final Class clazz) {
-<span class="nc" id="L157">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
+<span class="fc" id="L157">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
                 params), clazz);
     }
 
@@ -196,7 +196,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      * @return List of Maps containing field name/value pair.
      */
     public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql) {
-<span class="nc" id="L199">        return selectList(sql, new Object[]{});</span>
+<span class="fc" id="L199">        return selectList(sql, new Object[]{});</span>
     }
 
     /**
@@ -208,13 +208,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final Map&lt;String, Object&gt; select(final String sql,
             final Object[] params) {
-<span class="nc" id="L211">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, params);</span>
-<span class="nc" id="L212">        Map&lt;String, Object&gt; map = null;</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+<span class="fc" id="L211">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, params);</span>
+<span class="fc" id="L212">        Map&lt;String, Object&gt; map = null;</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
             // Get first item in List
-<span class="nc" id="L215">            map = list.get(0);</span>
+<span class="fc" id="L215">            map = list.get(0);</span>
         }
-<span class="nc" id="L217">        return map;</span>
+<span class="fc" id="L217">        return map;</span>
     }
 
     /**
@@ -224,13 +224,13 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      * @return List of Maps containing field name/value pair.
      */
     public final Map&lt;String, Object&gt; select(final String sql) {
-<span class="nc" id="L227">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, new Object[]{});</span>
-<span class="nc" id="L228">        Map&lt;String, Object&gt; map = null;</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (!list.isEmpty()) {</span>
+<span class="fc" id="L227">        final List&lt;Map&lt;String, Object&gt;&gt; list = selectList(sql, new Object[]{});</span>
+<span class="fc" id="L228">        Map&lt;String, Object&gt; map = null;</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (!list.isEmpty()) {</span>
             // Get first item in List
-<span class="nc" id="L231">            map = list.get(0);</span>
+<span class="fc" id="L231">            map = list.get(0);</span>
         }
-<span class="nc" id="L233">        return map;</span>
+<span class="fc" id="L233">        return map;</span>
     }
 
     /**
@@ -244,14 +244,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final &lt;T&gt; T select(final String sql, final Object[] params,
             final String fieldName) {
-<span class="nc" id="L247">        T object = null;</span>
-<span class="nc" id="L248">        Map&lt;String, Object&gt; map = null;</span>
-<span class="nc" id="L249">        map = select(sql, params);</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (map != null) {</span>
+<span class="fc" id="L247">        T object = null;</span>
+<span class="fc" id="L248">        Map&lt;String, Object&gt; map = null;</span>
+<span class="fc" id="L249">        map = select(sql, params);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        if (map != null) {</span>
             // Get first item in List
-<span class="nc" id="L252">            object = (T) map.get(fieldName);</span>
+<span class="fc" id="L252">            object = (T) map.get(fieldName);</span>
         }
-<span class="nc" id="L254">        return object;</span>
+<span class="fc" id="L254">        return object;</span>
     }
 
     /**
@@ -263,14 +263,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      * @return Object by field name.
      */
     public final &lt;T&gt; T select(final String sql, final String fieldName) {
-<span class="nc" id="L266">        T object = null;</span>
-<span class="nc" id="L267">        Map&lt;String, Object&gt; map = null;</span>
-<span class="nc" id="L268">        map = select(sql, new Object[]{});</span>
-<span class="nc bnc" id="L269" title="All 2 branches missed.">        if (map != null) {</span>
+<span class="fc" id="L266">        T object = null;</span>
+<span class="fc" id="L267">        Map&lt;String, Object&gt; map = null;</span>
+<span class="fc" id="L268">        map = select(sql, new Object[]{});</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">        if (map != null) {</span>
             // Get first item in List
-<span class="nc" id="L271">            object = (T) map.get(fieldName);</span>
+<span class="fc" id="L271">            object = (T) map.get(fieldName);</span>
         }
-<span class="nc" id="L273">        return object;</span>
+<span class="fc" id="L273">        return object;</span>
     }
 
     /**
@@ -283,7 +283,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final List&lt;Map&lt;String, Object&gt;&gt; selectList(final String sql,
             final Map&lt;String, Object&gt; params) {
-<span class="nc" id="L286">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
+<span class="fc" id="L286">        return selectList(namedParamsToMarkers(sql), paramMapToArray(sql,</span>
                 params));
     }
 
@@ -336,7 +336,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      * @return Number of rows updated.
      */
     public final int update(final String sql, final Map&lt;String, Object&gt; params) {
-<span class="nc" id="L339">        return update(namedParamsToMarkers(sql), paramMapToArray(sql, params));</span>
+<span class="fc" id="L339">        return update(namedParamsToMarkers(sql), paramMapToArray(sql, params));</span>
     }
 
     /**
@@ -400,7 +400,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final int updateReturnKey(final String sql, final Object[] params,
             final String keyName) {
-<span class="nc" id="L403">        return Integer.parseInt(updateReturnKeys(sql, params).get(keyName).</span>
+<span class="fc" id="L403">        return Integer.parseInt(updateReturnKeys(sql, params).get(keyName).</span>
                 toString());
     }
 
@@ -416,7 +416,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final int updateReturnKey(final String sql,
             final Map&lt;String, Object&gt; params, final String keyName) {
-<span class="nc" id="L419">        return Integer.parseInt(updateReturnKeys(namedParamsToMarkers(sql),</span>
+<span class="fc" id="L419">        return Integer.parseInt(updateReturnKeys(namedParamsToMarkers(sql),</span>
                 paramMapToArray(sql, params)).get(keyName).toString());
     }
 
@@ -439,7 +439,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
      */
     public final int[] batch(final String sql,
             final List&lt;Map&lt;String, Object&gt;&gt; params) {
-<span class="nc" id="L442">        return batch(namedParamsToMarkers(sql), mapListToArray(sql, params));</span>
+<span class="fc" id="L442">        return batch(namedParamsToMarkers(sql), mapListToArray(sql, params));</span>
     }
 
     /**

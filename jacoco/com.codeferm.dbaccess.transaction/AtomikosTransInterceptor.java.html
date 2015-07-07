@@ -99,12 +99,12 @@ import org.slf4j.LoggerFactory;
 <span class="fc" id="L99">            userTransaction.begin();</span>
             try {
                 // Proceed with the original method's invocation
-<span class="nc" id="L102">                object = invocation.proceed();</span>
+<span class="fc" id="L102">                object = invocation.proceed();</span>
                 // Close connection
-<span class="nc" id="L104">                dbAccess.cleanUp();</span>
+<span class="fc" id="L104">                dbAccess.cleanUp();</span>
                 // Commit if successful
-<span class="nc" id="L106">                userTransaction.commit();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">                if (log.isDebugEnabled()) {</span>
+<span class="fc" id="L106">                userTransaction.commit();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L108">                    log.debug(String.format(</span>
                             &quot;Committed transaction for method %s&quot;,
                             invocation.getMethod().getName()));
@@ -121,9 +121,9 @@ import org.slf4j.LoggerFactory;
                 // Rollback on error
 <span class="fc" id="L122">                userTransaction.rollback();</span>
 <span class="fc" id="L123">                throw e;</span>
-<span class="nc" id="L124">            }</span>
+<span class="fc" id="L124">            }</span>
         }
-<span class="nc" id="L126">        return object;</span>
+<span class="fc" id="L126">        return object;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -90,7 +90,7 @@ public class DbJdbcTemplate extends DbAccess {
 <span class="nc" id="L90">            log.debug(String.format(&quot;selectBeanList: sql=%s, params=%s&quot;, sql,</span>
                     Arrays.asList(params)));
         }
-<span class="nc" id="L93">        return template.query(sql, params,</span>
+<span class="fc" id="L93">        return template.query(sql, params,</span>
                 new BeanPropertyRowMapper(clazz));
     }
 
@@ -109,7 +109,7 @@ public class DbJdbcTemplate extends DbAccess {
 <span class="nc" id="L109">            log.debug(String.format(&quot;selectMapList: sql=%s, params=%s&quot;, sql,</span>
                     Arrays.asList(params)));
         }
-<span class="nc" id="L112">        return template.queryForList(sql, params);</span>
+<span class="fc" id="L112">        return template.queryForList(sql, params);</span>
     }
 
     /**
@@ -123,11 +123,11 @@ public class DbJdbcTemplate extends DbAccess {
      */
     @Override
     public final int update(final String sql, final Object[] params) {
-<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (log.isDebugEnabled()) {</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (log.isDebugEnabled()) {</span>
 <span class="nc" id="L127">            log.debug(String.format(&quot;update: sql=%s, params=%s&quot;, sql, Arrays.</span>
                     asList(params)));
         }
-<span class="nc" id="L130">        return template.update(sql, params);</span>
+<span class="fc" id="L130">        return template.update(sql, params);</span>
     }
 
     /**
@@ -160,21 +160,21 @@ public class DbJdbcTemplate extends DbAccess {
                     = &quot;This mimics how Spring does it, SQL libraries are allowed to accept SQL as parameter&quot;)
             public final PreparedStatement createPreparedStatement(
                     final Connection con) throws SQLException {
-<span class="nc" id="L163">                PreparedStatement preparedStatement = con.</span>
+<span class="fc" id="L163">                PreparedStatement preparedStatement = con.</span>
                         prepareStatement(sql,
                                 Statement.RETURN_GENERATED_KEYS);
                 // Fill parameters
-<span class="nc" id="L167">                int i = 1; //NOPMD</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">                for (Object o : params) {</span>
-<span class="nc" id="L169">                    preparedStatement.setObject(i++, o);</span>
+<span class="fc" id="L167">                int i = 1; //NOPMD</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                for (Object o : params) {</span>
+<span class="fc" id="L169">                    preparedStatement.setObject(i++, o);</span>
                 }
-<span class="nc" id="L171">                return preparedStatement;</span>
+<span class="fc" id="L171">                return preparedStatement;</span>
             }
         };
         // Execute update
-<span class="nc" id="L175">        template.update(psc, keyHolder);</span>
+<span class="fc" id="L175">        template.update(psc, keyHolder);</span>
         // Return keys
-<span class="nc" id="L177">        return keyHolder.getKeys();</span>
+<span class="fc" id="L177">        return keyHolder.getKeys();</span>
     }
 
     /**
@@ -195,7 +195,7 @@ public class DbJdbcTemplate extends DbAccess {
                                 Arrays.asList(param)));
             }
         }
-<span class="nc" id="L198">        return template.batchUpdate(sql, Arrays.asList(params));</span>
+<span class="fc" id="L198">        return template.batchUpdate(sql, Arrays.asList(params));</span>
     }
 
     /**
