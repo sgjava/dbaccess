@@ -74,8 +74,7 @@ public class BaseTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         // Config path for externalized files
-        final String configPath = System.getProperty("user.home")
-                + "/config/dbaccess/";
+        final String configPath = "/opt/config/dbaccess/";
         // Set log4j.properties location
         File file = new File(configPath + "log4j.properties");
         System.setProperty("log4j.configuration", "file:" + file);
