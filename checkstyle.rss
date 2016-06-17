@@ -23,7 +23,7 @@ under the License.
     <link>https://github.com/sgjava/dbaccess</link>
     <description>DB Access - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2015</copyright>
+    <copyright>&#169;2016</copyright>
     <item>
       <title>File: 20,
              Errors: 0,
@@ -158,6 +158,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.DbJdbcConn.java">com/codeferm/dbaccess/DbJdbcConn.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.DbJdbcTemplate.java">com/codeferm/dbaccess/DbJdbcTemplate.java</a>
                 </td>
                 <td>
@@ -173,20 +187,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.transaction.package-info.java">com/codeferm/dbaccess/transaction/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/sgjava/dbaccess/checkstyle.html#com.codeferm.dbaccess.DbJdbcConn.java">com/codeferm/dbaccess/DbJdbcConn.java</a>
                 </td>
                 <td>
                   0
