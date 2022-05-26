@@ -58,7 +58,7 @@ sgoldsmith@codeferm.com
     <properties>
         <java-api.version>1.7</java-api.version>
         <junit.version>4.12</junit.version>
-        <spring.version>4.1.3.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <atomikos.version>3.9.3</atomikos.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
